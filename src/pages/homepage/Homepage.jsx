@@ -34,18 +34,18 @@ const Homepage = () => {
                 and unlock premium experiences. Stream, collect, and
                 trade—because music should be yours to own.
               </p>
-              <div className={style.buton}>
-                <a href="#">
-                  <button>Get Started</button>
-                </a>
-                <a href="#">
-                  <button>Explore</button>
-                </a>
+              <div className={style.button}>
+                <a href="#" className={style.rightButton} >Get Started</a>
+                <a href="#">Explore</a>
               </div>
             </div>
           </article>
         </div>
       </header>
+
+      <main>
+        
+      </main>
     </body>
   );
 }

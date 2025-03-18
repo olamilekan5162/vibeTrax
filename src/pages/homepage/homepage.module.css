@@ -1,13 +1,16 @@
 body{
     background-color: black;
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
+    font-family: var(--prim-font);
+    color: var(--prim-color-2);
 }
 
 header{
     background: url('/public/asset/danny.jpg') no-repeat center/cover;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: luminosity;
     height: 500px;
-    color: white;
     border-radius: 1rem;
     margin: 2rem 0;
 }
@@ -52,7 +55,7 @@ a{
 }
 
 article{
-    width: 50%;
+    width: 52%;
 }
 
 .articleContainer{
@@ -60,6 +63,23 @@ article{
 }
 
 .articleContainer h1{
-    font-family: var(--logo-font);
     font-size: 4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+}
+
+.articleContainer p{
+    margin: 2rem 0;
+    font-weight: 700;
+}
+
+.button{
+    display: flex;
+    gap: 10px;
+}
+
+.button .rightButton{
+    background-color: transparent;
+    border: 1px solid white;
 }
