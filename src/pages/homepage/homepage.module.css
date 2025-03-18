@@ -1,3 +1,65 @@
 body{
     background-color: black;
+    width: 90%;
+    margin: 0 auto;
+}
+
+header{
+    background: url('/public/asset/danny.jpg') no-repeat center/cover;
+    height: 500px;
+    color: white;
+    border-radius: 1rem;
+    margin: 2rem 0;
+}
+
+.headerContainer{
+    padding: 0 2rem;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+}
+
+ul{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 10px;
+}
+
+.headerIcon{
+    font-size: 1.5rem;
+}
+
+
+ul .logoText{
+    font-family: var(--logo-font);
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+a{
+    text-decoration: none;
+    color: var(--prim-color-2);
+    background-color: var(--prim-color);
+    padding: .5rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+article{
+    width: 50%;
+}
+
+.articleContainer{
+    padding: 2rem 0;
+}
+
+.articleContainer h1{
+    font-family: var(--logo-font);
+    font-size: 4rem;
 }

@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
+:root{
+    --logo-font: 'Oswald', sans-serif;
+    --prim-font: 'Roboto', sans-serif;
+    --prim-color: #f98045;
+    --prim-color-2: #fff;
+}
+
+ul, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
