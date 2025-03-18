@@ -1,6 +1,12 @@
+import style from './homepage.module.css';
+
 const Homepage = () => {
   return(
-    <h1>Homepage</h1>
+    <body>
+      <div>
+        <h1>Homepage</h1>
+      </div>
+    </body>
     )
 }
 export default Homepage;
