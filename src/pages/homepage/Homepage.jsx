@@ -13,7 +13,8 @@ import MarketPlace from "../MarketPlace/MarketPlace";
 
 const Homepage = () => {
   return (
-    <body>
+<div>
+
       <header>
         <div className={style.headerContainer}>
           <nav>
@@ -117,7 +118,8 @@ const Homepage = () => {
           <MarketPlace/>
         </section>
       </main>
-    </body>
+</div>
+
   );
 };
 export default Homepage;

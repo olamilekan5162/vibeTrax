@@ -1,22 +1,11 @@
-import {Route, createBrowserRouter, RouterProvider} from 'react-router-dom';
-import UserProfile from "./pages/userprofile/UserProfile"
-import Homepage from "./pages/homepage/Homepage"
+import { Outlet } from "react-router-dom";
 
 function App() {
-    const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Homepage />
-    },
-    {
-      path: "userprofile",
-      element: <UserProfile />
-    }
-    ])
-  
   return (
-    <RouterProvider router={router}/>
-  )
+    <>
+      <Outlet />
+    </>
+  );
 }
 
-export default App
+export default App;
