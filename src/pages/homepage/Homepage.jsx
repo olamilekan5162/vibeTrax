@@ -8,6 +8,8 @@ import {
   FaMoneyBillWave as Moneyicon,
 } from "react-icons/fa";
 import { MdPayments as Paymenticon } from "react-icons/md";
+import MarketPlace from "../MarketPlace/MarketPlace";
+
 
 const Homepage = () => {
   return (
@@ -109,8 +111,10 @@ const Homepage = () => {
             </div>
             <div>
               <h4>Get Paid Instantly</h4>
+              
             </div>
           </article>
+          <MarketPlace/>
         </section>
       </main>
     </body>
