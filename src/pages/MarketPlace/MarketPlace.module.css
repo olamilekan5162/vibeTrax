@@ -1,0 +1,20 @@
+.marketplace {
+    padding: 20px;
+    color: white;
+    text-align: center;
+
+}
+
+.title{
+    font-size: 28px;
+    margin-bottom: 20px;
+
+}
+
+.nftGrid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+

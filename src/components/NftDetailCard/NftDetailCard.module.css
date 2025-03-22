@@ -1,0 +1,52 @@
+.card {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    width: 500px;
+    text-align: center;
+  }
+  
+  .image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .details {
+    margin-top: 15px;
+  }
+  
+  .artist {
+    color: #08f7fe;
+  }
+  
+  .description {
+    font-size: 14px;
+    color: #ccc;
+  }
+  
+  .info {
+    margin: 15px 0;
+  }
+  
+  .buyButton {
+    background: #08f7fe;
+    color: black;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  
+  .playButton {
+    background: #1db954;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  

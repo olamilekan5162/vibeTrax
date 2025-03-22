@@ -8,11 +8,13 @@ import {
   FaMoneyBillWave as Moneyicon,
 } from "react-icons/fa";
 import { MdPayments as Paymenticon } from "react-icons/md";
-import { Link } from "react-router-dom";
+import MarketPlace from "../MarketPlace/MarketPlace";
+
 
 const Homepage = () => {
   return (
-    <body>
+<div>
+
       <header>
         <div className={style.headerContainer}>
           <nav>
@@ -110,11 +112,14 @@ const Homepage = () => {
             </div>
             <div>
               <h4>Get Paid Instantly</h4>
+              
             </div>
           </article>
+          <MarketPlace/>
         </section>
       </main>
-    </body>
+</div>
+
   );
 };
 export default Homepage;
