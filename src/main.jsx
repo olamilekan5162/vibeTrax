@@ -18,7 +18,8 @@ const router = createBrowserRouter([
       },
       {
         path:"marketplace", element: <MarketPlace/>
-      }
+      },
+      
     ]
   }
 ])

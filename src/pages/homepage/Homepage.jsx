@@ -11,15 +11,14 @@ import {
 import { MdPayments as Paymenticon } from "react-icons/md";
 import MarketPlace from "../MarketPlace/MarketPlace";
 
-
 const Homepage = () => {
   return (
-    <div className={style.body} >
+    <div className={style.body}>
       <div className={style.container}>
         <header>
           <div className={style.headerContainer}>
             <nav>
-              <div className={style.logoContainer} >
+              <div className={style.logoContainer}>
                 <Link to="/">
                   <Soundicon className={style.headerIcon} />
                   <h1 className={style.logoText}>SuiTunes</h1>
@@ -27,13 +26,18 @@ const Homepage = () => {
               </div>
               <ul className={style.navLink}>
                 <li>
-                  <a href="#"><button>Get Started</button></a>
+                  <a href="#">
+                    <button>Get Started</button>
+                  </a>
                 </li>
               </ul>
             </nav>
             <article>
               <div className={style.articleContainer}>
-                <h1>Own the Sound. <br/>Fuel the Future.</h1>
+                <h1>
+                  Own the Sound. <br />
+                  Fuel the Future.
+                </h1>
                 <p>
                   Discover exclusive music NFTs, support your favorite artists,
                   and unlock premium experiences. Stream, collect, and
@@ -112,6 +116,7 @@ const Homepage = () => {
             <MarketPlace/>
           </section> */}
         </main>
+        <MarketPlace />
       </div>
     </div>
   );
