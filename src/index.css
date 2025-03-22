@@ -1,13 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 
 * {
   box-sizing: border-box;
 }
 
 :root {
-  --logo-font: "Oswald", sans-serif;
-  --prim-font: "Roboto", sans-serif;
+  --prim-OSWALD: "Oswald", sans-serif;
+  --prim-ROBOTO: "Roboto", sans-serif;
+  --prim-VT323: "VT323", monospace;
+  --prim-ORBITRON: "Orbitron", sans-serif;
+  --prim-CHAKRA: "Chakra Petch", sans-serif;
   --prim-color: #f98045;
   --prim-color-2: #fff;
 }

@@ -1,4 +1,5 @@
 import style from "./homepage.module.css";
+import { Link } from "react-router-dom";
 import {
   SiBluesound as Soundicon,
   SiMintlify as Minticon,
@@ -13,19 +14,19 @@ import MarketPlace from "../MarketPlace/MarketPlace";
 
 const Homepage = () => {
   return (
-<div>
-
+    <div>
       <header>
         <div className={style.headerContainer}>
           <nav>
-            <Link to="/">
-              <Soundicon className={style.headerIcon} />
+            <div className={style.logoContainer} >
+              <Link to="/">
+                <Soundicon className={style.headerIcon} />
 
-             
-                <p className={style.logoText}>WaveKey</p>
-            </Link>
+                <h1 className={style.logoText}>WaveKey</h1>
+              </Link>
+            </div>
 
-            <ul>
+            <ul className={style.navLink}>
               <li>
                 <a href="#">Sign In</a>
               </li>
@@ -37,8 +38,7 @@ const Homepage = () => {
 
           <article>
             <div className={style.articleContainer}>
-              <h1>Own the Sound.</h1>
-              <h1>Fuel the Future.</h1>
+              <h1>Own the Sound. <br/>Fuel the Future.</h1>
 
               <p>
                 Discover exclusive music NFTs, support your favorite artists,
@@ -46,10 +46,12 @@ const Homepage = () => {
                 trade—because music should be yours to own.
               </p>
               <div className={style.button}>
-                <a href="#" className={style.rightButton}>
-                  Get Started
+                <a href="#">
+                  <button className={style.rightButton}>Get Started</button>
                 </a>
-                <a href="#">Explore</a>
+                <a href="#">
+                  <button className={style.leftButton}>Explore</button>
+                </a>
               </div>
             </div>
           </article>
@@ -61,7 +63,7 @@ const Homepage = () => {
           <h3>Trending Now</h3>
           <article className={style.musicCard}>
             <div>
-              <img src="/asset/zachary.jpg" alt="album cover" />
+              <img src="/assets/zachary.jpg" alt="album cover" />
               <h4>P.Jay</h4>
               <span>
                 <a href="#">Buy</a>
@@ -69,7 +71,7 @@ const Homepage = () => {
               </span>
             </div>
             <div>
-              <img src="/asset/howe.jpg" alt="album cover" />
+              <img src="/assets/howe.jpg" alt="album cover" />
               <h4>CharBae</h4>
               <span>
                 <a href="#">Buy</a>
@@ -77,7 +79,7 @@ const Homepage = () => {
               </span>
             </div>
             <div>
-              <img src="/asset/dreokt.jpg" alt="album cover" />
+              <img src="/assets/dreokt.jpg" alt="album cover" />
               <h4>R.Power</h4>
               <span>
                 <a href="#">Buy</a>
@@ -85,7 +87,7 @@ const Homepage = () => {
               </span>
             </div>
             <div>
-              <img src="/asset/marcela.jpg" alt="album cover" />
+              <img src="/assets/marcela.jpg" alt="album cover" />
               <h4>Oracle</h4>
               <span>
                 <a href="#">Buy</a>
@@ -95,7 +97,7 @@ const Homepage = () => {
           </article>
         </section>
 
-        <section>
+        {/* <section>
           <h3>How it Works</h3>
           <article className={style.stepsContainer}>
             <div className={style.stepsCard}>
@@ -116,10 +118,9 @@ const Homepage = () => {
             </div>
           </article>
           <MarketPlace/>
-        </section>
+        </section> */}
       </main>
-</div>
-
+    </div>
   );
 };
 export default Homepage;
