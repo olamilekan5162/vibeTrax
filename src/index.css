@@ -19,6 +19,11 @@
   --prim-color-2: #fff;
 }
 
+body{
+  margin: 0;
+  padding: 0;
+}
+
 ul,
 h1,
 h2,

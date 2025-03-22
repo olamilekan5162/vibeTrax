@@ -1,185 +1,189 @@
-body{
-    background-color: black;
-    /* background-color: var(--prim-color-2); */
-    width: 90%;
-    margin: 0 auto;
-    font-family: var(--prim-ROBOTO);
-    color: var(--prim-color-2);
-    padding-bottom: 10rem;
+.body {
+  background-color: black;
+  /* background-color: var(--prim-color-2); */
+  width: 100%;
+  background-image: url("/assets/dreokt.jpg");
+  background-size: 100% 550px;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  font-family: var(--prim-ROBOTO);
+  color: var(--prim-color-2);
+  padding-bottom: 10rem;
+  /* padding-top: 2rem; */
+  /* animation: changeBG 3s linear 100ms infinite forwards; */
 }
 
-header{
-    background: url('/assets/dreokt.jpg') no-repeat center/cover;
-    /* background-color: rgba(0, 0, 0, 0.6); */
-    /* background-color: #5f1baa;
-    background-blend-mode: luminosity; */
-    height: 550px;
-    border-radius: 1rem;
-    margin: 2rem 0;
+.container {
+  /* width: 90%; */
+  /* margin: 0 auto; */
 }
 
-.headerContainer{
-    padding: 0 2rem;
+header {
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 10rem;
+  padding: 3rem 2rem;
+  /* border: 2px solid red; */
+  /* background: url('/assets/dreokt.jpg') no-repeat center/cover; */
+  /* height: 550px; */
+  /* border-radius: 1rem; */
 }
 
-nav{
-    display: flex;
-    justify-content: space-between;
-    padding: 1.5rem 0;
+.headerContainer {
+  /* padding: 0 2rem; */
 }
 
-ul, .logoContainer a{
-    display: flex;
-    align-items: center;
-    list-style: none;
-    text-decoration: none;
-    margin: 0;
-    padding: 0;
-    gap: 10px;
+nav {
+  display: flex;
+  justify-content: space-between;
 }
 
-.headerIcon{
-    font-size: 1.5rem;
+ul,
+.logoContainer a {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
 }
 
-.logoContainer a{
+.headerIcon {
+  font-size: 1.5rem;
+}
+
+.logoContainer a {
   color: var(--prim-color-2);
 }
 
-.logoContainer .logoText{
-    font-family: var(--prim-CHAKRA);
-    font-size: 1.75rem;
-    font-weight: 700;
+.logoContainer .logoText {
+  font-family: var(--prim-CHAKRA);
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
-.navLink a, .leftButton{
-    text-decoration: none;
-    color:  #5f1baa;
-    background-color: var(--prim-color-2);
-    padding: .5rem;
-    font-weight: 600;
-    cursor: pointer;
+.articleContainer {
+  width: 100%;
+  padding: 1.5rem 0;
 }
 
-
-.articleContainer{
-    width: 100%;
-    padding: 1.5rem 0;
+.articleContainer h1 {
+  font-family: var(--prim-ORBITRON);
+  font-size: 5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 4px;
+  margin-bottom: 4rem;
+  text-align: center;
+  animation: fadeInUp 1.2s ease-out forwards;
 }
 
-.articleContainer h1{
-    font-family: var(--prim-ORBITRON);
-    font-size: 5rem;
-    font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: 4px;
-    margin-bottom: 4rem;
-    text-align: center;
-    animation: fadeInUp 1.2s ease-out forwards;
+.articleContainer p {
+  font-family: var(--prim-CHAKRA);
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 700;
+  animation: fadeInUp 1.5s ease-out forwards;
 }
 
-.articleContainer p{
-    font-family: var(--prim-CHAKRA);
-    width: 80%;
-    margin: 0 auto;
-    font-weight: 700;
-     animation: fadeInUp 1.5s ease-out forwards;
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 3rem;
 }
 
-
-.button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 3rem;
-}
-
+.navLink button,
 .button button {
-    padding: 10px 15px;
+  padding: 8px 15px;
 }
 
-.button .rightButton{
-    background-color: transparent;
-    border: 1px solid white;
-    color: white;
-    cursor: pointer;
+.navLink button,
+.button .rightButton {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
 }
 
-.button .leftButton{
-    border: none;
+.button .leftButton {
+  border: none;
+  text-decoration: none;
+  color: #5f1baa;
+  background-color: var(--prim-color-2);
+  padding: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.mainBody{
-    padding: 2rem 0;
+.mainBody {
+  padding: 2rem 0;
 }
 
-.mainBody section{
-    margin-bottom: 5rem;
+.mainBody section {
+  margin-bottom: 5rem;
 }
 
-
-.mainBody h3{
-    padding: 1rem 0;
-    color: var(--prim-color);
+.mainBody h3 {
+  padding: 1rem 0;
+  color: var(--prim-color);
 }
 
-.musicCard, .stepsContainer{
-display: grid;
+.musicCard,
+.stepsContainer {
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
 }
 
-.musicCard img{
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 1rem;
+.musicCard img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 1rem;
 }
 
-
-.musicCard h4{
-    text-align: center;
-    padding: 1rem 0;
+.musicCard h4 {
+  text-align: center;
+  padding: 1rem 0;
 }
 
-.musicCard span{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+.musicCard span {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.musicCard a{
-    color: white;
-    cursor: pointer;
+.musicCard a {
+  color: white;
+  cursor: pointer;
 }
 
-.musicCard a:hover{
-    color: var(--prim-color);
+.musicCard a:hover {
+  color: var(--prim-color);
 }
 
-.stepsContainer .stepsCard{
-    border: 2px solid var(--prim-color-2);
-    border-radius: 1rem;
-    text-align: center;
-    background-color: v;
+.stepsContainer .stepsCard {
+  border: 2px solid var(--prim-color-2);
+  border-radius: 1rem;
+  text-align: center;
+  background-color: v;
 }
 
-    
-
-.stepsContainer h2{
-    text-align: left;
-    padding: 1rem;
-    color: white;
+.stepsContainer h2 {
+  text-align: left;
+  padding: 1rem;
+  color: white;
 }
 
-.stepsContainer .iconCard{
-    background-color: rgba(255, 255, 255, 0.2);
+.stepsContainer .iconCard {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-.stepsContainer .stepsIcon{
-    font-size: 12rem;
-    max-width: 100%;
+.stepsContainer .stepsIcon {
+  font-size: 12rem;
+  max-width: 100%;
 }
 
 @keyframes fadeInUp {
@@ -190,5 +194,19 @@ display: grid;
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes changeBG {
+  0% {
+    background-image: url("/assets/dreokt.jpg");
+  }
+
+  50% {
+    background-image: url("/assets/zachary.jpg");
+  }
+
+  100% {
+    background-image: url("macela.jpg");
   }
 }
