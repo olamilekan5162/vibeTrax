@@ -8,6 +8,7 @@ import {
   FaMoneyBillWave as Moneyicon,
 } from "react-icons/fa";
 import { MdPayments as Paymenticon } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Homepage = () => {
   return (
@@ -15,12 +16,12 @@ const Homepage = () => {
       <header>
         <div className={style.headerContainer}>
           <nav>
-            <ul>
-              <li>
-                <Soundicon className={style.headerIcon} />
-              </li>
-              <li className={style.logoText}>WaveKey</li>
-            </ul>
+            <Link to="/">
+              <Soundicon className={style.headerIcon} />
+
+             
+                <p className={style.logoText}>WaveKey</p>
+            </Link>
 
             <ul>
               <li>
@@ -95,7 +96,7 @@ const Homepage = () => {
         <section>
           <h3>How it Works</h3>
           <article className={style.stepsContainer}>
-            <div className={style.stepsCard} >
+            <div className={style.stepsCard}>
               <h2>1. Upload Music</h2>
               <div className={style.iconCard}>
                 <Uploadicon className={style.stepsIcon} />
