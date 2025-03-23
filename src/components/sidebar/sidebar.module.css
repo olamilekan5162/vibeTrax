@@ -6,7 +6,8 @@
   height: 100vh;
   background-color: black;
   font-family: var(--prim-ROBOTO);
-  padding: 20px;
+  padding: 2.5rem 30px;
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .logoContainer a {

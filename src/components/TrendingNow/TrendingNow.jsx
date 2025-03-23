@@ -1,10 +1,10 @@
 import style from "./trendingNow.module.css";
 import { motion } from "framer-motion"
-import { Link } from "react-router-dom";
+
 
 const TrendingNow = ({image, artist, price}) => {
   return (
-    <motion.div whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.95 }}>
+    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
       <img src={image} alt="album cover" />
 
       <h4>{artist}</h4>
@@ -17,20 +17,7 @@ const TrendingNow = ({image, artist, price}) => {
             <article className={style.stepsContainer}>
               <div className={style.stepsCard}>
                 <h3>1. Upload Music</h3>
-                <div className={style.iconCard}>
-                  <Uploadicon className={style.stepsIcon} />
-                </div>
-              </div>
-              <div>
-                <h4>Mint as NFTs</h4>
-              </div>
-              <div>
-                <h4>Sell to your Fave</h4>
-              </div>
-              <div>
-                <h4>Get Paid Instantly</h4>
-        
-              </div>
+                
             </article>
            
           </section> */

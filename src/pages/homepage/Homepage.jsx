@@ -1,13 +1,14 @@
-import style from "./homepage.module.css";
+import styles from "./homepage.module.css";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import img1 from "/assets/zachary.jpg";
-import img2 from "/assets/howe.jpg";
+import img2 from "/assets/danny.jpg";
 import img3 from "/assets/dreokt.jpg";
 import img4 from "/assets/marcela.jpg";
 import img5 from "/assets/tamara.jpg";
 import TrendingNow from "../../components/TrendingNow/TrendingNow";
+import ArtistCard from "../../components/artistcard/ArtistCard";
 import { SiBluesound as Soundicon } from "react-icons/si";
 import { GrNext as Nexticon, GrPrevious as Previcon } from "react-icons/gr";
 import MarketPlace from "../MarketPlace/MarketPlace";
@@ -64,16 +65,16 @@ const Homepage = () => {
 
 
   return (
-    <div className={style.body}>
+    <div className={styles.body}>
       <header>
         <nav>
-          <div className={style.logoContainer}>
+          <div className={styles.logoContainer}>
             <Link to="/">
-              <Soundicon className={style.headerIcon} />
-              <h1 className={style.logoText}>SuiTunes</h1>
+              <Soundicon className={styles.headerIcon} />
+              <h1 className={styles.logoText}>SuiTunes</h1>
             </Link>
           </div>
-          <ul className={style.navLink}>
+          <ul className={styles.navLink}>
             <li>
               <a href="#">
                 <button>Get Started</button>
@@ -82,7 +83,7 @@ const Homepage = () => {
           </ul>
         </nav>
         <article>
-          <div className={style.articleContainer}>
+          <div className={styles.articleContainer}>
             <h1>
               Own the Sound. <br />
               Fuel the Future.
@@ -92,35 +93,36 @@ const Homepage = () => {
               unlock premium experiences. Stream, collect, and trade—because
               music should be yours to own.
             </p>
-            <div className={style.button}>
+            <div className={styles.button}>
               <a href="#">
-                <button className={style.rightButton}>Get Started</button>
+                <button className={styles.rightButton}>Get Started</button>
               </a>
               <a href="#">
-                <button className={style.leftButton}>Explore</button>
+                <button className={styles.leftButton}>Explore</button>
               </a>
             </div>
           </div>
         </article>
       </header>
 
-      <main className={style.mainBody}>
-        <section className={style.musicTrend}>
-          <div className={style.musicTrendTopBar} >
+      <main className={styles.mainBody}>
+        <section className={styles.musicTrend}>
+          <div className={styles.musicTrendTopBar}>
             <h2>Trending Now</h2>
-            <div className={style.controls}>
-              <button onClick={prevSlide} className={style.prevButton}>
+            <div className={styles.controls}>
+              <button onClick={prevSlide} className={styles.prevButton}>
                 <Previcon />
               </button>
-              <button onClick={nextSlide} className={style.nextButton}>
+              <button onClick={nextSlide} className={styles.nextButton}>
                 <Nexticon />
               </button>
             </div>
           </div>
-          <div className={style.carouselContainer}>
+
+          <div className={styles.carouselContainer}>
             <motion.div
               key={index}
-              className={style.musicGallery}
+              className={styles.musicGallery}
               initial={{ x: "100%", opacity: 0 }}
               animate={{ x: "0%", opacity: 1 }}
               exit={{ x: "-100%", opacity: 0 }}
@@ -136,9 +138,31 @@ const Homepage = () => {
               ))}
             </motion.div>
           </div>
-          {/* <MarketPlace /> */}
+        </section>
+
+        <section className={styles.artistSection}>
+          <div className={styles.artistHeader}>
+            <h2>Top Artist</h2>
+            <div className={styles.controls}>
+              <button onClick={prevSlide} className={styles.prevButton}>
+                <Previcon />
+              </button>
+              <button onClick={nextSlide} className={styles.nextButton}>
+                <Nexticon />
+              </button>
+            </div>
+          </div>
+
+          <div className={styles.artistContainer}>
+            <div className={styles.artistGrid}>
+
+          <ArtistCard />
+
+            </div>
+          </div>
         </section>
       </main>
+      {/* <MarketPlace /> */}
       {/* <CompactMusicPlayer /> */}
     </div>
   );

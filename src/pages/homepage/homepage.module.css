@@ -108,7 +108,13 @@ ul,
   padding: 2rem;
 }
 
-.musicTrendTopBar{
+.musicTrend{
+  margin: 3rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.musicTrendTopBar, .artistHeader{
   display: flex;
   justify-content: space-between;
   padding: 0 2rem;
@@ -136,10 +142,9 @@ ul,
 
 .musicGallery {
   display: grid;
-  gap: 15px;
-  justify-content: center;
-   grid-template-columns: repeat(auto-fill, minmax(250px, max-content));
+   grid-template-columns: repeat(auto-fit, 280px);
   gap: 2rem;
+  justify-content: center;
 }
 
 .musicGallery h4 {
