@@ -1,6 +1,9 @@
+import {ExpandedMusicPlayer} from "../../components/musicplayer/MusicPlayer"
 const UserProfile = () => {
   return(
-    <h1>Profile</h1>
+    <>
+    <ExpandedMusicPlayer />
+    </>
     )
 }
 export default UserProfile;

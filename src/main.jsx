@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from './pages/homepage/Homepage.jsx'
 import MarketPlace from './pages/MarketPlace/MarketPlace.jsx'
+import UserProfile from './pages/userprofile/UserProfile.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,9 @@ const router = createBrowserRouter([
       {
         path:"marketplace", element: <MarketPlace/>
       },
+      {
+        path: "profile", element: <UserProfile/>
+      }
       
     ]
   }

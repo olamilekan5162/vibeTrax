@@ -11,6 +11,7 @@ import TrendingNow from "../../components/TrendingNow/TrendingNow";
 import { SiBluesound as Soundicon } from "react-icons/si";
 import { GrNext as Nexticon, GrPrevious as Previcon } from "react-icons/gr";
 import MarketPlace from "../MarketPlace/MarketPlace";
+import {CompactMusicPlayer} from "../../components/musicplayer/MusicPlayer"
 
 const Homepage = () => {
   const trendingNow = [
@@ -138,6 +139,7 @@ const Homepage = () => {
           {/* <MarketPlace /> */}
         </section>
       </main>
+      <CompactMusicPlayer />
     </div>
   );
 };
