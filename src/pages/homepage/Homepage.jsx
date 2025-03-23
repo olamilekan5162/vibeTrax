@@ -1,126 +1,142 @@
 import style from "./homepage.module.css";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import img1 from "/assets/zachary.jpg"
+import img1 from "/assets/zachary.jpg";
 import img2 from "/assets/howe.jpg";
 import img3 from "/assets/dreokt.jpg";
 import img4 from "/assets/marcela.jpg";
+import img5 from "/assets/tamara.jpg";
 import TrendingNow from "../../components/TrendingNow/TrendingNow";
-import {
-  SiBluesound as Soundicon,
-} from "react-icons/si";
+import { SiBluesound as Soundicon } from "react-icons/si";
+import { GrNext as Nexticon, GrPrevious as Previcon } from "react-icons/gr";
 import MarketPlace from "../MarketPlace/MarketPlace";
 
 const Homepage = () => {
-  
   const trendingNow = [
-
     {
       id: 1,
       image: img1,
-      artist: 'P.Jay',
-      price: '20',
+      artist: "P.Jay",
+      price: "20",
     },
 
     {
       id: 2,
       image: img2,
-      artist: 'Charbae',
-      price: '15',
+      artist: "Charbae",
+      price: "15",
     },
 
     {
       id: 3,
       image: img3,
-      artist: 'R.power',
-      price: '5',
+      artist: "R.power",
+      price: "5",
     },
 
     {
       id: 4,
       image: img4,
-      artist: 'Oracle',
-      price: '6',
-    }
-  ]
+      artist: "Oracle",
+      price: "6",
+    },
+
+    {
+      id: 5,
+      image: img5,
+      artist: "tamara",
+      price: "6",
+    },
+  ];
+
+  const [index, setIndex] = useState(0);
+  const visibleCards = trendingNow.slice(index, index + 4);
+
+  const nextSlide = () => {
+    setIndex((prev) => (prev + 4 < trendingNow.length ? prev + 4 : 0));
+  };
+
+  const prevSlide = () => {
+    setIndex((prev) => (prev - 4 >= 0 ? prev - 4 : trendingNow.length - 4));
+  };
+
+
   return (
     <div className={style.body}>
       <header>
-       
-          <nav>
-            <div className={style.logoContainer}>
-              <Link to="/">
-                <Soundicon className={style.headerIcon} />
-                <h1 className={style.logoText}>SuiTunes</h1>
-              </Link>
+        <nav>
+          <div className={style.logoContainer}>
+            <Link to="/">
+              <Soundicon className={style.headerIcon} />
+              <h1 className={style.logoText}>SuiTunes</h1>
+            </Link>
+          </div>
+          <ul className={style.navLink}>
+            <li>
+              <a href="#">
+                <button>Get Started</button>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <article>
+          <div className={style.articleContainer}>
+            <h1>
+              Own the Sound. <br />
+              Fuel the Future.
+            </h1>
+            <p>
+              Discover exclusive music NFTs, support your favorite artists, and
+              unlock premium experiences. Stream, collect, and trade—because
+              music should be yours to own.
+            </p>
+            <div className={style.button}>
+              <a href="#">
+                <button className={style.rightButton}>Get Started</button>
+              </a>
+              <a href="#">
+                <button className={style.leftButton}>Explore</button>
+              </a>
             </div>
-            <ul className={style.navLink}>
-              <li>
-                <a href="#">
-                  <button>Get Started</button>
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <article>
-            <div className={style.articleContainer}>
-              <h1>
-                Own the Sound. <br />
-                Fuel the Future.
-              </h1>
-              <p>
-                Discover exclusive music NFTs, support your favorite artists,
-                and unlock premium experiences. Stream, collect, and
-                trade—because music should be yours to own.
-              </p>
-              <div className={style.button}>
-                <a href="#">
-                  <button className={style.rightButton}>Get Started</button>
-                </a>
-                <a href="#">
-                  <button className={style.leftButton}>Explore</button>
-                </a>
-              </div>
-            </div>
-          </article>
-        
+          </div>
+        </article>
       </header>
+
       <main className={style.mainBody}>
         <section className={style.musicTrend}>
-          <h2>Trending Now</h2>
-          <article className={style.musicGallery}>
-            {trendingNow.map(trend => (
-              <TrendingNow 
-              key = {trend.id}
-              image={trend.image}
-              artist={trend.artist}
-              price={trend.price}
-               />
-            ))}
-          </article>
+          <div className={style.musicTrendTopBar} >
+            <h2>Trending Now</h2>
+            <div className={style.controls}>
+              <button onClick={prevSlide} className={style.prevButton}>
+                <Previcon />
+              </button>
+              <button onClick={nextSlide} className={style.nextButton}>
+                <Nexticon />
+              </button>
+            </div>
+          </div>
+          <div className={style.carouselContainer}>
+            <motion.div
+              key={index}
+              className={style.musicGallery}
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: "0%", opacity: 1 }}
+              exit={{ x: "-100%", opacity: 0 }}
+              transition={{ duration: 0.1 }}
+            >
+              {visibleCards.map((trend) => (
+                <TrendingNow
+                  key={trend.id}
+                  image={trend.image}
+                  artist={trend.artist}
+                  price={trend.price}
+                />
+              ))}
+            </motion.div>
+          </div>
+          {/* <MarketPlace /> */}
         </section>
-
-        {/* <section>
-            <h2>How it Works</h2>
-            <article className={style.stepsContainer}>
-              <div className={style.stepsCard}>
-                <h3>1. Upload Music</h3>
-                <div className={style.iconCard}>
-                  <Uploadicon className={style.stepsIcon} />
-                </div>
-              </div>
-              <div>
-                <h4>Mint as NFTs</h4>
-              </div>
-              <div>
-                <h4>Sell to your Fave</h4>
-              </div>
-              <div>
-                <h4>Get Paid Instantly</h4>
-        
-              </div>
-            </article>
-            <MarketPlace/>
-          </section> */}
       </main>
     </div>
   );

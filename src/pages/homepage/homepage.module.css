@@ -95,7 +95,7 @@ ul,
 .button .leftButton {
   border: none;
   text-decoration: none;
-  color: #5f1baa;
+  color: var(--prim-color);
   background-color: var(--prim-color-2);
   padding: 0.5rem;
   font-weight: 600;
@@ -103,38 +103,54 @@ ul,
 }
 
 .mainBody {
-  padding: 0 2rem;
+  padding: 2rem;
 }
 
-.musicTrend h2 {
-  padding: 1rem 0;
+/* .musicTrend {
+  text-align: center;
+  padding: 20px;
+} */
+
+.musicTrendTopBar{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
   font-family: var(--prim-ORBITRON);
 }
 
-.musicGallery{
-    width: 100%;
-    padding: 1rem;
-     display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+.prevButton, .nextButton {
+  border: none;
+  background: #000;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-.musicGallery img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 1rem;
+.prevButton:hover, .nextButton:hover {
+  background: #333;
+}
+.carouselContainer {
+ width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.musicGallery {
+  display: grid;
+  gap: 15px;
+  justify-content: center;
+   grid-template-columns: repeat(auto-fill, minmax(250px, max-content));
+  gap: 2rem;
 }
 
 .musicGallery h4 {
-  text-align: center;
-  padding: 1rem 0;
+  padding: .5rem 0;
 }
 
-.musicGallery span {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+.musicGallery p {
+  margin-top: 10px;
 }
 
 .musicGallery a {
@@ -146,6 +162,24 @@ ul,
   color: var(--prim-color);
 }
 
+.musicGallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+
+
+
+
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -156,27 +190,3 @@ ul,
     transform: translateX(0);
   }
 }
-
-/* @keyframes movingCard {
-  from {
-    transform: translateX(0%);
-  }
-
-  to {
-    transform: translateX(-40%);
-  }
-} */
-
-/* @keyframes changeBG {
-  0% {
-    background-image: url("/assets/dreokt.jpg");
-  }
-
-  50% {
-    background-image: url("/assets/zachary.jpg");
-  }
-
-  100% {
-    background-image: url("macela.jpg");
-  }
-} */
