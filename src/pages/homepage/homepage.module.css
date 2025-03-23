@@ -20,8 +20,8 @@
 
 header {
   background-color: rgba(0, 0, 0, 0.2);
-  margin-bottom: 10rem;
-  padding: 3rem 2rem;
+  margin-bottom: 1rem;
+  padding: 2.75rem 2rem;
   /* border: 2px solid red; */
   /* background: url('/assets/dreokt.jpg') no-repeat center/cover; */
   /* height: 550px; */
@@ -118,49 +118,69 @@ ul,
 }
 
 .mainBody {
-  padding: 2rem 0;
+  padding: 2rem;
 }
 
 .mainBody section {
   margin-bottom: 5rem;
 }
 
-.mainBody h3 {
+.mainBody h2 {
   padding: 1rem 0;
-  color: var(--prim-color);
+  font-family: var(--prim-ORBITRON);
 }
 
-.musicCard,
+.musicGallery{
+    position: relative;
+    width: 100%;
+    /* background-color: red; */
+    /* padding: 1rem; */
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.musicAnimate{
+    animation: movingCard 10s linear infinite;
+}
+
+.musicGallery div:hover{
+    animation-play-state: paused;
+    cursor: pointer;
+}
+
+.musicAnimate,
 .stepsContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  /* display: grid; */
+  display: flex;
+  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+  gap: 2rem;
+  width: max-content;
 }
 
-.musicCard img {
-  width: 100%;
+.musicGallery img {
+  width: 200px;
   height: 200px;
   object-fit: cover;
   border-radius: 1rem;
 }
 
-.musicCard h4 {
+.musicGallery h4 {
   text-align: center;
   padding: 1rem 0;
 }
 
-.musicCard span {
+.musicGallery span {
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
 
-.musicCard a {
+.musicGallery a {
   color: white;
   cursor: pointer;
 }
 
-.musicCard a:hover {
+.musicGallery a:hover {
   color: var(--prim-color);
 }
 
@@ -197,7 +217,17 @@ ul,
   }
 }
 
-@keyframes changeBG {
+@keyframes movingCard {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-40%);
+  }
+}
+
+/* @keyframes changeBG {
   0% {
     background-image: url("/assets/dreokt.jpg");
   }
@@ -209,4 +239,4 @@ ul,
   100% {
     background-image: url("macela.jpg");
   }
-}
+} */
