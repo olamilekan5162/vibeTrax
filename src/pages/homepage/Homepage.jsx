@@ -52,14 +52,14 @@ const Homepage = () => {
   ];
 
   const [index, setIndex] = useState(0);
-  const visibleCards = trendingNow.slice(index, index + 4);
+  const visibleCards = trendingNow.slice(index, index + 3);
 
   const nextSlide = () => {
-    setIndex((prev) => (prev + 4 < trendingNow.length ? prev + 4 : 0));
+    setIndex((prev) => (prev + 3 < trendingNow.length ? prev + 3 : 0));
   };
 
   const prevSlide = () => {
-    setIndex((prev) => (prev - 4 >= 0 ? prev - 4 : trendingNow.length - 4));
+    setIndex((prev) => (prev - 3 >= 0 ? prev - 3 : trendingNow.length - 3));
   };
 
 
@@ -139,7 +139,7 @@ const Homepage = () => {
           {/* <MarketPlace /> */}
         </section>
       </main>
-      <CompactMusicPlayer />
+      {/* <CompactMusicPlayer /> */}
     </div>
   );
 };
