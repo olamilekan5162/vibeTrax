@@ -1,6 +1,9 @@
+import styles from './musicPlayer.module.css';
+
 const MusicPlayer = () => {
   return(
-    <h1>Music Player</h1>
+    <h1>music player</h1>
+    
     )
 }
 export default MusicPlayer;

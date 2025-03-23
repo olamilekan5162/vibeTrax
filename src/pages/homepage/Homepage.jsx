@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { MdPayments as Paymenticon } from "react-icons/md";
 import MarketPlace from "../MarketPlace/MarketPlace";
+import MusicPlayer from "../../components/musicplayer/MusicPlayer"
 
 const Homepage = () => {
   return (

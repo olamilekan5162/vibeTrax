@@ -1,0 +1,27 @@
+
+.stickySidebar {
+  position: sticky;
+  top: 0;
+  width: 20%;
+  height: 100vh;
+  background-color: green;
+  font-family: var(--prim-ROBOTO);
+  padding: 20px;
+}
+
+.barContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: centre;
+  align-items: centre;
+}
+
+.barContainer a {
+  background: blue;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  color: var(--prim-color-2);
+}

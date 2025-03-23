@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./NFTCard.module.css";
+import styles from "./NftCard.module.css";
 
 const NFTCard = ({ image, title, artist, price, isOwned, onBuy }) => {
   return (
