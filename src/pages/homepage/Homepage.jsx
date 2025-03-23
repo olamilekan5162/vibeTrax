@@ -1,21 +1,51 @@
 import style from "./homepage.module.css";
 import { Link } from "react-router-dom";
+import img1 from "/assets/zachary.jpg"
+import img2 from "/assets/howe.jpg";
+import img3 from "/assets/dreokt.jpg";
+import img4 from "/assets/marcela.jpg";
+import TrendingNow from "../../components/TrendingNow/TrendingNow";
 import {
   SiBluesound as Soundicon,
-  SiMintlify as Minticon,
 } from "react-icons/si";
-import {
-  FaCloudUploadAlt as Uploadicon,
-  FaMoneyBillWave as Moneyicon,
-} from "react-icons/fa";
-import { MdPayments as Paymenticon } from "react-icons/md";
 import MarketPlace from "../MarketPlace/MarketPlace";
 
 const Homepage = () => {
+  
+  const trendingNow = [
+
+    {
+      id: 1,
+      image: img1,
+      artist: 'P.Jay',
+      price: '20',
+    },
+
+    {
+      id: 2,
+      image: img2,
+      artist: 'Charbae',
+      price: '15',
+    },
+
+    {
+      id: 3,
+      image: img3,
+      artist: 'R.power',
+      price: '5',
+    },
+
+    {
+      id: 4,
+      image: img4,
+      artist: 'Oracle',
+      price: '6',
+    }
+  ]
   return (
     <div className={style.body}>
       <header>
-        <div className={style.headerContainer}>
+       
           <nav>
             <div className={style.logoContainer}>
               <Link to="/">
@@ -52,88 +82,28 @@ const Homepage = () => {
               </div>
             </div>
           </article>
-        </div>
+        
       </header>
       <main className={style.mainBody}>
-        <section>
+        <section className={style.musicTrend}>
           <h2>Trending Now</h2>
           <article className={style.musicGallery}>
-            <div className={style.musicAnimate}>
-              <div>
-                <img src="/assets/zachary.jpg" alt="album cover" />
-                <h4>P.Jay</h4>
-                <span>
-                  <a href="#">Buy</a>
-                  <p>20 Sui</p>
-                </span>
-              </div>
-              <div>
-                <img src="/assets/howe.jpg" alt="album cover" />
-                <h4>CharBae</h4>
-                <span>
-                  <a href="#">Buy</a>
-                  <p>15 Sui</p>
-                </span>
-              </div>
-              <div>
-                <img src="/assets/dreokt.jpg" alt="album cover" />
-                <h4>R.Power</h4>
-                <span>
-                  <a href="#">Buy</a>
-                  <p>5 Sui</p>
-                </span>
-              </div>
-              <div>
-                <img src="/assets/marcela.jpg" alt="album cover" />
-                <h4>Oracle</h4>
-                <span>
-                  <a href="#">Buy</a>
-                  <p>6 Sui</p>
-                </span>
-              </div>
-
-              {/* Duplicate */}
-
-              <div>
-                <img src="/assets/zachary.jpg" alt="album cover" />
-                <h4>P.Jay</h4>
-                <span>
-                  <a href="#">Buy</a>
-                  <p>20 Sui</p>
-                </span>
-              </div>
-              <div>
-                <img src="/assets/howe.jpg" alt="album cover" />
-                <h4>CharBae</h4>
-                <span>
-                  <a href="#">Buy</a>
-                  <p>15 Sui</p>
-                </span>
-              </div>
-              <div>
-                <img src="/assets/dreokt.jpg" alt="album cover" />
-                <h4>R.Power</h4>
-                <span>
-                  <a href="#">Buy</a>
-                  <p>5 Sui</p>
-                </span>
-              </div>
-              <div>
-                <img src="/assets/marcela.jpg" alt="album cover" />
-                <h4>Oracle</h4>
-                <span>
-                  <a href="#">Buy</a>
-                  <p>6 Sui</p>
-                </span>
-              </div>
-            </div>
+            {trendingNow.map(trend => (
+              <TrendingNow 
+              key = {trend.id}
+              image={trend.image}
+              artist={trend.artist}
+              price={trend.price}
+               />
+            ))}
           </article>
         </section>
+
         {/* <section>
-            <h3>How it Works</h3>
+            <h2>How it Works</h2>
             <article className={style.stepsContainer}>
               <div className={style.stepsCard}>
-                <h2>1. Upload Music</h2>
+                <h3>1. Upload Music</h3>
                 <div className={style.iconCard}>
                   <Uploadicon className={style.stepsIcon} />
                 </div>

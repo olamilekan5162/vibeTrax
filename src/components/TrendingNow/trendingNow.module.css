@@ -1,0 +1,21 @@
+.stepsContainer .stepsCard {
+  border: 2px solid var(--prim-color-2);
+  border-radius: 1rem;
+  text-align: center;
+  background-color: v;
+}
+
+.stepsContainer h2 {
+  text-align: left;
+  padding: 1rem;
+  color: white;
+}
+
+.stepsContainer .iconCard {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.stepsContainer .stepsIcon {
+  font-size: 12rem;
+  max-width: 100%;
+}
