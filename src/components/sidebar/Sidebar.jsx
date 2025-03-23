@@ -14,23 +14,23 @@ const Sidebar = () => {
       </div>
       
       <div className={styles.barContainer}>
-        <NavLink className={styles.inactive} to='dashboard'>
+        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='/'>
           Home
         </NavLink>
         
-        <NavLink className={styles.active}to='Marketplace'>
+        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='marketplace'>
           Marketplace
         </NavLink>
         
-        <NavLink className={styles.inactive} to='nft'>
+        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='nft'>
           My NFTs
         </NavLink>
         
-        <NavLink className={styles.inactive} to='profile'>
+        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='profile'>
           Profile
         </NavLink>
       
-        <NavLink className={styles.inactive} to='settings'>
+        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='settings'>
           Settings
         </NavLink>
         
