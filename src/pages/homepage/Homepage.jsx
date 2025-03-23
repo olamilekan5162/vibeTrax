@@ -9,7 +9,7 @@ import {
   SiBluesound as Soundicon,
 } from "react-icons/si";
 import MarketPlace from "../MarketPlace/MarketPlace";
-import MusicPlayer from "../../components/musicplayer/MusicPlayer"
+import {CompactMusicPlayer} from "../../components/musicplayer/MusicPlayer"
 
 const Homepage = () => {
   
@@ -123,6 +123,7 @@ const Homepage = () => {
             <MarketPlace/>
           </section> */}
       </main>
+      <CompactMusicPlayer />
     </div>
   );
 };
