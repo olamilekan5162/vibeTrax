@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react';
 import NFTCard from '../../components/NftCard/NftCard';
-import styles from './MarketPlace.module.css'
-import img1 from '../../assets/sui-bears.png'
-import img2 from '../../assets/sui-bears1.png'
+import BuyNFTModal from '../../components/BuyNftModal/BuyNftModal';
+import styles from './MarketPlace.module.css';
+import img1 from '../../assets/sui-bears.png';
+import img2 from '../../assets/sui-bears1.png';
 import { useNavigate } from 'react-router-dom';
-
-
-
 
 const MarketPlace = () => {
   const navigate = useNavigate();
+  const [selectedNFT, setSelectedNFT] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const nfts = [
     {
       id: 1,
@@ -29,20 +30,40 @@ const MarketPlace = () => {
     },
   ];
 
-  const handleCardClick = ()=>{
-    navigate(`/nft/${id}`)
-  }
+  const handleCardClick = (id) => {
+    navigate(`/nft/${id}`);
+  };
+
+  const handleBuyClick = (nft) => {
+    setSelectedNFT(nft);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedNFT(null);
+  };
+
   return (
     <div className={styles.marketplace}>
       <h1 className={styles.title}>NFT MarketPlace</h1>
       <div className={styles.nftGrid}>
-        {nfts.map((nft)=>(
-          <NFTCard key={nft.id} {...nft} onClick={() => handleCardClick(nft.id)} onBuy={()=>alert(`Buying ${nft.title}`)}/>
+        {nfts.map((nft) => (
+          <NFTCard 
+            key={nft.id} 
+            {...nft} 
+            onClick={() => handleCardClick(nft.id)} 
+            onBuy={() => handleBuyClick(nft)}
+          />
         ))}
       </div>
-        
-    </div>
-  )
-}
 
-export default MarketPlace
+     
+      {isModalOpen && selectedNFT && (
+        <BuyNFTModal nft={selectedNFT} onClose={closeModal} />
+      )}
+    </div>
+  );
+};
+
+export default MarketPlace;

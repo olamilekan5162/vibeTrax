@@ -11,7 +11,6 @@ import {
 import { MdPayments as Paymenticon } from "react-icons/md";
 import MarketPlace from "../MarketPlace/MarketPlace";
 
-
 const Homepage = () => {
   return (
     <div className={style.body}>
