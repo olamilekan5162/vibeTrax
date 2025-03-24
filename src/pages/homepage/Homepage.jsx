@@ -162,7 +162,7 @@ const Homepage = () => {
           </div>
         </section>
       </main>
-      {/* <MarketPlace /> */}
+      <MarketPlace />
       {/* <CompactMusicPlayer /> */}
     </div>
   );

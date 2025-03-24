@@ -1,79 +1,140 @@
+.nftCard {
+  width: 300px;
+  height: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 12px;
+  background-color: #1e1e1e;
+  padding: 15px;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  position: relative;
+}
 
+.nftCard:hover {
+  transform: scale(1.05);
+}
+
+.nftImage {
+  width: 100%;
+  height: auto;
+  max-height: 55%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cardContent {
+  flex-grow: 1;
+  padding: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.nftTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.artist {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+
+.audioPlayer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #292929;
+  padding: 5px;
+  gap: 10px;
+  border-radius: 5px;
+  margin: 8px 0;
+  font-size: 12px;
+}
+
+.playButton {
+  background: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-size: 14px;
+}
+
+.playButton:hover {
+  background: #0056b3;
+  transform: scale(1.1);
+}
+
+.audioQuality {
+  font-size: 12px;
+  color: lightgray;
+}
+
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffdd57;
+}
+
+.buyButton {
+  background: #28a745;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.buyButton:hover {
+  background: #218838;
+  transform: scale(1.1);
+}
+
+.ownedLabel {
+  font-size: 14px;
+  color: #f39c12;
+  font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
   .nftCard {
-    width: 300px; 
-    height: 450px; 
-    overflow: hidden;
-    display: flex;
+    width: 90%;
+  }
+
+  .footer {
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    border-radius: 10px;
-    background-color: #121212; 
-    padding: 10px;
-    transition: transform 0.3s ease-in-out;
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-    cursor: pointer;
+    gap: 10px;
   }
-  
-  
-  .nftCard:hover {
-    transform: scale(1.05);
+
+  .playButton, .buyButton {
+    width: 100%;
   }
-  
-  
-  .nftImage {
-    width: 100%; 
-    height: 500px; 
-    object-fit: cover;
-    border-radius: 10px; 
-  }
-  
-  .cardContent {
-    padding: 15px;
-    color: white;
-  }
-  
-  .nftTitle {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .artist {
-    font-size: 14px;
-    opacity: 0.7;
-  }
-  
-  .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    gap: 100px;
-  }
-  
-  .price {
-    font-size: 16px;
-    font-weight: bold;
-    color: #00ffa3;
-  }
-  
-  .buyButton {
-    background: #00ffa3;
-    color: #121212;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .buyButton:hover {
-    background: #00cc85;
-  }
-  
-  .ownedLabel {
-    font-size: 14px;
-    color: #f39c12;
-    font-weight: bold;
-  }
-  
+}
