@@ -15,8 +15,9 @@
   --prim-VT323: "VT323", monospace;
   --prim-ORBITRON: "Orbitron", sans-serif;
   --prim-CHAKRA: "Chakra Petch", sans-serif;
-  --prim-color: #f98045;
+  --prim-color: #5f1baa;
   --prim-color-2: #fff;
+  --prim-color-3: #4a1473;
 }
 
 body{

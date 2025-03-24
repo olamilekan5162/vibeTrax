@@ -1,0 +1,74 @@
+
+.stickySidebar {
+  position: sticky;
+  top: 0;
+  width: 20%;
+  height: 100vh;
+  background-color: black;
+  font-family: var(--prim-ROBOTO);
+  padding: 2.5rem 30px;
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.logoContainer a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+  color: var(--prim-color-2);
+}
+
+.headerIcon {
+  font-size: 1.5rem;
+}
+
+.logoContainer .logoText {
+  font-family: var(--prim-CHAKRA);
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.barContainer {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.barContainer .inactive {
+  text-decoration: none;
+  color: var(--prim-color-2);
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: left;
+}
+
+.barContainer .inactive:hover {
+  color: var(--prim-color);
+}
+
+.active {
+  text-decoration: none;
+  background: var(--prim-color); 
+  color: var(--prim-color-2);
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+ 
+}
+.active:hover {
+  background-color: var(--prim-color-3);
+  background: linear-gradient(270deg, var(--prim-color), #b284e4b7, var(--prim-color-3));
+  background-size: 300% 300%;
+   animation: gradientAnimation 5s ease infinite alternate;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
