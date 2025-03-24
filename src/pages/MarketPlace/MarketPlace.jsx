@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NFTCard from '../../components/NftCard/NftCard';
 import BuyNFTModal from '../../components/BuyNftModal/BuyNftModal';
-import styles from './MarketPlace.module.css';
+
 import img1 from '../../assets/sui-bears.png';
 import img2 from '../../assets/sui-bears1.png';
 import { useNavigate } from 'react-router-dom';

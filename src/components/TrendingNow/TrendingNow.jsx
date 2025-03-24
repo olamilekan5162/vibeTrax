@@ -11,16 +11,6 @@ const TrendingNow = ({image, artist, price}) => {
       <a href="#">Buy</a>
       <p>{price} SUI</p>
     </motion.div>
-
-    /* <section>
-            <h2>How it Works</h2>
-            <article className={style.stepsContainer}>
-              <div className={style.stepsCard}>
-                <h3>1. Upload Music</h3>
-                
-            </article>
-           
-          </section> */
   );
 };
 export default TrendingNow;
