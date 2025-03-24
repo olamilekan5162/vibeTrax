@@ -55,8 +55,8 @@ const Homepage = () => {
 
        <ArtistCard />
       </main>
-      {/* <MarketPlace /> */}
-      {/* <CompactMusicPlayer /> */}
+      {/* <MarketPlace />
+      <CompactMusicPlayer /> */}
     </div>
   );
 };

@@ -1,20 +1,31 @@
 .marketplace {
-    padding: 20px;
+    min-height: 100vh;  
+    width: 100%;
+    padding: 40px;
     color: white;
     text-align: center;
-
+    background: linear-gradient(135deg, #0a0f24, #1a1f3d); /* Web3 dark theme */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
 }
 
-.title{
-    font-size: 28px;
-    margin-bottom: 20px;
-
+.title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #00ffa3; 
 }
 
-.nftGrid{
+.nftGrid {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 25px;
+    max-width: 1200px;
+    width: 100%;
 }
-

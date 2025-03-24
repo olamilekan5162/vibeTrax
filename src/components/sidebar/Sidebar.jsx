@@ -22,7 +22,7 @@ const Sidebar = () => {
           Marketplace
         </NavLink>
         
-        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='nft'>
+        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='my-nfts'>
           My NFTs
         </NavLink>
         

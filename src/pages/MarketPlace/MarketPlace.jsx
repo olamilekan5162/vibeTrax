@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import NFTCard from '../../components/NftCard/NftCard';
 import BuyNFTModal from '../../components/BuyNftModal/BuyNftModal';
 
 import img1 from '../../assets/sui-bears.png';
 import img2 from '../../assets/sui-bears1.png';
+import preview1 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
+import full1 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
+import preview2 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
+import full2 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
 import { useNavigate } from 'react-router-dom';
 
 const MarketPlace = () => {
@@ -19,6 +23,8 @@ const MarketPlace = () => {
       artist: "DJ Crypto",
       price: 2.5,
       isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
     },
     {
       id: 2,
@@ -27,6 +33,8 @@ const MarketPlace = () => {
       artist: "BeatMakerX",
       price: 1.2,
       isOwned: true,
+      previewAudio: preview2,
+      fullAudio: full2,
     },
   ];
 
@@ -58,7 +66,6 @@ const MarketPlace = () => {
         ))}
       </div>
 
-     
       {isModalOpen && selectedNFT && (
         <BuyNFTModal nft={selectedNFT} onClose={closeModal} />
       )}
