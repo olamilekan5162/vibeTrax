@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from './pages/homepage/Homepage.jsx'
 import MarketPlace from './pages/MarketPlace/MarketPlace.jsx'
 import UserProfile from './pages/userprofile/UserProfile.jsx'
+import MyNFTs from './pages/MyNfts/MyNfts.jsx'
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,10 @@ const router = createBrowserRouter([
       },
       {
         path: "profile", element: <UserProfile/>
-      }
+      },
+      {
+        path: "my-nfts", element: <MyNFTs/>
+      },
       
     ]
   }

@@ -162,8 +162,8 @@ const Homepage = () => {
           </div>
         </section>
       </main>
-      <MarketPlace />
-      {/* <CompactMusicPlayer /> */}
+      {/* <MarketPlace />
+      <CompactMusicPlayer /> */}
     </div>
   );
 };
