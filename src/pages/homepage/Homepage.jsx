@@ -116,7 +116,7 @@ const Homepage = () => {
             <MarketPlace/>
           </section> */}
         </main>
-        <MarketPlace />
+        
       </div>
     </div>
   );
