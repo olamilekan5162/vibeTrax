@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import TrendingCard from "../../components/trendingCard/TrendingCard";
 import ArtistCard from "../../components/artistCard/ArtistCard";
 import { SiBluesound as Soundicon } from "react-icons/si";
+import { FaXTwitter as Xicon } from "react-icons/fa6";
+import { IoLogoInstagram as Igicon } from "react-icons/io5";
 
 import MarketPlace from "../MarketPlace/MarketPlace";
 import {CompactMusicPlayer} from "../../components/musicplayer/MusicPlayer"
@@ -51,10 +53,32 @@ const Homepage = () => {
       </header>
 
       <main className={styles.mainBody}>
-       <TrendingCard />
+        <TrendingCard />
 
-       <ArtistCard />
+        <ArtistCard />
       </main>
+
+      <footer className={styles.footer}>
+        <div class={styles.footerWrap}>
+          <div>
+            Enjoy your Sound
+            <p>&copy; 2025 - SuiTunes Music Catalog</p>
+          </div>
+
+          <div className={styles.footerLhs} >
+            <a href="#" target="_blank">
+              <button>Help</button>
+            </a>
+
+            <a href="#" target="_blank">
+              <button>Feedback</button>
+            </a>
+
+            <Xicon className={styles.footerIcon} />
+            <Igicon className={styles.footerIcon} />
+          </div>
+        </div>
+      </footer>
       {/* <MarketPlace />
       <CompactMusicPlayer /> */}
     </div>

@@ -125,8 +125,52 @@ ul,
   padding: 2rem;
 }
 
+.footer{
+ border-top: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+}
 
+.footerWrap {
+      display: flex;
+      justify-content: space-between;
+    }
 
+    .footerLhs{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footerWrap p{
+      margin-top: 8px;
+    }
+
+.footerWrap a{
+  border: none;
+  text-decoration: none;
+}
+
+.footerWrap button{
+  border: none;
+    color: var(--prim-color-2);
+  background-color: var(--prim-color-3);
+  padding: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.footerWrap button:hover {
+ background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+}
+
+.footer .footerIcon{
+  font-size: 2rem;
+  background-color: rgba(54, 51, 51, 0.5);
+  padding: 5px;
+}
 
 
 @keyframes fadeInUp {
