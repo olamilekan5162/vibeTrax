@@ -6,8 +6,8 @@ const Navbar = () => {
   return (
     <div className={styles.navbarContainer} >
         <div className={styles.Navbar}>
-          <Searchicon />
-          <input type="text" placeholder="Search songs, albulms, artists..." />
+          <Searchicon className={styles.navIcon} />
+          <input type="text" placeholder="Search songs, albums, artists ..." />
         </div>
 
         <div className={styles.imgContainer} >

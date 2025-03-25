@@ -2,12 +2,22 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    padding: 1rem 4rem;
 }
 
 .Navbar{
-    width: 80%;
-    border: 1px solid white;
+    width: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(65, 65, 122, 0.534);
+    padding: .5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 1rem;
+    cursor: text;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .Navbar input{
@@ -15,8 +25,21 @@
     padding: 0;
     background: transparent;
     border: none;
+    width: 100%;
+}
+
+.Navbar input::placeholder{
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    font-size: 1rem;
 }
 
 .imgContainer img{
-    width: 50px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.navIcon{
+    font-size: 2rem;
 }
