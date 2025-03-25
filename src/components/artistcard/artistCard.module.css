@@ -15,6 +15,7 @@
   justify-content: space-between;
   padding: 0 2rem;
   font-family: var(--prim-ORBITRON);
+  color: #00ffa3;
 }
 
 .prevButton, .nextButton {

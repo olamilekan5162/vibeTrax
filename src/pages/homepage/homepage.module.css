@@ -1,5 +1,4 @@
 .body {
-  background-color: black;
   width: 80%;
   background-image: url("/assets/dreokt.jpg");
   background-size: 100% 90vh;
@@ -153,7 +152,7 @@ ul,
 .footerWrap button{
   border: none;
     color: var(--prim-color-2);
-  background-color: var(--prim-color-3);
+  background-color: #075f3f;
   padding: 0.5rem;
   font-weight: 600;
   cursor: pointer;
@@ -167,9 +166,10 @@ ul,
 }
 
 .footer .footerIcon{
-  font-size: 2rem;
+  font-size: 2.25rem;
   background-color: rgba(54, 51, 51, 0.5);
-  padding: 5px;
+  padding: 8px;
+  border-radius: 1rem;
 }
 
 

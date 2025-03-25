@@ -6,7 +6,7 @@
 }
 
 .artistCard:hover {
-  background: linear-gradient(270deg, var(--prim-color), rgba(29, 19, 19, 0.5), var(--prim-color-3));
+  background: linear-gradient(270deg, #136645, rgba(29, 19, 19, 0.5), var(--prim-color-3));
   background-size: 300% 300%;
    animation: gradientAnimation 5s ease infinite alternate;
    cursor: pointer;
