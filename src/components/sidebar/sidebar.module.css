@@ -30,7 +30,7 @@
 
 .headerIcon {
   font-size: 2rem;
-  color: #00ffa3;
+  color: var(--prim-color);
 }
 
 .logoText {
