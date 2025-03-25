@@ -17,6 +17,7 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #00ffa3;
+    font-family: var(--prim-ORBITRON);
 }
 
 .nftGrid {

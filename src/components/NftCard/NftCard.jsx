@@ -5,11 +5,11 @@ const NFTCard = ({ image, title, artist, price, isOwned, previewAudio, fullAudio
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
-  // Determine which audio to play based on ownership
+  
   const audioSrc = isOwned ? fullAudio : previewAudio;
 
   const togglePlay = (e) => {
-    e.stopPropagation(); // Prevent accidental navigation
+    e.stopPropagation(); 
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
@@ -27,7 +27,7 @@ const NFTCard = ({ image, title, artist, price, isOwned, previewAudio, fullAudio
         <h3 className={styles.nftTitle}>{title}</h3>
         <p className={styles.artist}>By {artist}</p>
 
-        {/* Audio Player */}
+        
         <div className={styles.audioPlayer}>
           <audio ref={audioRef} src={audioSrc} />
           <button className={styles.playButton} onClick={togglePlay}>
@@ -38,7 +38,7 @@ const NFTCard = ({ image, title, artist, price, isOwned, previewAudio, fullAudio
           </span>
         </div>
 
-        {/* Footer Section */}
+        
         <div className={styles.footer}>
           <span className={styles.price}>{price} SUI</span>
           {isOwned ? (

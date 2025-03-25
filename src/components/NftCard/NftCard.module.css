@@ -40,6 +40,7 @@
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 5px;
+  font-family: var(--prim-ORBITRON);
 }
 
 .artist {
