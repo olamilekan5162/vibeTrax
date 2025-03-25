@@ -7,6 +7,7 @@ import preview1 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
 import full1 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
 import preview2 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
 import full2 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
+import Navbar from '../../components/navbar/Navbar';
 
 const MyNFTs = () => {
   const ownedNFTs = [
@@ -24,6 +25,7 @@ const MyNFTs = () => {
 
   return (
     <div className={styles.myNFTs}>
+      
       <h1 className={styles.title}>My NFTs</h1>
       {ownedNFTs.length > 0 ? (
         <div className={styles.nftContainer}>

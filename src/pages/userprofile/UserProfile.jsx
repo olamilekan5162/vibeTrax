@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./userProfile.module.css";
 import profilePic from "../../assets/sui-bears.png";
 import MyNFTs from "../MyNfts/MyNfts";
+import Navbar from "../../components/navbar/Navbar";
 
 
 const UserProfile = () => {
@@ -22,6 +23,9 @@ const UserProfile = () => {
 
   return (
     <div className={styles.profileContainer}>
+      <div className={styles.navbar}>
+          <Navbar />
+        </div>
       <div className={styles.userInfo}>
         <img src={profilePic} alt="Profile" className={styles.profilePic} />
         <h2>{user.name}</h2>
