@@ -1,7 +1,7 @@
 import styles from "./homepage.module.css";
 import { Link } from "react-router-dom";
 import TrendingCard from "../../components/trendingCard/TrendingCard";
-import ArtistCard from "../../components/artistCard/ArtistCard";
+import ArtistCard from "../../components/artistcard/ArtistCard";
 import { SiBluesound as Soundicon } from "react-icons/si";
 import { FaXTwitter as Xicon } from "react-icons/fa6";
 import { IoLogoInstagram as Igicon } from "react-icons/io5";
@@ -79,8 +79,6 @@ const Homepage = () => {
           </div>
         </div>
       </footer>
-      {/* <MarketPlace />
-      <CompactMusicPlayer /> */}
     </div>
   );
 };
