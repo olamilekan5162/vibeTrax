@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; 
 import NFTCard from '../../components/NftCard/NftCard';
 import BuyNFTModal from '../../components/BuyNftModal/BuyNftModal';
+import Navbar from "../../components/navbar/Navbar";
 import styles from './MarketPlace.module.css'
 import img1 from '../../assets/sui-bears.png';
 import img2 from '../../assets/sui-bears1.png';
@@ -53,23 +54,28 @@ const MarketPlace = () => {
   };
 
   return (
-    <div className={styles.marketplace}>
-      <h1 className={styles.title}>NFT MarketPlace</h1>
-      <div className={styles.nftGrid}>
-        {nfts.map((nft) => (
-          <NFTCard 
-            key={nft.id} 
-            {...nft} 
-            onClick={() => handleCardClick(nft.id)} 
-            onBuy={() => handleBuyClick(nft)}
-          />
-        ))}
+      <div className={styles.container} >
+        <div>
+          <Navbar />
+        </div>
+            
+            <div className={styles.marketplace}>
+        <h1 className={styles.title}>NFT MarketPlace</h1>
+        <div className={styles.nftGrid}>
+          {nfts.map((nft) => (
+            <NFTCard
+              key={nft.id}
+              {...nft}
+              onClick={() => handleCardClick(nft.id)}
+              onBuy={() => handleBuyClick(nft)}
+            />
+          ))}
+        </div>
+        {isModalOpen && selectedNFT && (
+          <BuyNFTModal nft={selectedNFT} onClose={closeModal} />
+        )}
+            </div>
       </div>
-
-      {isModalOpen && selectedNFT && (
-        <BuyNFTModal nft={selectedNFT} onClose={closeModal} />
-      )}
-    </div>
   );
 };
 
