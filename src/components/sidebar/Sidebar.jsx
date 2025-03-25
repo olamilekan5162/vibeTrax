@@ -14,7 +14,7 @@ const Sidebar = () => {
       </div>
       
       <div className={styles.barContainer}>
-        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='homepage'>
+        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='/homepage' end>
           Home
         </NavLink>
         
