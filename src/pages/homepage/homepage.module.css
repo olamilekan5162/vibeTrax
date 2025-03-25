@@ -96,8 +96,8 @@ ul,
 .button .rightButton:hover {
   border: none;
   text-decoration: none;
-  color: var(--prim-color);
-  background-color: var(--prim-color-2);
+ color: var(--prim-color-2);
+  background-color: #075f3f;
   padding: 0.5rem;
   font-weight: 600;
   cursor: pointer;
@@ -106,8 +106,8 @@ ul,
 .button .leftButton {
   border: none;
   text-decoration: none;
-  color: var(--prim-color);
-  background-color: var(--prim-color-2);
+  color: var(--prim-color-2);
+  background-color: #075f3f;
   padding: 0.5rem;
   font-weight: 600;
   cursor: pointer;

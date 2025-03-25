@@ -1,0 +1,22 @@
+.navbarContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Navbar{
+    width: 80%;
+    border: 1px solid white;
+}
+
+.Navbar input{
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+.imgContainer img{
+    width: 50px;
+}
