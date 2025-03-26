@@ -145,10 +145,6 @@ const MarketPlace = () => {
 
   return (
       <div className={styles.container} >
-        <div>
-          <Navbar />
-        </div>
-            
             <div className={styles.marketplace}>
         <h1 className={styles.title}>NFT MarketPlace</h1>
         <div className={styles.nftGrid}>
