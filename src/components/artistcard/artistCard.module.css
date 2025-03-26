@@ -5,9 +5,9 @@
 
 .artistGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 280px);
+  grid-template-columns: repeat(auto-fit, 300px);
   gap: 1rem;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .artistHeader{

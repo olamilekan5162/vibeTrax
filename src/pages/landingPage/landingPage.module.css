@@ -1,7 +1,7 @@
 .body {
   width: 100%;
   background-image: url("/assets/dreokt.jpg");
-  background-size: 100% 523px;
+  background-size: 100% 87vh;
   background-repeat: no-repeat;
   min-height: 100vh;
   font-family: var(--prim-ROBOTO);
@@ -12,7 +12,7 @@ header {
    background: linear-gradient(270deg, #601baa93, rgba(0, 0, 0, .5), #4a147398);
   background-size: 300% 300%;
    animation: gradientAnimation 8s ease infinite alternate;
-  padding: 2.85rem 2rem;
+  height: 87vh;
 }
 
 nav {
@@ -119,18 +119,18 @@ ul,
   cursor: pointer;
 }
 
-.mainBody {
-  padding: 0 2rem;
-}
-
 .footer{
  border-top: 2px solid rgba(255, 255, 255, 0.1);
-  padding: 2rem;
+  padding: 1rem 2rem;
+  height: 10vh;
+  /* background-color: RED; */
+  margin-bottom: 1rem;
 }
 
 .footerWrap {
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
 
     .footerLhs{

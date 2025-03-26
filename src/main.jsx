@@ -7,30 +7,36 @@ import Homepage from './pages/homepage/Homepage.jsx'
 import MarketPlace from './pages/MarketPlace/MarketPlace.jsx'
 import UserProfile from './pages/userprofile/UserProfile.jsx'
 import MyNFTs from './pages/MyNfts/MyNfts.jsx'
+import LandingPage from "./pages/landingPage/LandingPage.jsx";
 
 const router = createBrowserRouter([
   {
-    path: 
-    "/",
+    path: "/",
     element: <App />,
     children: [
       {
-        index: true, element: <Homepage/>
-
+        index: true,
+        element: <Homepage />,
       },
       {
-        path:"marketplace", element: <MarketPlace/>
+        path: "marketplace",
+        element: <MarketPlace />,
       },
       {
-        path: "profile", element: <UserProfile/>
+        path: "profile",
+        element: <UserProfile />,
       },
       {
-        path: "my-nfts", element: <MyNFTs/>
+        path: "my-nfts",
+        element: <MyNFTs />,
       },
-      
-    ]
-  }
-])
+      {
+        path: "landingpage",
+        element: <LandingPage />,
+      },
+    ],
+  },
+]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
