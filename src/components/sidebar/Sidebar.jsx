@@ -1,6 +1,7 @@
 import styles from './sidebar.module.css';
 import { NavLink, Link} from 'react-router-dom';
 import { SiBluesound } from "react-icons/si";
+import profilePic from "/assets/austin.jpg"
 
 const Sidebar = () => {
   return(
@@ -13,8 +14,12 @@ const Sidebar = () => {
         </Link>
       </div>
       
+      <div className={styles.imgContainer} >
+            <img src={profilePic} alt="profilePic" />
+        </div>
+        
       <div className={styles.barContainer}>
-        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='/'>
+        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='/homepage' end>
           Home
         </NavLink>
         
@@ -22,9 +27,9 @@ const Sidebar = () => {
           Marketplace
         </NavLink>
         
-        <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='my-nfts'>
+        {/* <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='my-nfts'>
           My NFTs
-        </NavLink>
+        </NavLink> */}
         
         <NavLink className={({isActive}) => (isActive ? styles.active : styles.inactive)} to='profile'>
           Profile

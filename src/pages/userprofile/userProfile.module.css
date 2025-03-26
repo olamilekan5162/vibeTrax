@@ -1,0 +1,91 @@
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+
+.userInfo {
+    background: rgba(20, 20, 30, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 255, 163, 0.2);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.profilePic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #00ffa3;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.wallet {
+    font-size: 14px;
+    color: #b0b0b0;
+    word-break: break-word;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.copyButton {
+    background: none;
+    border: none;
+    color: #00ffa3;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.copyButton:hover {
+    color: #00ffcc;
+}
+
+.bio {
+    font-size: 16px;
+    color: #e0e0e0;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.editButton {
+    background: #00ffa3;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #16213e;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.editButton:hover {
+    background: #00ffcc;
+}
+
+.nftSection {
+    margin-top: 40px;
+}
+
+.nftSection h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #00ffa3;
+}
+
+
+

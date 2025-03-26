@@ -7,6 +7,7 @@ import preview1 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
 import full1 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
 import preview2 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
 import full2 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
+import Navbar from '../../components/navbar/Navbar';
 
 const MyNFTs = () => {
   const ownedNFTs = [
@@ -20,10 +21,81 @@ const MyNFTs = () => {
       previewAudio: preview2,
       fullAudio: full2,
     },
+    {
+      id: 3,
+      image: img2,
+      title: "Lofi NFT",
+      artist: "BeatMakerX",
+      price: 1.2,
+      isOwned: true,
+      previewAudio: preview2,
+      fullAudio: full2,
+    },
+    {
+      id: 4,
+      image: img2,
+      title: "Lofi NFT",
+      artist: "BeatMakerX",
+      price: 1.2,
+      isOwned: true,
+      previewAudio: preview2,
+      fullAudio: full2,
+    },
+    {
+      id: 5,
+      image: img2,
+      title: "Lofi NFT",
+      artist: "BeatMakerX",
+      price: 1.2,
+      isOwned: true,
+      previewAudio: preview2,
+      fullAudio: full2,
+    },
+    {
+      id: 6,
+      image: img2,
+      title: "Lofi NFT",
+      artist: "BeatMakerX",
+      price: 1.2,
+      isOwned: true,
+      previewAudio: preview2,
+      fullAudio: full2,
+    },
+    {
+      id: 7,
+      image: img2,
+      title: "Lofi NFT",
+      artist: "BeatMakerX",
+      price: 1.2,
+      isOwned: true,
+      previewAudio: preview2,
+      fullAudio: full2,
+    },
+    {
+      id: 8,
+      image: img2,
+      title: "Lofi NFT",
+      artist: "BeatMakerX",
+      price: 1.2,
+      isOwned: true,
+      previewAudio: preview2,
+      fullAudio: full2,
+    },
+    {
+      id: 9,
+      image: img2,
+      title: "Lofi NFT",
+      artist: "BeatMakerX",
+      price: 1.2,
+      isOwned: true,
+      previewAudio: preview2,
+      fullAudio: full2,
+    },
   ];
 
   return (
     <div className={styles.myNFTs}>
+      
       <h1 className={styles.title}>My NFTs</h1>
       {ownedNFTs.length > 0 ? (
         <div className={styles.nftContainer}>

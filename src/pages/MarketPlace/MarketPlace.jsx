@@ -37,6 +37,96 @@ const MarketPlace = () => {
       previewAudio: preview2,
       fullAudio: full2,
     },
+    {
+      id: 3,
+      image: img1,
+      title: "Sui Vibes #1",
+      artist: "DJ Crypto",
+      price: 2.5,
+      isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
+    },
+    {
+      id: 4,
+      image: img1,
+      title: "Sui Vibes #1",
+      artist: "DJ Crypto",
+      price: 2.5,
+      isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
+    },
+    {
+      id: 5,
+      image: img1,
+      title: "Sui Vibes #1",
+      artist: "DJ Crypto",
+      price: 2.5,
+      isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
+    },
+    {
+      id: 6,
+      image: img1,
+      title: "Sui Vibes #1",
+      artist: "DJ Crypto",
+      price: 2.5,
+      isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
+    },
+    {
+      id: 7,
+      image: img1,
+      title: "Sui Vibes #1",
+      artist: "DJ Crypto",
+      price: 2.5,
+      isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
+    },
+    {
+      id: 8,
+      image: img1,
+      title: "Sui Vibes #1",
+      artist: "DJ Crypto",
+      price: 2.5,
+      isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
+    },
+    {
+      id: 9,
+      image: img1,
+      title: "Sui Vibes #1",
+      artist: "DJ Crypto",
+      price: 2.5,
+      isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
+    },
+    {
+      id: 10,
+      image: img1,
+      title: "Sui Vibes #1",
+      artist: "DJ Crypto",
+      price: 2.5,
+      isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
+    },
+    {
+      id: 11,
+      image: img1,
+      title: "Sui Vibes #1",
+      artist: "DJ Crypto",
+      price: 2.5,
+      isOwned: false,
+      previewAudio: preview1,
+      fullAudio: full1,
+    },
   ];
 
   const handleCardClick = (id) => {
@@ -55,10 +145,6 @@ const MarketPlace = () => {
 
   return (
       <div className={styles.container} >
-        <div>
-          <Navbar />
-        </div>
-            
             <div className={styles.marketplace}>
         <h1 className={styles.title}>NFT MarketPlace</h1>
         <div className={styles.nftGrid}>

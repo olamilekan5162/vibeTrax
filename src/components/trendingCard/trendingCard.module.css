@@ -29,7 +29,7 @@
  width: 100%;
   cursor: pointer;
   overflow: hidden;
-  padding: 2rem;
+  /* padding: 2rem; */
 }
 
 .musicGallery {
