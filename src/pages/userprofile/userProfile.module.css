@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: center;
     padding: 40px;
-    min-height: 100vh;
     background: linear-gradient(135deg, #1a1a2e, #16213e);
     color: white;
     text-align: center;
@@ -79,24 +78,14 @@
 }
 
 .nftSection {
-    width: 100%;
-    max-width: 800px;
     margin-top: 40px;
 }
 
-.nftSection h3 {
+.nftSection h2 {
     font-size: 22px;
     margin-bottom: 20px;
     color: #00ffa3;
 }
 
-.nftGrid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
 
-.navbar{
-    width: 100%;
-}
+

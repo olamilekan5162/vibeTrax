@@ -23,9 +23,7 @@ const UserProfile = () => {
 
   return (
     <div className={styles.profileContainer}>
-      <div className={styles.navbar}>
-          <Navbar />
-        </div>
+      
       <div className={styles.userInfo}>
         <img src={profilePic} alt="Profile" className={styles.profilePic} />
         <h2>{user.name}</h2>
