@@ -172,6 +172,15 @@ ul,
   border-radius: 1rem;
 }
 
+.trendingContainer h2{
+  font-size: 1.5rem;
+  font-family: var(--prim-ORBITRON);
+  margin-bottom: 20px;
+}
+.nftGrid{
+  display: flex;
+  gap: 20px;
+}
 
 @keyframes fadeInUp {
   from {
