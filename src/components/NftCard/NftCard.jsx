@@ -29,13 +29,13 @@ const NFTCard = ({ image, title, artist, price, isOwned, previewAudio, fullAudio
 
         
         <div className={styles.audioPlayer}>
-          <audio ref={audioRef} src={audioSrc} />
-          <button className={styles.playButton} onClick={togglePlay}>
+          <audio ref={audioRef} src={audioSrc} controls/>
+          {/* <button className={styles.playButton} onClick={togglePlay}>
             {isPlaying ? "Pause" : "Play"}
           </button>
           <span className={styles.audioQuality}>
             {isOwned ? "HQ Audio" : "Low-Quality Preview"}
-          </span>
+          </span> */}
         </div>
 
         
