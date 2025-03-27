@@ -4,10 +4,10 @@ import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from './pages/homepage/Homepage.jsx'
-import LandingPage from './pages/LandingPage/LandingPage.jsx'
 import MarketPlace from './pages/MarketPlace/MarketPlace.jsx'
 import UserProfile from './pages/userprofile/UserProfile.jsx'
 import MyNFTs from './pages/MyNfts/MyNfts.jsx'
+import LandingPage from "./pages/landingPage/LandingPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,18 +23,20 @@ const router = createBrowserRouter([
         index: true, element: <Homepage/>
       },
       {
-        path:"marketplace", element: <MarketPlace/>
+        path: "marketplace",
+        element: <MarketPlace />,
       },
       {
-        path: "profile", element: <UserProfile/>
+        path: "profile",
+        element: <UserProfile />,
       },
       {
-        path: "my-nfts", element: <MyNFTs/>
+        path: "my-nfts",
+        element: <MyNFTs />,
       },
-      
-    ]
-  }
-])
+    ],
+  },
+]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -24,6 +24,7 @@
 .prevButton:hover, .nextButton:hover {
   background: #333;
 }
+
 .carouselContainer {
  width: 100%;
   cursor: pointer;
@@ -33,9 +34,9 @@
 
 .musicGallery {
   display: grid;
-   grid-template-columns: repeat(auto-fit, 280px);
+   grid-template-columns: repeat(auto-fit, 300px);
   gap: 2rem;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .musicGallery h4 {

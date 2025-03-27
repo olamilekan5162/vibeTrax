@@ -1,7 +1,7 @@
 .body {
   width: 100%;
   background-image: url("/assets/dreokt.jpg");
-  background-size: 100% 90vh;
+  background-size: 100% 520px;
   background-repeat: no-repeat;
   min-height: 100vh;
   font-family: var(--prim-ROBOTO);
@@ -9,119 +9,15 @@
 }
 
 header {
+  height: 200px;
    background: linear-gradient(270deg, #601baa93, rgba(0, 0, 0, .5), #4a147398);
-  background-size: 300% 300%;
+  background-size: 300% 100%;
    animation: gradientAnimation 8s ease infinite alternate;
-  margin-bottom: 1rem;
   padding: 2.85rem 2rem;
 }
 
-nav {
-  display: flex;
-  justify-content: space-between;
-}
-
-ul,
-.logoContainer a {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
-  gap: 10px;
-}
-
-.headerIcon {
-  font-size: 1.5rem;
-}
-
-.logoContainer a {
-  color: var(--prim-color-2);
-}
-
-.logoContainer .logoText {
-  font-family: var(--prim-CHAKRA);
-  font-size: 1.75rem;
-  font-weight: 700;
-}
-
-.articleContainer {
-  width: 100%;
-  padding: 1.5rem 0;
-  overflow-x: hidden;
-}
-
-.articleContainer h1 {
-  font-family: var(--prim-ORBITRON);
-  font-size: 5rem;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: 4px;
-  margin-bottom: 4rem;
-  text-align: center;
-  animation: fadeInUp 1.2s ease-out forwards;
-}
-
-.articleContainer p {
-  font-family: var(--prim-CHAKRA);
-  width: 80%;
-  margin: 0 auto;
-  font-weight: 700;
-  animation: fadeInUp 1.5s ease-out forwards;
-}
-
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 3rem;
-}
-
-.navLink button,
-.button button {
-  padding: 8px 15px;
-}
-
-.navLink button,
-.button .rightButton {
-  background-color: transparent;
-  border: 1px solid white;
-  color: white;
-  cursor: pointer;
-}
-
-.navLink button:hover,
-.button .rightButton:hover {
-  border: none;
-  text-decoration: none;
- color: var(--prim-color-2);
-  background-color: #075f3f;
-  padding: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.button .leftButton {
-  border: none;
-  text-decoration: none;
-  color: var(--prim-color-2);
-  background-color: #075f3f;
-  padding: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.button .leftButton:hover {
- background-color: transparent;
-  border: 1px solid white;
-  color: white;
-  cursor: pointer;
-}
-
 .mainBody {
-  padding: 2rem;
+  padding: 0 2rem;
 }
 
 .footer{
@@ -194,7 +90,6 @@ ul,
 }
 
 @keyframes gradientAnimation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% { background-position: 0% 0; }
+  100% { background-position: 100% 0; }
 }
