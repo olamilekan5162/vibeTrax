@@ -70,17 +70,37 @@
 .audioPlayer {
   width: 100%;
   /* background: rgba(255, 255, 255, 0.2); */
-  border-radius: 8px;
+  border-radius: 9px;
   color: white;
 }
-
-aaudio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-play-button{
+  filter: invert(1);
+}
 audio::-webkit-media-controls-panel {
-  background-color: white;
-  /* background: linear-gradient(135deg, #1a1a2e, #16213e); */
-  color: white;
+background: linear-gradient(135deg, #1a1a2e, #16213e);
+  
 }
 
+audio::-webkit-media-controls-timeline{
+  filter: invert(1);
+  
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  filter: invert(1) !important;
+}
+audio::-webkit-media-controls-volume-slider{
+  filter: invert(1);
+}
+
+audio::-webkit-media-controls-mute-button{
+  filter: invert(1);
+}
+
+audio::-webkit-media-controls-return-to-realtime-button{
+  filter: invert(1);
+}
 @media (max-width: 768px) {
   .nftCard {
     width: 90%;
