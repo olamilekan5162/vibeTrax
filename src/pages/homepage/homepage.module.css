@@ -1,19 +1,13 @@
 .body {
   width: 100%;
-  background-image: url("/assets/dreokt.jpg");
-  background-size: 100% 520px;
-  background-repeat: no-repeat;
+ 
   min-height: 100vh;
   font-family: var(--prim-ROBOTO);
   color: var(--prim-color-2);
 }
 
 header {
-  height: 200px;
-   background: linear-gradient(270deg, #601baa93, rgba(0, 0, 0, .5), #4a147398);
-  background-size: 300% 100%;
-   animation: gradientAnimation 8s ease infinite alternate;
-  padding: 2.85rem 2rem;
+ 
 }
 
 .mainBody {
@@ -78,18 +72,3 @@ header {
   gap: 20px;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes gradientAnimation {
-  0% { background-position: 0% 0; }
-  100% { background-position: 100% 0; }
-}

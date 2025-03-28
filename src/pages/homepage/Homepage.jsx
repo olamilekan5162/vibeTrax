@@ -11,9 +11,6 @@ import preview1 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
 import full1 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
 import preview2 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
 import full2 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
-
-import MarketPlace from "../MarketPlace/MarketPlace";
-import {CompactMusicPlayer} from "../../components/musicplayer/MusicPlayer"
 import NFTCard from "../../components/NftCard/NftCard";
 
 const Homepage = () => {
