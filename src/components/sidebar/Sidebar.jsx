@@ -35,7 +35,7 @@ const Sidebar = () => {
           className={({ isActive }) =>
             isActive ? styles.active : styles.inactive
           }
-          to="marketplace"
+          to="library"
         >
           <MdOutlineLibraryMusic className={styles.icons} /> Library
         </NavLink>

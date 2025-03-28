@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NFTCard from '../../components/NftCard/NftCard';
 import BuyNFTModal from '../../components/BuyNftModal/BuyNftModal';
 import Navbar from "../../components/navbar/Navbar";
-import styles from './MarketPlace.module.css'
+import styles from './Library.module.css'
 import img1 from '../../assets/sui-bears.png';
 import img2 from '../../assets/sui-bears1.png';
 import preview1 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
@@ -11,7 +11,7 @@ import preview2 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
 import full2 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
 import { useNavigate } from 'react-router-dom';
 
-const MarketPlace = () => {
+const Library = () => {
   const navigate = useNavigate();
   const [selectedNFT, setSelectedNFT] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -145,8 +145,8 @@ const MarketPlace = () => {
 
   return (
       <div className={styles.container} >
-            <div className={styles.marketplace}>
-        <h1 className={styles.title}>NFT MarketPlace</h1>
+            <div className={styles.library}>
+        <h1 className={styles.title}>NFT Library</h1>
         <div className={styles.nftGrid}>
           {nfts.map((nft) => (
             <NFTCard
@@ -165,4 +165,4 @@ const MarketPlace = () => {
   );
 };
 
-export default MarketPlace;
+export default Library;
