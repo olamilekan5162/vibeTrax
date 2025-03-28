@@ -7,9 +7,9 @@
 
 .mainContent {
   width: 100%;
-  background-image: url("/assets/dreokt.jpg");
+  /* background-image: url("/assets/dreokt.jpg");
   background-size: 100% 520px;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   min-height: 100vh;
   font-family: var(--prim-ROBOTO);
   color: var(--prim-color-2);
@@ -98,7 +98,7 @@ header {
   }
 }
 
-@keyframes gradientAnimation {
+/* @keyframes gradientAnimation {
   0% { background-position: 0% 0; }
   100% { background-position: 100% 0; }
-}
+} */

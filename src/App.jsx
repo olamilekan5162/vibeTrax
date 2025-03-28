@@ -5,7 +5,7 @@ function App() {
   return (
     <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
       <Sidebar />
-      <div style={{display: 'flex', flexDirection: 'column', width: '100%', height: '100vh'}}>
+      <div style={{display: 'flex', position: 'sticky', left: '20%' , flexDirection: 'column', width: '80%', height: '100vh'}}>
         <Navbar />
         <Outlet />
       </div>

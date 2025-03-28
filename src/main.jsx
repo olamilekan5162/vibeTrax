@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from './pages/homepage/Homepage.jsx'
 import UserProfile from './pages/userprofile/UserProfile.jsx'
 import MyNFTs from './pages/MyNfts/MyNfts.jsx'
-import LandingPage from "./pages/LandingPage/LandingPage.jsx";
+import LandingPage from "./pages/landingPage/LandingPage.jsx";
 import Library from './pages/Library/Library.jsx'
 
 const router = createBrowserRouter([
