@@ -10,9 +10,8 @@ import img3 from "../../assets/img3.png";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { GrNext as Nexticon, GrPrevious as Previcon } from "react-icons/gr";
-import TopArtists from "../../components/TopArtist/TopArtist";
+import ArtistCard from "../../components/artistCard/ArtistCard";
 import MyNFTs from "../MyNfts/MyNfts";
-
 import Library from "../Library/Library";
 import TrendingCard from "../../components/trendingCard/TrendingCard";
 import NFTCard from "../../components/NftCard/NftCard";
@@ -109,14 +108,6 @@ const HomePage = () => {
         <section className={styles.header}>
           <h1>Discover Exclusive Music NFTs 🎵</h1>
           <p>Collect, trade, and earn with your favorite artists.</p>
-          <div className={styles.controls}>
-            <button onClick={prevSlide} className={styles.prevButton}>
-              <Previcon />
-            </button>
-            <button onClick={nextSlide} className={styles.nextButton}>
-              <Nexticon />
-            </button>
-          </div>
         </section>
         <div className={styles.gridContainer}>
           <motion.div
@@ -128,7 +119,6 @@ const HomePage = () => {
             transition={{ duration: 0.1 }}
           >
             {visibleCards.map((nft) => {
-
               return (
                 <motion.div
                   key={nft.id}
@@ -146,12 +136,21 @@ const HomePage = () => {
               );
             })}
           </motion.div>
-        </div>
 
-        <TopArtists />
+          <div className={styles.controls}>
+            <button onClick={prevSlide} className={styles.prevButton}>
+              <Previcon />
+            </button>
+            <button onClick={nextSlide} className={styles.nextButton}>
+              <Nexticon />
+            </button>
+          </div>
+        </div>
 
         <section className={styles.nftCollection}>
           <MyNFTs />
+
+          <ArtistCard />
         </section>
 
         {/* <section className={styles.librarySection}>
