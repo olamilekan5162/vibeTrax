@@ -15,9 +15,12 @@ const Sidebar = () => {
           <h1 className={styles.logoText}>SuiTunes</h1>
         </Link>
       </div>
-
-      <div className={styles.imgContainer}>
-        <img src={profilePic} alt="profilePic" />
+      
+      <div className={styles.profileContainer}>
+        <div className={styles.imgContainer}>
+          <img src={profilePic} alt="profilePic" />
+        </div>
+        <h4>0xb738...0928a</h4>
       </div>
 
       <div className={styles.barContainer}>
@@ -62,6 +65,11 @@ const Sidebar = () => {
           <RiSettings5Line className={styles.icons} /> Settings
         </NavLink>
       </div>
+      
+        <button className={styles.logoutButton}>
+          Logout
+        </button>
+        
     </div>
   );
 };
