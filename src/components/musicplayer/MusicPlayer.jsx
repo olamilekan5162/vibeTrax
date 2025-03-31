@@ -1,5 +1,5 @@
 import styles from './musicPlayer.module.css';
-import img1 from "/assets/howe.jpg"
+import img1 from "../../assets/sui-bears.png";
 import { FaPlay } from "react-icons/fa";
 import { FaBackwardStep } from "react-icons/fa6";
 import { FaForwardStep } from "react-icons/fa6";
@@ -23,8 +23,8 @@ const CompactMusicPlayer = () => {
           <FaForwardStep className={styles.controls}/>
         </div>
       </div>
-      <audio />
       <input type="range"/>
+      <audio />
     </div>
   );
 };
@@ -46,7 +46,6 @@ const ExpandedMusicPlayer = () => {
         <FaForwardStep className={styles.controls}/>
         <FaRepeat className={styles.controls}/>
       </div>
-      
       <audio />
     </div>
   );
