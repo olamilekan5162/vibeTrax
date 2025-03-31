@@ -1,0 +1,346 @@
+/* Login.module.css */
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f0f1e, #16213e, #132043);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Background network effect */
+  .node {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 10px 2px rgba(86, 204, 242, 0.5);
+    animation: float linear infinite;
+  }
+  
+  .node::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(86, 204, 242, 0.5), transparent);
+    transform: translate(-50%, -50%) rotate(var(--rotation, 45deg));
+    transform-origin: center;
+    opacity: 0.4;
+  }
+  
+  .glowCircle {
+    position: absolute;
+    width: 80vh;
+    height: 80vh;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(88, 101, 242, 0.1) 0%, rgba(78, 78, 211, 0.05) 50%, transparent 70%);
+    filter: blur(40px);
+    animation: pulse 8s infinite alternate;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(1.2);
+      opacity: 0.5;
+    }
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0) translateX(0);
+    }
+    50% {
+      transform: translateY(-20px) translateX(20px);
+    }
+    100% {
+      transform: translateY(0) translateX(0);
+    }
+  }
+  
+  .card {
+    background: rgba(14, 17, 36, 0.7);
+    border-radius: 24px;
+    padding: 2.5rem;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    width: 100%;
+    border: 1px solid rgba(86, 204, 242, 0.2);
+    position: relative;
+    z-index: 10;
+    animation: appear 0.6s ease-out;
+  }
+  
+  @keyframes appear {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .logoContainer {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2rem;
+  }
+  
+  .logo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #5d4aff, #56ccf2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    z-index: 3;
+  }
+  
+  .logoRing {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 2px solid rgba(93, 74, 255, 0.5);
+    border-radius: 50%;
+    animation: rotate 10s linear infinite;
+  }
+  
+  .logoRing2 {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border: 2px dotted rgba(86, 204, 242, 0.3);
+    border-radius: 50%;
+    animation: rotate 15s linear reverse infinite;
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .gradient {
+    background: linear-gradient(90deg, #5d4aff, #56ccf2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #a0a0c0;
+    margin-bottom: 2rem;
+  }
+  
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .separator {
+    display: flex;
+    align-items: center;
+    color: #6c6c8f;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+  }
+  
+  .separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .separator span {
+    padding: 0 1rem;
+  }
+  
+  .zkLogin, .walletConnect {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .zkLogin::before, .walletConnect::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #5d4aff, #56ccf2, #5d4aff);
+    z-index: -1;
+    border-radius: 14px;
+    background-size: 300% 300%;
+    animation: gradientBorder 3s ease infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .zkLogin:hover::before, .walletConnect:hover::before {
+    opacity: 1;
+  }
+  
+  @keyframes gradientBorder {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .zkLogin {
+    background: linear-gradient(90deg, #ff4b2b, #ff416c);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0px 4px 20px rgba(255, 75, 43, 0.4);
+  }
+  
+  .zkLogin:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 25px rgba(255, 75, 43, 0.6);
+  }
+  
+  .buttonIcon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+  }
+  
+  .walletConnect {
+    background: linear-gradient(90deg, #3a7bd5, #56ccf2);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0px 4px 20px rgba(74, 144, 226, 0.4);
+  }
+  
+  .walletConnect:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 25px rgba(74, 144, 226, 0.6);
+  }
+  
+  .loading {
+    color: transparent;
+  }
+  
+  .loader {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease infinite;
+    position: absolute;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .zkLogin:disabled, .walletConnect:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #a0a0c0;
+    font-size: 0.85rem;
+    gap: 8px;
+  }
+  
+  .featureIcon {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+  }
+  
+  /* Media queries for responsive design */
+  @media (max-width: 500px) {
+    .card {
+      max-width: 90%;
+      padding: 1.5rem;
+    }
+    
+    .logoContainer {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .title {
+      font-size: 1.6rem;
+    }
+    
+    .features {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .feature {
+      flex-direction: row;
+      justify-content: center;
+      gap: 10px;
+    }
+  }
