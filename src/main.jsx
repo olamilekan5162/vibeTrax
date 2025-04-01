@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
+import { AudioProvider } from "./components/AudioContext.jsx";
 
 import Homepage from "./pages/homepage/Homepage.jsx";
 import UserProfile from "./pages/userprofile/UserProfile.jsx";
@@ -11,7 +12,7 @@ import Library from "./pages/Library/Library.jsx";
 import Login from "./pages/Login/Login.jsx";
 
 const router = createBrowserRouter([
-  { path: "/", element: <LandingPage/> },
+  { path: "/", element: <LandingPage /> },
   { path: "/login", element: <Login /> },
   {
     path: "homepage",
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AudioProvider>
+      <RouterProvider router={router} />
+    </AudioProvider>
   </StrictMode>
 );
