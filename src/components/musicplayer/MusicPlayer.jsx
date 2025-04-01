@@ -13,6 +13,12 @@ const CompactMusicPlayer = ({nft}) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
+  
+  const formatTime = (time) => {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+};
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -50,10 +56,21 @@ const CompactMusicPlayer = ({nft}) => {
           <FaRepeat className={styles.controls}/>
         </div>
       </div>
-      <input type="range" onChange={handleSeek}/>
+      
+      <input 
+      type="range" 
+      onChange={handleSeek}
+      min="0"
+      max="100"
+      value={(currentTime / duration) * 100}
+      />
+      
       <div className={styles.musicTime}>
-        
+        <p> {formatTime(currentTime)}
+        </p>
+        <p>{formatTime(duration)}</p>
       </div>
+      
       <audio
       ref={audioRef}
       src={nft.isOwned ? nft.fullAudio : nft.previewAudio}
