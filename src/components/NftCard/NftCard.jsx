@@ -1,45 +1,54 @@
-import React, { useRef } from "react";
+import React, { useContext } from "react";
+import { Play, Pause } from "lucide-react";
 import styles from "./NftCard.module.css";
+import { AudioContext } from "../AudioContext";
 
-// Global audio management
-const globalAudio = {
-  currentAudio: null
-};
-
-const NFTCard = ({ image, title, artist, previewAudio, fullAudio, isOwned, onClick }) => {
-  const audioRef = useRef(null);
-
-  const handlePlay = () => {
-    // Pause any currently playing audio
-    if (globalAudio.currentAudio && globalAudio.currentAudio !== audioRef.current) {
-      globalAudio.currentAudio.pause();
-    }
-    // Set current audio
-    globalAudio.currentAudio = audioRef.current;
-  };
+const NFTCard = ({
+  id,
+  image,
+  title,
+  artist,
+  previewAudio,
+  fullAudio,
+  isOwned,
+  onClick,
+}) => {
+  const { currentTrack, isPlaying, playTrack } = useContext(AudioContext);
 
   const audioSrc = isOwned ? fullAudio : previewAudio;
 
+  const isCurrentTrack = currentTrack && currentTrack.id === id;
+  const isCurrentlyPlaying = isCurrentTrack && isPlaying;
+
+  const handlePlayClick = (e) => {
+    e.stopPropagation(); // Prevent card onClick from firing
+    playTrack({
+      id,
+      title,
+      artist,
+      audioSrc,
+      image,
+    });
+  };
+
   return (
     <div className={styles.nftCard} onClick={onClick}>
-      <div 
-        className={styles.cardBackground} 
+      <div
+        className={styles.cardBackground}
         style={{ backgroundImage: `url(${image})` }}
       >
         <div className={styles.cardContent}>
+          <div className={styles.playButton} onClick={handlePlayClick}>
+            {isCurrentlyPlaying ? (
+              <Pause className={styles.playIcon} />
+            ) : (
+              <Play className={styles.playIcon} />
+            )}
+          </div>
+
           <div className={styles.cardHeader}>
             <h3 className={styles.nftTitle}>{title}</h3>
             <p className={styles.artist}>By {artist}</p>
-          </div>
-
-          <div className={styles.audioPlayerContainer}>
-            <audio 
-              ref={audioRef}
-              src={audioSrc} 
-              controls
-              onPlay={handlePlay}
-              className={styles.audioPlayer}
-            />
           </div>
         </div>
       </div>
