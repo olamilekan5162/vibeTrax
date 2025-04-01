@@ -1,0 +1,773 @@
+.musicNFTUpload {
+    width: 100%;
+    max-width: 840px;
+    margin: 0 auto;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  .container {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: #e6e6e6;
+    padding: 32px;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #4361ee, #3a0ca3, #7209b7, #f72585);
+    z-index: 1;
+  }
+  
+  .header {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    background: linear-gradient(90deg, #4cc9f0, #4895ef, #4361ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    color: #a3a3c2;
+    margin: 0;
+  }
+  
+  /* Step Indicator */
+  .stepIndicator {
+    margin-bottom: 32px;
+  }
+  
+  .steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+  }
+  
+  .stepNumber {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #2a2a4a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 8px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .stepLabel {
+    font-size: 14px;
+    color: #a3a3c2;
+    transition: color 0.3s ease;
+  }
+  
+  .step.active .stepNumber {
+    background-color: rgba(67, 97, 238, 0.2);
+    border-color: #4361ee;
+    color: #4cc9f0;
+  }
+  
+  .step.active .stepLabel {
+    color: #e6e6e6;
+    font-weight: 500;
+  }
+  
+  .step.completed .stepNumber {
+    background-color: #4361ee;
+    border-color: #4361ee;
+  }
+  
+  .stepConnector {
+    flex-grow: 1;
+    height: 2px;
+    background-color: #2a2a4a;
+    margin: 0 12px;
+    position: relative;
+    top: -16px;
+  }
+  
+  /* Form Styles */
+  .form {
+    margin-top: 24px;
+  }
+  
+  .formGroup {
+    margin-bottom: 24px;
+  }
+  
+  .formRow {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .formRow .formGroup {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #a3a3c2;
+  }
+  
+  .input, .textarea, .select {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #e6e6e6;
+    font-size: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .input:focus, .textarea:focus, .select:focus {
+    outline: none;
+    border-color: #4361ee;
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+  }
+  
+  .textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a3a3c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+  }
+  
+  .hint {
+    display: block;
+    font-size: 12px;
+    color: #a3a3c2;
+    margin-top: 6px;
+  }
+  
+  /* File Upload Areas */
+  .fileUpload, .imageUpload {
+    display: block;
+    cursor: pointer;
+  }
+  
+  .uploadArea {
+    margin-bottom: 24px;
+  }
+  
+  .hiddenInput {
+    display: none;
+  }
+  
+  .uploadPrompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 2px dashed rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  
+  .uploadPrompt:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(67, 97, 238, 0.5);
+  }
+  
+  .uploadIcon {
+    margin-bottom: 16px;
+    color: #a3a3c2;
+  }
+  
+  .uploadText {
+    text-align: center;
+  }
+  
+  .uploadText .primary {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 16px;
+    color: #e6e6e6;
+  }
+  
+  .uploadText .secondary {
+    font-size: 14px;
+    color: #a3a3c2;
+  }
+  
+  /* File preview */
+  .filePreview {
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .fileName {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #e6e6e6;
+    word-break: break-all;
+  }
+  
+  .audioPreview {
+    width: 100%;
+    height: 40px;
+  }
+  
+  /* Image Upload */
+  .imageUpload {
+    display: block;
+    width: 100%;
+  }
+  
+  .imagePlaceholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 160px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 2px dashed rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    color: #a3a3c2;
+    transition: all 0.3s ease;
+  }
+  
+  .imagePlaceholder:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(67, 97, 238, 0.5);
+  }
+  
+  .imagePlaceholder svg {
+    margin-bottom: 8px;
+  }
+  
+  .imagePreview {
+    position: relative;
+    width: 100%;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .previewImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .imageOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .imagePreview:hover .imageOverlay {
+    opacity: 1;
+  }
+  
+  /* Contributors section */
+  .contributorsWrapper {
+    margin-bottom: 24px;
+  }
+  
+  .contributorCard {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .contributorHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .contributorTitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #e6e6e6;
+  }
+  
+  .removeBtn {
+    background: none;
+    border: none;
+    color: #f72585;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .contributorForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .addContributorBtn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(67, 97, 238, 0.1);
+    border: 1px dashed rgba(67, 97, 238, 0.5);
+    border-radius: 8px;
+    color: #4361ee;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 24px;
+  }
+  
+  .addContributorBtn:hover {
+    background-color: rgba(67, 97, 238, 0.15);
+  }
+  
+  /* Shares indicator */
+  .sharesIndicator {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .sharesLabel {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .sharesValid {
+    color: #4CAF50;
+  }
+  
+  .sharesInvalid {
+    color: #FF9800;
+  }
+  
+  .sharesProgress {
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  
+  .sharesBar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .sharesHint {
+    font-size: 12px;
+    color: #a3a3c2;
+  }
+  
+  /* Edition options */
+  .editionOptions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .editionOption {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .editionOption:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .editionOption.selected {
+    background-color: rgba(67, 97, 238, 0.1);
+    border-color: #4361ee;
+  }
+  
+  .editionIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 700;
+    color: #e6e6e6;
+  }
+  
+  .editionOption.selected .editionIcon {
+    background-color: rgba(67, 97, 238, 0.2);
+    color: #4cc9f0;
+  }
+  
+  .editionLabel {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .editionName {
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  
+  .editionDesc {
+    font-size: 12px;
+    color: #a3a3c2;
+  }
+  
+  /* Price input */
+  .priceInput {
+    display: flex;
+    align-items: center;
+  }
+  
+  .priceInput .input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+  }
+  
+  .currencySelect {
+    width: auto;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 12px 36px 12px 12px;
+  }
+  
+  /* NFT Preview */
+  .previewSection {
+    margin-top: 32px;
+  }
+  
+  .previewTitle {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 16px;
+    color: #e6e6e6;
+  }
+  
+  .nftCard {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .nftImage {
+    position: relative;
+    height: 240px;
+    background-color: #2a2a4a;
+  }
+  
+  .nftCover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .nftImagePlaceholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #a3a3c2;
+  }
+  
+  .audioControls {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+  }
+  
+  .playButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+  }
+  
+  .playButton:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: scale(1.05);
+  }
+  
+  .nftInfo {
+    padding: 16px;
+  }
+  
+  .nftTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #e6e6e6;
+  }
+  
+  .nftArtist {
+    font-size: 14px;
+    color: #a3a3c2;
+    margin-bottom: 12px;
+  }
+  
+  .nftDetails {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  
+  .nftEdition {
+    color: #4cc9f0;
+    font-weight: 500;
+  }
+  
+  .nftPrice {
+    font-weight: 600;
+    color: #e6e6e6;
+  }
+  
+  /* Form actions */
+  .formActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .backButton {
+    padding: 12px 24px;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #e6e6e6;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .backButton:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .primaryButton, .mintButton {
+    padding: 12px 32px;
+    background: linear-gradient(90deg, #4361ee, #3a0ca3);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .primaryButton:hover, .mintButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(67, 97, 238, 0.3);
+  }
+  
+  .primaryButton:disabled, .mintButton:disabled, .backButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  .mintButton {
+    background: linear-gradient(90deg, #4cc9f0, #4361ee);
+    padding: 14px 40px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  /* Spinner for loading state */
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Wallet Warning */
+  .walletWarning {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left: 4px solid #FFC107;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+  
+  .warningIcon {
+    font-size: 24px;
+  }
+  
+  .warningText {
+    flex: 1;
+  }
+  
+  .warningTitle {
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: #e6e6e6;
+  }
+  
+  .warningMessage {
+    margin: 0;
+    font-size: 14px;
+    color: #a3a3c2;
+  }
+  
+  .connectButton {
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #e6e6e6;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .connectButton:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  /* Step content */
+  .step {
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .stepTitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #e6e6e6;
+  }
+  
+  .stepDescription {
+    font-size: 14px;
+    color: #a3a3c2;
+    margin: 0 0 24px;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container {
+      padding: 24px 16px;
+    }
+    
+    .formRow {
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .editionOptions {
+      flex-direction: column;
+    }
+    
+    .formActions {
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .backButton, .primaryButton, .mintButton {
+      width: 100%;
+    }
+  }
