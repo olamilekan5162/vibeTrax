@@ -1,12 +1,33 @@
 import styles from './musicPlayer.module.css';
-import img1 from "../../assets/sui-bears.png";
 import { FaPlay } from "react-icons/fa";
+import { FaPause } from "react-icons/fa";
 import { FaBackwardStep } from "react-icons/fa6";
 import { FaForwardStep } from "react-icons/fa6";
 import { FaShuffle } from "react-icons/fa6";
 import { FaRepeat } from "react-icons/fa6";
+import { useState, useRef } from 'react';
 
 const CompactMusicPlayer = ({nft}) => {
+  
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef(null);
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleSeek = (e) => {
+    const seekTime = (e.target.value / 100) * duration;
+    audioRef.current.currentTime = seekTime;
+  };
+  
   return (
     <div className={styles.compactContainer}>
       <div className={styles.musicBox}>
@@ -20,18 +41,29 @@ const CompactMusicPlayer = ({nft}) => {
         <div className={styles.rightBox}>
           <FaShuffle className={styles.controls}/>
           <FaBackwardStep className={styles.controls}/>
-          <FaPlay className={styles.controls}/>
+          {isPlaying ?
+          <FaPause className={styles.controls} onClick={handlePlayPause}/>
+          :
+          <FaPlay className={styles.controls} onClick={handlePlayPause}/>
+          }
           <FaForwardStep className={styles.controls}/>
           <FaRepeat className={styles.controls}/>
         </div>
       </div>
-      <input type="range"/>
+      <input type="range" onChange={handleSeek}/>
       <div className={styles.musicTime}>
         
       </div>
-      <audio 
+      <audio
+      ref={audioRef}
       src={nft.isOwned ? nft.fullAudio : nft.previewAudio}
-      controls
+      onTimeUpdate={(e) => {
+        setCurrentTime(e.target.currentTime);
+        setDuration(e.target.duration);
+        }}
+      onEnded={() => {
+        setIsPlaying(false);
+        }}
       />
     </div>
   );
