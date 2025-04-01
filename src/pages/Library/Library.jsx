@@ -26,6 +26,9 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 2,
@@ -36,6 +39,9 @@ const Library = () => {
       isOwned: true,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 3,
@@ -46,6 +52,9 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 4,
@@ -56,6 +65,9 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 5,
@@ -66,6 +78,9 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 6,
@@ -76,6 +91,9 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 7,
@@ -86,6 +104,9 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 8,
@@ -96,6 +117,9 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 9,
@@ -106,6 +130,9 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 10,
@@ -116,6 +143,9 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 11,
@@ -126,11 +156,14 @@ const Library = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
   ];
 
-  const handleCardClick = (id) => {
-    navigate(`/nft/${id}`);
+  const handleCardClick = (nft) => {
+    navigate(`/nft/${nft.id}`, { state: nft });
   };
 
   const handleBuyClick = (nft) => {
@@ -152,7 +185,7 @@ const Library = () => {
             <NFTCard
               key={nft.id}
               {...nft}
-              onClick={() => handleCardClick(nft.id)}
+              onClick={() => handleCardClick(nft)}
               onBuy={() => handleBuyClick(nft)}
             />
           ))}

@@ -22,7 +22,7 @@
 .leftBox{
   display: flex;
   flex-direction: row;
-  align-items: centre;
+  align-items: center;
   justify-content: center;
   gap: 20px;
 }
@@ -35,13 +35,13 @@
 
 .leftBox .titleBox{
   display: flex;
-  gap: 10px;
+  gap: 2px;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .artist, .title {
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .title {
@@ -50,13 +50,13 @@
 
 
 .compactContainer input{
-  accent-color: #5f1baa;
+  accent-color: white;
 }
 
 .rightBox{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 20px;
 }
 
