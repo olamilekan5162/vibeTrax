@@ -1,4 +1,4 @@
-import styles from "./landingPage.module.css";
+import styles from "./LandingPage.module.css";
 import { Link } from "react-router-dom";
 import { SiBluesound as Soundicon } from "react-icons/si";
 import { FaXTwitter as Xicon } from "react-icons/fa6";

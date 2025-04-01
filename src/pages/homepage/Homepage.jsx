@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./HomePage.module.css";
+import styles from "./homepage.module.css";
 import preview1 from "../../assets/MichaelJackson-SmoothCriminalLow.mp3";
 import full1 from "../../assets/MichaelJackson-SmoothCriminalHigh.mp3";
 import preview2 from "../../assets/MichaelJackson-SmoothCriminalLow.mp3";

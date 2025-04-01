@@ -41,12 +41,18 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.imgContainer{
-  align-self: start;
-  margin: 10px;
+
+
+.profileContainer{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  /* align-self: start; */
 }
 
-.imgContainer img{
+.profileContainer img{
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -88,4 +94,22 @@
   /* margin-left: 5px; */
   text-align: center;
   
+}
+
+.logoutButton {
+  position: absolute;
+  bottom: 20px;
+  background: #00ffa3;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #16213e;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logoutButton:hover {
+    background: #00ffcc;
 }
