@@ -1,9 +1,11 @@
 .container {
-    min-height: 100vh;
+    /* min-height: 100vh; */
     background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
     color: #ffffff;
     padding: 2rem;
     width: 95%;
+    /* height: 100%; */
+    
     
   }
   
@@ -146,7 +148,7 @@
     }
   }
   
-  /* Custom styling for the MusicNFTUpload component to match the Web3 NFT music feel */
+  
   :global(.musicNFTUpload) {
     color: white;
   }
