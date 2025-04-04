@@ -44,12 +44,12 @@
 
 
 .profileContainer{
-  margin-top: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  /* align-self: start; */
+  align-self: start;
+  padding-left: 10px;
 }
 
 .profileContainer img{
@@ -98,7 +98,7 @@
 
 .logoutButton {
   position: absolute;
-  bottom: 20px;
+  bottom: 100px;
   background: #00ffa3;
   border: none;
   padding: 10px 20px;

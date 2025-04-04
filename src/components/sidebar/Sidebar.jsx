@@ -5,8 +5,10 @@ import profilePic from "/assets/austin.jpg";
 import { RiHome9Fill, RiSettings5Line } from "react-icons/ri";
 import { MdOutlineLibraryMusic } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate()
   return (
     <div className={styles.stickySidebar}>
       <div className={styles.logoContainer}>
@@ -66,7 +68,8 @@ const Sidebar = () => {
         </NavLink>
       </div>
       
-        <button className={styles.logoutButton}>
+        <button className={styles.logoutButton} onClick={() => navigate('/')}>
+      
           Logout
         </button>
         
