@@ -1,27 +1,27 @@
-.body {
-    width: 100%;
-    background-image: url("/assets/dreokt.jpg");
-    background-size: 100% 87vh;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    font-family: var(--prim-ROBOTO);
+.landingPageHeader{
+   width: 100%;
+   min-height: 80vh;
+  background-image: url("/assets/dreokt.jpg");
+  background-size: 100% 80vh;
+  background-repeat: no-repeat;
+  font-family: var(--prim-ROBOTO);
     color: var(--prim-color-2);
-  }
-  
-  header {
-     background: linear-gradient(270deg, #601baa93, rgba(0, 0, 0, .5), #4a147398);
-    background-size: 300% 300%;
-     animation: gradientAnimation 8s ease infinite alternate;
-    height: 87vh;
-    padding: 2.75rem 4rem;
-  }
-  
-  nav {
+}
+
+header{
+  background: linear-gradient(270deg, #601baa93, rgba(0, 0, 0, .5), #4a147398);
+  background-size: 300% 300%;
+  animation: gradientAnimation 8s ease infinite alternate;
+  padding: 2.75rem 4rem;
+  height: 80vh;
+}
+
+nav {
     display: flex;
     justify-content: space-between;
   }
-  
-  ul,
+
+   ul,
   .logoContainer a {
     display: flex;
     align-items: center;
@@ -31,15 +31,15 @@
     padding: 0;
     gap: 10px;
   }
-  
-  .headerIcon {
+
+   .headerIcon {
     font-size: 1.5rem;
   }
   
   .logoContainer a {
     color: var(--prim-color-2);
   }
-  
+
   .logoContainer .logoText {
     font-family: var(--prim-CHAKRA);
     font-size: 1.75rem;
@@ -52,13 +52,13 @@
     overflow-x: hidden;
   }
   
-  .articleContainer h1 {
+   .articleContainer h1 {
     font-family: var(--prim-ORBITRON);
-    font-size: 5rem;
+    font-size: 4.5rem;
     font-weight: 500;
     line-height: 1.2;
     letter-spacing: 4px;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     text-align: center;
     animation: fadeInUp 1.2s ease-out forwards;
   }
@@ -69,8 +69,9 @@
     margin: 0 auto;
     font-weight: 700;
     animation: fadeInUp 1.5s ease-out forwards;
+    text-align: center;
   }
-  
+
   .button {
     display: flex;
     align-items: center;
@@ -79,21 +80,19 @@
     margin-top: 3rem;
   }
   
-  .navLink button,
+   .navLink button,
   .button button {
     padding: 8px 15px;
   }
   
-  .navLink button,
-  .button .rightButton {
+  .navLink button, .rightButton {
     background-color: transparent;
     border: 1px solid white;
     color: white;
     cursor: pointer;
   }
-  
-  .navLink button:hover,
-  .button .rightButton:hover {
+
+   .navLink button:hover, .rightButton:hover {
     border: none;
     text-decoration: none;
    color: var(--prim-color-2);
@@ -119,12 +118,15 @@
     color: white;
     cursor: pointer;
   }
+
+
+/*  
   
   .footer{
    border-top: 2px solid rgba(255, 255, 255, 0.1);
     padding: 1rem 2rem;
     height: 10vh;
-    /* background-color: RED; */
+    background-color: RED; 
     margin-bottom: 1rem;
   }
   
@@ -171,9 +173,9 @@
     padding: 8px;
     border-radius: 1rem;
   }
-  
-  
-  @keyframes fadeInUp {
+   */
+
+   @keyframes fadeInUp {
     from {
       opacity: 0;
       transform: translateX(100px);
@@ -189,4 +191,3 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-  
