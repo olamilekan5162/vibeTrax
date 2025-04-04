@@ -15,6 +15,7 @@ import MyNFTs from "../MyNfts/MyNfts";
 import Library from "../Library/Library";
 import TrendingCard from "../../components/trendingCard/TrendingCard";
 import NFTCard from "../../components/NftCard/NftCard";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const nfts = [
@@ -27,6 +28,9 @@ const HomePage = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 2,
@@ -37,6 +41,9 @@ const HomePage = () => {
       isOwned: true,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 3,
@@ -47,6 +54,9 @@ const HomePage = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 3,
@@ -57,6 +67,9 @@ const HomePage = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 4,
@@ -67,6 +80,9 @@ const HomePage = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 5,
@@ -77,6 +93,9 @@ const HomePage = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 6,
@@ -87,8 +106,14 @@ const HomePage = () => {
       isOwned: false,
       previewAudio: preview1,
       fullAudio: full1,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
   ];
+
+  const navigate = useNavigate()
+  
   const [index, setIndex] = useState(0);
   const visibleCards = nfts.slice(index, index + 3);
     const nextSlide = () => {
@@ -99,6 +124,10 @@ const HomePage = () => {
 
     const prevSlide = () => {
         setIndex((prev) => (prev - 3 >= 0 ? prev - 3 : nfts.length - 3));
+    };
+
+    const handleCardClick = (nft) => {
+      navigate(`/nft/${nft.id}`, { state: nft });
     };
 
 
@@ -129,7 +158,7 @@ const HomePage = () => {
                 >
                   <NFTCard
                     {...nft}
-                    onClick={() => handleCardClick(nft.id)}
+                    onClick={() => handleCardClick(nft)}
                     onBuy={() => handleBuyClick(nft)}
                   />
                 </motion.div>

@@ -8,8 +8,10 @@ import full1 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
 import preview2 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
 import full2 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
 import Navbar from '../../components/navbar/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const MyNFTs = () => {
+  const navigate = useNavigate()
   const ownedNFTs = [
     {
       id: 2,
@@ -17,9 +19,12 @@ const MyNFTs = () => {
       title: "Lofi NFT",
       artist: "BeatMakerX",
       price: 1.2,
-      isOwned: true,
+      isOwned: false,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 3,
@@ -27,9 +32,12 @@ const MyNFTs = () => {
       title: "Lofi NFT",
       artist: "BeatMakerX",
       price: 1.2,
-      isOwned: true,
+      isOwned: false,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 4,
@@ -40,6 +48,9 @@ const MyNFTs = () => {
       isOwned: true,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 5,
@@ -47,9 +58,12 @@ const MyNFTs = () => {
       title: "Lofi NFT",
       artist: "BeatMakerX",
       price: 1.2,
-      isOwned: true,
+      isOwned: false,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 6,
@@ -60,6 +74,9 @@ const MyNFTs = () => {
       isOwned: true,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 7,
@@ -70,6 +87,9 @@ const MyNFTs = () => {
       isOwned: true,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 8,
@@ -80,6 +100,9 @@ const MyNFTs = () => {
       isOwned: true,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
     {
       id: 9,
@@ -90,8 +113,15 @@ const MyNFTs = () => {
       isOwned: true,
       previewAudio: preview2,
       fullAudio: full2,
+      description: "An exclusive track with smooth vibes.",
+      owner: "0x1234...5678",
+      totalStreams: 1245,
     },
   ];
+
+  const handleCardClick = (nft) => {
+    navigate(`/nft/${nft.id}`, { state: nft });
+  };
 
   return (
     <div className={styles.myNFTs}>
@@ -100,7 +130,7 @@ const MyNFTs = () => {
       {ownedNFTs.length > 0 ? (
         <div className={styles.nftContainer}>
           {ownedNFTs.map((nft) => (
-            <NFTCard key={nft.id} {...nft} />
+            <NFTCard key={nft.id} {...nft} onClick={() => handleCardClick(nft)}/>
           ))}
         </div>
       ) : (
