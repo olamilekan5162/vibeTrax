@@ -8,7 +8,12 @@ import { useLocation } from 'react-router-dom';
 const NftDetail = () => {
   const location = useLocation()
   const nft = location.state
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
 
   const closeModal = () => {
     setIsModalOpen(false)
@@ -16,7 +21,7 @@ const NftDetail = () => {
   
   return (
     <div className={styles.nftDetailcontainer}>
-      <NftDetailCard nft={nft} />
+      <NftDetailCard nft={nft} onBuy={openModal}/>
       <CompactMusicPlayer nft={nft}/>
       {isModalOpen && (
           <BuyNFTModal nft={nft} onClose={closeModal} />

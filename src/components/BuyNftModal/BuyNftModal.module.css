@@ -1,4 +1,4 @@
-.modalOverlay {
+   .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,19 +7,24 @@
     background: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end; /* Changed to align content to the right */
   }
   
   .modalContent {
-    background: #1a1a2e; 
+    background: #1e1e1e;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 10px 0 0 10px; /* Rounded corners only on the left side */
     text-align: center;
     max-width: 400px;
     width: 90%;
+    height: 100vh; /* Full height */
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    animation: fadeIn 0.3s ease-in-out;
+    animation: slideInRight 0.3s ease-in-out forwards; /* New animation */
     position: relative;
+    overflow-y: auto; /* Allow scrolling if content is too tall */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   
   .closeBtn {
@@ -56,8 +61,13 @@
     background: linear-gradient(90deg, #ff9c3f, #ff5c85);
   }
   
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes slideInRight {
+    from { 
+      transform: translateX(100%); 
+      opacity: 0;
+    }
+    to { 
+      transform: translateX(0); 
+      opacity: 1;
+    }
   }
-  

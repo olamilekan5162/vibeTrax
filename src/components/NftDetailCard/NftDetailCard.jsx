@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './NftDetailCard.module.css'
 
-const NftDetailCard = ({nft}) => {
+const NftDetailCard = ({nft, onBuy}) => {
   return (
     <div className={styles.card}>
       <img src={nft.image} alt={nft.title} className={styles.image} />
@@ -19,7 +19,7 @@ const NftDetailCard = ({nft}) => {
         {nft.isOwned ? (
           <button className={styles.playButton}>Play High-Quality</button>
         ) : (
-          <button className={styles.buyButton}>Buy NFT</button>
+          <button className={styles.buyButton} onClick={onBuy}>Buy NFT</button>
         )}
       </div>
     </div>
