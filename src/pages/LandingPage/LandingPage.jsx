@@ -51,8 +51,8 @@ const LandingPage = () => {
   
          <footer className={styles.footer}>
             <div class={styles.footerWrap}>
-                <div>
-                Enjoy your Sound
+                <div className={styles.footerText} >
+                <h4>Enjoy your Sound</h4>
                 <p>&copy; 2025 - SuiTunes Music Catalog</p>
                 </div>
 

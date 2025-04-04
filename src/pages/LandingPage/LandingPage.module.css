@@ -119,34 +119,32 @@ nav {
     cursor: pointer;
   }
 
-
-/*  
-  
-  .footer{
+   .footer{
    border-top: 2px solid rgba(255, 255, 255, 0.1);
-    padding: 1rem 2rem;
-    height: 10vh;
-    background-color: RED; 
-    margin-bottom: 1rem;
+    padding: 2.5rem 2rem;
+    height: 20vh; 
   }
-  
   .footerWrap {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-  
-      .footerLhs{
+
+       .footerLhs{
         display: flex;
         align-items: center;
         gap: 10px;
+      }
+
+      .footerText{
+        color: var(--prim-color-2);
       }
   
       .footerWrap p{
         margin-top: 8px;
       }
-  
-  .footerWrap a{
+
+      .footerWrap a{
     border: none;
     text-decoration: none;
   }
@@ -159,8 +157,8 @@ nav {
     font-weight: 600;
     cursor: pointer;
   }
-  
-  .footerWrap button:hover {
+
+   .footerWrap button:hover {
    background-color: transparent;
     border: 1px solid white;
     color: white;
@@ -173,7 +171,7 @@ nav {
     padding: 8px;
     border-radius: 1rem;
   }
-   */
+
 
    @keyframes fadeInUp {
     from {
