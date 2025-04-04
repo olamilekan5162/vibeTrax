@@ -1,10 +1,17 @@
-// Login.jsx
 import React, { useState, useEffect } from 'react';
 import styles from "./Login.module.css";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isZkLoading, setIsZkLoading] = useState(false);
+  const [showZkForm, setShowZkForm] = useState(false);
+  
+  // Form states
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   
   const handleWalletConnect = () => {
     setIsConnecting(true);
@@ -15,7 +22,31 @@ const Login = () => {
   const handleZkLogin = () => {
     setIsZkLoading(true);
     // Simulate login process
-    setTimeout(() => setIsZkLoading(false), 2000);
+    setTimeout(() => {
+      setIsZkLoading(false);
+      setShowZkForm(true); // Show the form after loading
+    }, 2000);
+  };
+  
+  const handleFormClose = () => {
+    setShowZkForm(false);
+    // Reset form fields when closing
+    setEmail('');
+    setPassword('');
+    setRememberMe(false);
+  };
+  
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setIsFormSubmitting(true);
+    
+    // Simulate authentication process
+    setTimeout(() => {
+      setIsFormSubmitting(false);
+      console.log('Login with:', { email, password, rememberMe });
+      // Here you would handle redirection to homepage
+      setShowZkForm(false);
+    }, 1500);
   };
 
   useEffect(() => {
@@ -120,6 +151,87 @@ const Login = () => {
           </div>
         </div>
       </div>
+      
+      {/* Sign In Form Modal */}
+      {showZkForm && (
+        <div className={styles.formOverlay}>
+          <div className={styles.formContainer}>
+            <button className={styles.closeButton} onClick={handleFormClose}>×</button>
+            
+            <div className={styles.formHeader}>
+              <div className={styles.logoMini}>
+                <span>ST</span>
+              </div>
+              <h2>Sign in to <span className={styles.gradientText}>SuiTunes</span></h2>
+            </div>
+            
+            <p className={styles.zkMessage}>
+              <span className={styles.zkIcon}>🔐</span>
+              Secure authentication with zero-knowledge proof
+            </p>
+            
+            <form onSubmit={handleFormSubmit}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+              
+              <div className={styles.inputGroup}>
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  required
+                />
+              </div>
+              
+              <div className={styles.formOptions}>
+                <label className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={() => setRememberMe(!rememberMe)}
+                  />
+                  <span className={styles.checkmark}></span>
+                  Remember me
+                </label>
+                <a href="#" className={styles.forgotLink}>Forgot password?</a>
+              </div>
+              <Link to="/homepage">
+              
+              <button 
+                type="submit" 
+                className={`${styles.submitButton} ${isFormSubmitting ? styles.loading : ''}`}
+                disabled={isFormSubmitting}
+              >
+                {isFormSubmitting ? (
+                  <span className={styles.buttonLoader}></span>
+                ) : "Sign In"}
+              </button>
+              </Link>
+            </form>
+            
+            <div className={styles.privacyNote}>
+              By signing in, you agree to SuiTunes's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </div>
+            
+            <div className={styles.web3Note}>
+              <p>First time using Web3?</p>
+              <a href="#" className={styles.learnMoreLink}>Learn more about zkLogin</a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
