@@ -1,10 +1,28 @@
 import React, { useState } from "react";
 import styles from "./MusicNftUpload.module.css";
+import {
+  useNetworkVariable,
+  useNetworkVariables,
+} from "../../config/networkConfig";
+import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
+import { Transaction } from "@mysten/sui/transactions";
 
 const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [previewActive, setPreviewActive] = useState(false);
+
+  const { tunflowNFTRegistryId, tunflowPackageId } = useNetworkVariables(
+    "tunflowNFTRegistryId",
+    "tunflowPackageId"
+  );
+
+  const suiClient = useSuiClient();
+  const {
+    mutate: signAndExecute,
+    isSuccess,
+    isPending,
+  } = useSignAndExecuteTransaction();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -20,6 +38,48 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
     price: 0.1,
     blockchain: "ethereum",
   });
+
+  const uploadMusic = (e) => {
+    e.preventDefault();
+    const tx = new Transaction();
+
+    tx.moveCall({
+      arguments: [
+        tx.object(tunflowNFTRegistryId),
+        tx.pure.string("Title 1"),
+        tx.pure.string("Description 1"),
+        tx.pure.string("Genre 1"),
+        tx.pure.string("https://high"),
+        tx.pure.string("https://low"),
+        tx.pure.u64(200),
+        tx.pure.u64(5),
+        tx.pure.vector("address", [
+          "0xa35e89e56f9064f5c64edbcdd54cec51f7622720c942c2810809792af97c1359",
+        ]),
+        tx.pure.vector("u64", [2]),
+      ],
+      target: `${tunflowPackageId}::music_nft::mint_music_nft`,
+    });
+
+    signAndExecute(
+      {
+        transaction: tx,
+      },
+      {
+        onSuccess: async ({ digest }) => {
+          const { effects } = await suiClient.waitForTransaction({
+            digest: digest,
+            options: {
+              showEffects: true,
+            },
+          });
+
+          console.log(effects?.created?.[0]?.reference?.objectId);
+          console.log("Uploaded!!!");
+        },
+      }
+    );
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -854,6 +914,7 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
 
   return (
     <div className={styles.musicNFTUpload}>
+      <button onClick={uploadMusic}>Upload</button>
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>Create Music NFT</h2>

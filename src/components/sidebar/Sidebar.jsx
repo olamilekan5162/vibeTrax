@@ -6,9 +6,10 @@ import { RiHome9Fill, RiSettings5Line } from "react-icons/ri";
 import { MdOutlineLibraryMusic } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { ConnectButton } from "@mysten/dapp-kit";
 
 const Sidebar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div className={styles.stickySidebar}>
       <div className={styles.logoContainer}>
@@ -17,7 +18,7 @@ const Sidebar = () => {
           <h1 className={styles.logoText}>SuiTunes</h1>
         </Link>
       </div>
-      
+
       <div className={styles.profileContainer}>
         <div className={styles.imgContainer}>
           <img src={profilePic} alt="profilePic" />
@@ -67,12 +68,11 @@ const Sidebar = () => {
           <RiSettings5Line className={styles.icons} /> Settings
         </NavLink>
       </div>
-      
-        <button className={styles.logoutButton} onClick={() => navigate('/')}>
-      
-          Logout
-        </button>
-        
+
+      <button className={styles.logoutButton} onClick={() => navigate("/")}>
+        Logout
+      </button>
+      <ConnectButton />
     </div>
   );
 };
