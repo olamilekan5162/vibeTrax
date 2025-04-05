@@ -8,7 +8,7 @@ import { IoLogoInstagram as Igicon } from "react-icons/io5";
 const LandingPage = () => {
     return (
       <div>
-        <div className={styles.landingPageHeader} >
+        <div className={styles.landingPageHeader}>
           <header>
             <nav>
               <div className={styles.logoContainer}>
@@ -32,12 +32,12 @@ const LandingPage = () => {
                   Fuel the Future.
                 </h1>
                 <p>
-                  Discover exclusive music NFTs, support your favorite artists, and
-                  unlock premium experiences. Stream, collect, and trade—because
-                  music should be yours to own.
+                  Discover exclusive music NFTs, support your favorite artists,
+                  and unlock premium experiences. Stream, collect, and
+                  trade—because music should be yours to own.
                 </p>
                 <div className={styles.button}>
-                  <a href="#">
+                  <a href="/homepage">
                     <button className={styles.rightButton}>Get Started</button>
                   </a>
                   <a href="#">
@@ -48,30 +48,29 @@ const LandingPage = () => {
             </article>
           </header>
         </div>
-  
-         <footer className={styles.footer}>
-            <div class={styles.footerWrap}>
-                <div className={styles.footerText} >
-                <h4>Enjoy your Sound</h4>
-                <p>&copy; 2025 - SuiTunes Music Catalog</p>
-                </div>
 
-                <div className={styles.footerLhs} >
-                <a href="#" target="_blank">
-                    <button>Help</button>
-                </a>
-
-                <a href="#" target="_blank">
-                    <button>Feedback</button>
-                </a>
-
-                <Xicon className={styles.footerIcon} />
-                <Igicon className={styles.footerIcon} />
-                </div>
+        <footer className={styles.footer}>
+          <div class={styles.footerWrap}>
+            <div className={styles.footerText}>
+              <h4>Enjoy your Sound</h4>
+              <p>&copy; 2025 - SuiTunes Music Catalog</p>
             </div>
+
+            <div className={styles.footerLhs}>
+              <a href="#" target="_blank">
+                <button>Help</button>
+              </a>
+
+              <a href="#" target="_blank">
+                <button>Feedback</button>
+              </a>
+
+              <Xicon className={styles.footerIcon} />
+              <Igicon className={styles.footerIcon} />
+            </div>
+          </div>
         </footer>
-        </div>
-       
+      </div>
     );
   };
   export default LandingPage;
