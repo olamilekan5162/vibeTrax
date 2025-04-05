@@ -56,7 +56,7 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
         tx.pure.vector("address", [
           "0xa35e89e56f9064f5c64edbcdd54cec51f7622720c942c2810809792af97c1359",
         ]),
-        tx.pure.vector("u64", [2]),
+        tx.pure.vector("u64", [10000]),
       ],
       target: `${tunflowPackageId}::music_nft::mint_music_nft`,
     });
