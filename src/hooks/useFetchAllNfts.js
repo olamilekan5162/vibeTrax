@@ -1,0 +1,65 @@
+import { useSuiClientQuery } from "@mysten/dapp-kit";
+import { useEffect, useState } from "react";
+import { useNetworkVariables } from "../config/networkConfig";
+
+
+const useFetchAllNfts = () => {
+
+    const [userNfts, setUserNfts] = useState([])
+      const [NftIds, setNftIds] = useState([])
+      
+      const { tunflowPackageId, tunflowNFTRegistryId } = useNetworkVariables(
+        "tunflowPackageId",
+        "tunflowNFTRegistryId"
+      );
+
+        const { data: objectData, isPending: objectPending } = useSuiClientQuery(
+          'queryEvents',{
+            query: {
+              MoveModule: {
+                package: tunflowPackageId,
+                module: "music_nft",
+              },
+            }
+          },
+          {
+            select: (data => data.data.flatMap(x => x.parsedJson))
+          }
+          
+        ) 
+
+        useEffect(() => {
+          if(objectData) {
+            const allNftIds = objectData.map((nft) => nft.nft_id)
+            setNftIds(...NftIds, allNftIds)
+          }
+        },[objectData])
+
+      
+        const { data: musicData, isPending: musicPending } = useSuiClientQuery(
+          "multiGetObjects", {
+            ids: NftIds,
+            options: {
+               showOwner: true,
+               showContent: true
+            }
+          },
+          {
+            select: (data => data.flatMap(x => x.data.content.fields))
+          }
+        )
+
+        useEffect(() =>{
+          if (musicData) {
+            const musicNfts = musicData
+            setUserNfts(musicNfts)
+          }
+        }, [musicData])
+
+        return {
+          userNfts,
+          isPending: objectPending || musicPending,
+        }
+    
+
+}; export default useFetchAllNfts

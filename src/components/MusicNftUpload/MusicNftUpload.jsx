@@ -46,9 +46,9 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
     tx.moveCall({
       arguments: [
         tx.object(tunflowNFTRegistryId),
-        tx.pure.string("Title 1"),
-        tx.pure.string("Description 1"),
-        tx.pure.string("Genre 1"),
+        tx.pure.string("Title 2"),
+        tx.pure.string("Description 2"),
+        tx.pure.string("Genre 2"),
         tx.pure.string("https://high"),
         tx.pure.string("https://low"),
         tx.pure.u64(200),

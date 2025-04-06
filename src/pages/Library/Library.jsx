@@ -21,16 +21,6 @@ const Library = () => {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(true); // Set based on your wallet connection logic
   
-  const fetchAllNfts = useFetchAllNfts();
-
-useEffect(() => {
-  const fetchNfts = async () => {
-    const nfts = await fetchAllNfts()
-    console.log("NFT List:", nfts);
-
-  }
-  fetchNfts()
-}, []);
 
 
   const nfts = [
