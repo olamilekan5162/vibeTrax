@@ -28,14 +28,6 @@ const MyNFTs = () => {
     }
   },[isPending, userNfts])
 
-  // useEffect(() => {
-  //   if (isPending){
-  //     console.log("pending")
-  //   }else if(userNfts.length > 0 && currentAccount?.address ){
-  //     const myNft = userNfts.filter((nft) => nft.current_owner === currentAccount.address)
-  //     console.log(myNft)
-  //   }
-  // }, [isPending, userNfts, currentAccount?.address])
 
   const ownedNFTs = [
     {

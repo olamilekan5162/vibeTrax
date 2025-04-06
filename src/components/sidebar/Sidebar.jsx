@@ -27,7 +27,11 @@ const Sidebar = () => {
         <div className={styles.imgContainer}>
           <img src={profilePic} alt="profilePic" />
         </div>
-        <h4>{`${currentAccount.address.slice(0,6)}...${currentAccount.address.slice(-4)}`}</h4>
+        {
+          currentAccount ? <h4>{`${currentAccount.address.slice(0,6)}...${currentAccount.address.slice(-4)}`}</h4>
+          : <h4>Hello User</h4>
+        }
+        
       </div>
 
       <div className={styles.barContainer}>

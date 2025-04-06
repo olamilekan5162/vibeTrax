@@ -41,7 +41,7 @@ const CompactMusicPlayer = ({nft}) => {
           <img src={nft.genre}/>
           <div className={styles.titleBox}>
             <p className={styles.title}>{nft.title}</p>
-            <p className={styles.artist}>{nft.artist}</p>
+            <p className={styles.artist}>{`${nft.artist.slice(0,6)}...${nft.artist.slice(-4)}`}</p>
           </div>
         </div>
         <div className={styles.rightBox}>

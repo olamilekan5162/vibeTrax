@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./MusicNftUpload.module.css";
 import {
-  useNetworkVariable,
   useNetworkVariables,
 } from "../../config/networkConfig";
 import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
