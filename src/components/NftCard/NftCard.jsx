@@ -5,17 +5,17 @@ import { AudioContext } from "../AudioContext";
 
 const NFTCard = ({
   id,
-  image,
+  genre,
   title,
   artist,
-  previewAudio,
-  fullAudio,
+  low_quality_ipfs,
+  high_quality_ipfs,
   isOwned,
   onClick,
 }) => {
   const { currentTrack, isPlaying, playTrack } = useContext(AudioContext);
 
-  const audioSrc = isOwned ? fullAudio : previewAudio;
+  const audioSrc = isOwned ? high_quality_ipfs : low_quality_ipfs;
 
   const isCurrentTrack = currentTrack && currentTrack.id === id;
   const isCurrentlyPlaying = isCurrentTrack && isPlaying;
@@ -27,7 +27,7 @@ const NFTCard = ({
       title,
       artist,
       audioSrc,
-      image,
+      genre,
     });
   };
 
@@ -35,7 +35,7 @@ const NFTCard = ({
     <div className={styles.nftCard} onClick={onClick}>
       <div
         className={styles.cardBackground}
-        style={{ backgroundImage: `url(${image})` }}
+        style={{ backgroundImage: `url(${genre})` }}
       >
         <div className={styles.cardContent}>
           <div className={styles.playButton} onClick={handlePlayClick}>

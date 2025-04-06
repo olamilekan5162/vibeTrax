@@ -21,6 +21,7 @@ const Library = () => {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(true); // Set based on your wallet connection logic
   
+  const { isPending, userNfts } = useFetchAllNfts()
 
 
   const nfts = [
@@ -215,14 +216,22 @@ const Library = () => {
         </div>
 
         <div className={styles.nftGrid}>
-          {nfts.map((nft) => (
+          {userNfts.map((nft, index) => (
+            <NFTCard
+              key={index}
+              {...nft}
+              onClick={() => handleCardClick(nft)}
+              onBuy={() => handleBuyClick(nft)}
+            />
+          ))}
+          {/* {nfts.map((nft) => (
             <NFTCard
               key={nft.id}
               {...nft}
               onClick={() => handleCardClick(nft)}
               onBuy={() => handleBuyClick(nft)}
             />
-          ))}
+          ))} */}
         </div>
 
         {isModalOpen && selectedNFT && (

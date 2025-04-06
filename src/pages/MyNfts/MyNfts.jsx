@@ -152,10 +152,19 @@ const MyNFTs = () => {
     <div className={styles.myNFTs}>
       
       <h1 className={styles.title}>My NFTs</h1>
-      {ownedNFTs.length > 0 ? (
+      {/* {ownedNFTs.length > 0 ? (
         <div className={styles.nftContainer}>
           {ownedNFTs.map((nft) => (
             <NFTCard key={nft.id} {...nft} onClick={() => handleCardClick(nft)}/>
+          ))}
+        </div>
+      ) : (
+        <p className={styles.noNFTs}>You don't own any NFTs yet.</p>
+      )} */}
+      {!isPending && userNfts.length > 0 ? (
+        <div className={styles.nftContainer}>
+          {userNfts.map((nft, index) => (
+            <NFTCard key={index} {...nft} onClick={() => handleCardClick(nft)}/>
           ))}
         </div>
       ) : (
