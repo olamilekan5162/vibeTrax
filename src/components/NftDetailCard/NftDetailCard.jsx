@@ -4,7 +4,7 @@ import styles from './NftDetailCard.module.css'
 const NftDetailCard = ({nft, onBuy}) => {
   return (
     <div className={styles.card}>
-      <img src={nft.image} alt={nft.title} className={styles.image} />
+      <img src={nft.genre} alt={nft.title} className={styles.image} />
       <div className={styles.details}>
         <h2>{nft.title}</h2>
         <p>By <span className={styles.artist}>{nft.artist}</span></p>

@@ -46,12 +46,12 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
     tx.moveCall({
       arguments: [
         tx.object(tunflowNFTRegistryId),
-        tx.pure.string("sai gobe"),
-        tx.pure.string("Another hit gem from wapLoaded"),
-        tx.pure.string("https://usercontent.jamendo.com?type=album&id=404140&width=300&trackid=1532771"),
-        tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1532771&format=mp31&from=Te7dxqQy6FkKRT53bpH%2BdQ%3D%3D%7CeOiji5gKqrMFpQfAuAmUJA%3D%3D"),
-        tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1532771&format=mp31&from=Te7dxqQy6FkKRT53bpH%2BdQ%3D%3D%7CeOiji5gKqrMFpQfAuAmUJA%3D%3D"),
-        tx.pure.u64(200),
+        tx.pure.string("Lovey Dovey"),
+        tx.pure.string("Another hit gem from oracleLoaded"),
+        tx.pure.string("https://usercontent.jamendo.com?type=album&id=452525&width=300&trackid=1880336"),
+        tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+        tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+        tx.pure.u64(100),
         tx.pure.u64(5),
         tx.pure.vector("address", [
           "0xa35e89e56f9064f5c64edbcdd54cec51f7622720c942c2810809792af97c1359",

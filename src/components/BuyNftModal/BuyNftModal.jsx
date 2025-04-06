@@ -8,7 +8,7 @@ const BuyNFTModal = ({ nft, onClose }) => {
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <button className={styles.closeBtn} onClick={onClose}>✖</button>
-        <img src={nft.image} alt={nft.name} className={styles.nftImage} />
+        <img src={nft.genre} alt={nft.name} className={styles.nftImage} />
         <h2>{nft.name}</h2>
         <p>{nft.description}</p>
         <button className={styles.buyBtn}>Buy for {nft.price} SUI</button>
