@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NFTCard from "../../components/NftCard/NftCard";
 import BuyNFTModal from "../../components/BuyNftModal/BuyNftModal";
 // import MusicNFTUpload from "../../components/MusicNFTUpload/MusicNFTUpload";
@@ -12,6 +12,7 @@ import preview2 from "../../assets/MichaelJackson-SmoothCriminalLow.mp3";
 import full2 from "../../assets/MichaelJackson-SmoothCriminalHigh.mp3";
 import { useNavigate } from "react-router-dom";
 import MusicNFTUpload from "../../components/MusicNftUpload/MusicNftUpload";
+import useFetchAllNfts from "../../hooks/useFetchAllNfts";
 
 const Library = () => {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const Library = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(true); // Set based on your wallet connection logic
+  
+  const { isPending, userNfts } = useFetchAllNfts()
+
 
   const nfts = [
     {
@@ -212,14 +216,22 @@ const Library = () => {
         </div>
 
         <div className={styles.nftGrid}>
-          {nfts.map((nft) => (
+          {userNfts.map((nft, index) => (
+            <NFTCard
+              key={index}
+              {...nft}
+              onClick={() => handleCardClick(nft)}
+              onBuy={() => handleBuyClick(nft)}
+            />
+          ))}
+          {/* {nfts.map((nft) => (
             <NFTCard
               key={nft.id}
               {...nft}
               onClick={() => handleCardClick(nft)}
               onBuy={() => handleBuyClick(nft)}
             />
-          ))}
+          ))} */}
         </div>
 
         {isModalOpen && selectedNFT && (

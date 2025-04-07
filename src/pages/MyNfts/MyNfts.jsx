@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import NFTCard from '../../components/NftCard/NftCard';
 import styles from './MyNfts.module.css';
 import img1 from '../../assets/sui-bears.png';
@@ -9,9 +9,26 @@ import preview2 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
 import full2 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
 import Navbar from '../../components/navbar/Navbar';
 import { useNavigate } from 'react-router-dom';
+import { useCurrentAccount } from "@mysten/dapp-kit";
+import useFetchAllNfts from '../../hooks/useFetchAllNfts';
+
+
 
 const MyNFTs = () => {
   const navigate = useNavigate()
+  const currentAccount = useCurrentAccount()
+
+  const { userNfts, isPending } = useFetchAllNfts()
+
+  useEffect(() =>{
+    if(isPending){
+      console.log('pending')
+    }else{
+        console.log(userNfts);
+    }
+  },[isPending, userNfts])
+
+
   const ownedNFTs = [
     {
       id: 2,
@@ -127,10 +144,19 @@ const MyNFTs = () => {
     <div className={styles.myNFTs}>
       
       <h1 className={styles.title}>My NFTs</h1>
-      {ownedNFTs.length > 0 ? (
+      {/* {ownedNFTs.length > 0 ? (
         <div className={styles.nftContainer}>
           {ownedNFTs.map((nft) => (
             <NFTCard key={nft.id} {...nft} onClick={() => handleCardClick(nft)}/>
+          ))}
+        </div>
+      ) : (
+        <p className={styles.noNFTs}>You don't own any NFTs yet.</p>
+      )} */}
+      {!isPending && userNfts.length > 0 ? (
+        <div className={styles.nftContainer}>
+          {userNfts.map((nft, index) => (
+            <NFTCard key={index} {...nft} onClick={() => handleCardClick(nft)}/>
           ))}
         </div>
       ) : (

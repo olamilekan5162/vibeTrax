@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./MusicNftUpload.module.css";
 import {
-  useNetworkVariable,
   useNetworkVariables,
 } from "../../config/networkConfig";
 import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
@@ -46,12 +45,12 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
     tx.moveCall({
       arguments: [
         tx.object(tunflowNFTRegistryId),
-        tx.pure.string("Title 1"),
-        tx.pure.string("Description 1"),
-        tx.pure.string("Genre 1"),
-        tx.pure.string("https://high"),
-        tx.pure.string("https://low"),
-        tx.pure.u64(200),
+        tx.pure.string("Lovey Dovey"),
+        tx.pure.string("Another hit gem from oracleLoaded"),
+        tx.pure.string("https://usercontent.jamendo.com?type=album&id=452525&width=300&trackid=1880336"),
+        tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+        tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+        tx.pure.u64(100),
         tx.pure.u64(5),
         tx.pure.vector("address", [
           "0xa35e89e56f9064f5c64edbcdd54cec51f7622720c942c2810809792af97c1359",

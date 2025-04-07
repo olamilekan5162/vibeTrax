@@ -38,10 +38,10 @@ const CompactMusicPlayer = ({nft}) => {
     <div className={styles.compactContainer}>
       <div className={styles.musicBox}>
         <div className={styles.leftBox}>
-          <img src={nft.image}/>
+          <img src={nft.genre}/>
           <div className={styles.titleBox}>
             <p className={styles.title}>{nft.title}</p>
-            <p className={styles.artist}>{nft.artist}</p>
+            <p className={styles.artist}>{`${nft.artist.slice(0,6)}...${nft.artist.slice(-4)}`}</p>
           </div>
         </div>
         <div className={styles.rightBox}>
@@ -73,7 +73,7 @@ const CompactMusicPlayer = ({nft}) => {
       
       <audio
       ref={audioRef}
-      src={nft.isOwned ? nft.fullAudio : nft.previewAudio}
+      src={nft.isOwned ? nft.high_quality_ipfs : nft.low_quality_ipfs}
       onTimeUpdate={(e) => {
         setCurrentTime(e.target.currentTime);
         setDuration(e.target.duration);
