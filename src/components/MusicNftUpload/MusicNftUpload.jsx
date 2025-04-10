@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styles from "./MusicNftUpload.module.css";
-import {
-  useNetworkVariables,
-} from "../../config/networkConfig";
+import { useNetworkVariables } from "../../config/networkConfig";
 import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 import { Transaction } from "@mysten/sui/transactions";
 
@@ -751,7 +749,7 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
                     onChange={handleChange}
                     className={styles.currencySelect}
                   >
-                    <option value="ethereum">ETH</option>
+                    <option value="sui">SUI</option>
                     <option value="polygon">MATIC</option>
                     <option value="solana">SOL</option>
                     <option value="arbitrum">ARB</option>
@@ -980,7 +978,7 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
                 Back
               </button>
             )}
-
+            <button onClick={uploadMusic}>Upload</button>
             {activeStep < 2 ? (
               <button
                 type="button"
@@ -994,6 +992,7 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
               <button
                 type="submit"
                 className={styles.mintButton}
+                onClick={uploadMusic}
                 disabled={!isStepValid() || isUploading || !walletConnected}
               >
                 {isUploading ? (

@@ -19,7 +19,7 @@ const LandingPage = () => {
               </div>
               <ul className={styles.navLink}>
                 <li>
-                  <a href="#">
+                  <a href="/login">
                     <button>Get Started</button>
                   </a>
                 </li>
