@@ -18,6 +18,8 @@ const MyNFTs = () => {
 
   const { userNfts, isPending } = useFetchAllNfts();
 
+  const myNfts = userNfts.filter((nft) => nft.current_owner === currentAccount.address)
+
   useEffect(() => {
     if (isPending) {
       console.log("pending");
@@ -149,9 +151,9 @@ const MyNFTs = () => {
       ) : (
         <p className={styles.noNFTs}>You don't own any NFTs yet.</p>
       )} */}
-      {!isPending && userNfts.length > 0 ? (
+      {!isPending && userNfts.length > 0 && myNfts.length > 0 ? (
         <div className={styles.nftContainer}>
-          {userNfts.map((nft, index) => (
+          {myNfts.map((nft, index) => (
             <NFTCard
               key={index}
               {...nft}

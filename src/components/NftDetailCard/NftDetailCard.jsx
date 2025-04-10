@@ -15,10 +15,10 @@ const NftDetailCard = ({nft, onBuy}) => {
           <p><strong>Total Streams:</strong> {nft.streaming_count}</p>
         </div>
 
-        {nft.isOwned ? (
-          <button className={styles.playButton}>Play High-Quality</button>
-        ) : (
+        {nft.for_sale ? (
           <button className={styles.buyButton} onClick={onBuy}>Buy NFT</button>
+        ) : (
+          <button className={styles.playButton}>Already Sold</button>
         )}
       </div>
     </div>

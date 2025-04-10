@@ -19,10 +19,6 @@ const BuyNFTModal = ({ nft, onClose }) => {
     isPending,
   } = useSignAndExecuteTransaction();
 
-<<<<<<< HEAD
-
-=======
->>>>>>> be18f3d9a7e9218503a6c0ffddb08fec8df8fbeb
   const buyNft = (e) => {
     e.preventDefault();
     const amountMist = BigInt(Math.floor(nft.price * 1_000_000_000));
@@ -33,15 +29,7 @@ const BuyNFTModal = ({ nft, onClose }) => {
 
 
     tx.moveCall({
-<<<<<<< HEAD
-      arguments: [
-        tx.object(tunflowNFTRegistryId),
-        tx.object(nft.id.id),
-        coin
-      ],
-=======
       arguments: [tx.object(tunflowNFTRegistryId), tx.object(nft.id.id), coin],
->>>>>>> be18f3d9a7e9218503a6c0ffddb08fec8df8fbeb
       target: `${tunflowPackageId}::music_nft::purchase_music_nft`,
     });
 
