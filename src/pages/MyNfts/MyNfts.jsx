@@ -137,7 +137,7 @@ const MyNFTs = () => {
   ];
 
   const handleCardClick = (nft) => {
-    navigate(`/nft/${nft.id}`, { state: nft });
+    navigate(`/nft/${nft.id.id}`, { state: nft });
   };
 
   return (
