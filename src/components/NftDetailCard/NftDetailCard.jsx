@@ -7,13 +7,12 @@ const NftDetailCard = ({nft, onBuy}) => {
       <img src={nft.genre} alt={nft.title} className={styles.image} />
       <div className={styles.details}>
         <h2>{nft.title}</h2>
-        <p>By <span className={styles.artist}>{`${nft.artist.slice(0,6)}...${nft.artist.slice(-4)}`}</span></p>
         <p className={styles.description}>{nft.description}</p>
+        <p>Owner: <span className={styles.artist}>{`${nft.current_owner.slice(0,6)}...${nft.current_owner.slice(-4)}`}</span></p>
 
         <div className={styles.info}>
           <p><strong>Price:</strong> {nft.price}</p>
-          <p><strong>Total Streams:</strong> {nft.totalStreams}</p>
-          <p><strong>Owner:</strong> {nft.owner}</p>
+          <p><strong>Total Streams:</strong> {nft.streaming_count}</p>
         </div>
 
         {nft.isOwned ? (
