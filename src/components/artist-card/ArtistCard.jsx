@@ -8,52 +8,12 @@ import TopArtist from "../../components/topArtist/TopArtist";
 import styles from "./ArtistCard.module.css";
 import { useState } from "react";
 import { GrNext as Nexticon, GrPrevious as Previcon } from "react-icons/gr";
+import useFetchAllNfts from "../../hooks/useFetchAllNfts";
 
 const ArtistCard = () => {
-  
- const topArtist = [
-   {
-     id: 1,
-     profilePic: image1,
-     name: "Daniel Howe",
-     follower: "200",
-   },
+    const { isPending, userNfts} = useFetchAllNfts()
 
-   {
-     id: 2,
-     profilePic: image2,
-     name: "Bee Wizzy",
-     follower: "115",
-   },
-
-   {
-     id: 3,
-     profilePic: image3,
-     name: "Tengu Power",
-     follower: "552",
-   },
-
-   {
-     id: 4,
-     profilePic: image4,
-     name: "Danny Dreokt",
-     follower: "595",
-   },
-
-   {
-     id: 5,
-     profilePic: image5,
-     name: "Tamara Austin",
-     follower: "135",
-   },
-
-   {
-     id: 6,
-     profilePic: image6,
-     name: "Lizzy Tube",
-     follower: "919",
-   },
- ];
+    const topArtist = [...new Set(userNfts.map((artist) => artist.artist))]
 
  const [index, setIndex] = useState(0);
  const showingCards = topArtist.slice(index, index + 3);
@@ -84,14 +44,17 @@ const ArtistCard = () => {
 
       <div className={styles.artistContainer}>
         <div className={styles.artistGrid}>
-          {showingCards.map((artist) => (
+          {!isPending && topArtist.length > 0 ? (
+          showingCards.map((artist, index) => (
             <TopArtist
-              key={artist.id}
-              profilePic={artist.profilePic}
-              name={artist.name}
+              key={index}
+              name={artist}
               follower={artist.follower}
             />
-          ))}
+          ))) : (
+            "Loading..."
+          )
+        }
         </div>
       </div>
     </section>
