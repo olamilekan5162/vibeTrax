@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./homepage.module.css";
-import ArtistCard from "../../components/artistCard/ArtistCard";
+import ArtistCard from "../../components/artist-card/ArtistCard";
 import MusicNft from "../../components/musicNft/MusicNft";
 import MyNFTs from "../MyNfts/MyNfts";
 
