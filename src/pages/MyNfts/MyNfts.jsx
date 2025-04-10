@@ -1,33 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import NFTCard from '../../components/NftCard/NftCard';
-import styles from './MyNfts.module.css';
-import img1 from '../../assets/sui-bears.png';
-import img2 from '../../assets/sui-bears1.png';
-import preview1 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
-import full1 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
-import preview2 from '../../assets/MichaelJackson-SmoothCriminalLow.mp3';
-import full2 from '../../assets/MichaelJackson-SmoothCriminalHigh.mp3';
-import Navbar from '../../components/navbar/Navbar';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import NFTCard from "../../components/NftCard/NftCard";
+import styles from "./MyNfts.module.css";
+import img1 from "../../assets/sui-bears.png";
+import img2 from "../../assets/sui-bears1.png";
+import preview1 from "../../assets/MichaelJackson-SmoothCriminalLow.mp3";
+import full1 from "../../assets/MichaelJackson-SmoothCriminalHigh.mp3";
+import preview2 from "../../assets/MichaelJackson-SmoothCriminalLow.mp3";
+import full2 from "../../assets/MichaelJackson-SmoothCriminalHigh.mp3";
+import Navbar from "../../components/navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 import { useCurrentAccount } from "@mysten/dapp-kit";
-import useFetchAllNfts from '../../hooks/useFetchAllNfts';
-
-
+import useFetchAllNfts from "../../hooks/useFetchAllNfts";
 
 const MyNFTs = () => {
-  const navigate = useNavigate()
-  const currentAccount = useCurrentAccount()
+  const navigate = useNavigate();
+  const currentAccount = useCurrentAccount();
 
-  const { userNfts, isPending } = useFetchAllNfts()
+  const { userNfts, isPending } = useFetchAllNfts();
 
-  useEffect(() =>{
-    if(isPending){
-      console.log('pending')
-    }else{
-        console.log(userNfts);
+  useEffect(() => {
+    if (isPending) {
+      console.log("pending");
+    } else {
+      console.log(userNfts);
     }
-  },[isPending, userNfts])
-
+  }, [isPending, userNfts]);
 
   const ownedNFTs = [
     {
@@ -137,12 +134,11 @@ const MyNFTs = () => {
   ];
 
   const handleCardClick = (nft) => {
-    navigate(`/nft/${nft.id}`, { state: nft });
+    navigate(`/nft/${nft.id.id}`, { state: nft });
   };
 
   return (
     <div className={styles.myNFTs}>
-      
       <h1 className={styles.title}>My NFTs</h1>
       {/* {ownedNFTs.length > 0 ? (
         <div className={styles.nftContainer}>
@@ -156,7 +152,11 @@ const MyNFTs = () => {
       {!isPending && userNfts.length > 0 ? (
         <div className={styles.nftContainer}>
           {userNfts.map((nft, index) => (
-            <NFTCard key={index} {...nft} onClick={() => handleCardClick(nft)}/>
+            <NFTCard
+              key={index}
+              {...nft}
+              onClick={() => handleCardClick(nft)}
+            />
           ))}
         </div>
       ) : (

@@ -20,9 +20,8 @@ const Library = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(true); // Set based on your wallet connection logic
-  
-  const { isPending, userNfts } = useFetchAllNfts()
 
+  const { isPending, userNfts } = useFetchAllNfts();
 
   const nfts = [
     {
@@ -172,7 +171,7 @@ const Library = () => {
   ];
 
   const handleCardClick = (nft) => {
-    navigate(`/nft/${nft.id}`, { state: nft });
+    navigate(`/nft/${nft.id.id}`, { state: nft });
   };
 
   const handleBuyClick = (nft) => {
