@@ -9,12 +9,13 @@ import { networkConfig } from "./config/networkConfig.js";
 import "@mysten/dapp-kit/dist/index.css";
 
 const queryClient = new QueryClient();
+// const  {} = useCurrentWallet()
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <SuiClientProvider networks={networkConfig} defaultNetwork="devnet">
-        <WalletProvider>
+        <WalletProvider autoConnect>
           <AudioProvider>
             <RouterProvider router={router} />
           </AudioProvider>

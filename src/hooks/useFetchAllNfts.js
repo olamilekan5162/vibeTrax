@@ -2,65 +2,61 @@ import { useSuiClientQuery } from "@mysten/dapp-kit";
 import { useEffect, useState } from "react";
 import { useNetworkVariables } from "../config/networkConfig";
 
-
 const useFetchAllNfts = () => {
+  const [userNfts, setUserNfts] = useState([]);
+  const [NftIds, setNftIds] = useState([]);
 
-    const [userNfts, setUserNfts] = useState([])
-      const [NftIds, setNftIds] = useState([])
-      
-      const { tunflowPackageId, tunflowNFTRegistryId } = useNetworkVariables(
-        "tunflowPackageId",
-        "tunflowNFTRegistryId"
-      );
+  const { tunflowPackageId, tunflowNFTRegistryId } = useNetworkVariables(
+    "tunflowPackageId",
+    "tunflowNFTRegistryId"
+  );
 
-        const { data: objectData, isPending: objectPending } = useSuiClientQuery(
-          'queryEvents',{
-            query: {
-              MoveModule: {
-                package: tunflowPackageId,
-                module: "music_nft",
-              },
-            }
-          },
-          {
-            select: (data => data.data.flatMap(x => x.parsedJson))
-          }
-          
-        ) 
+  const { data: objectData, isPending: objectPending } = useSuiClientQuery(
+    "queryEvents",
+    {
+      query: {
+        MoveEventType: `${tunflowPackageId}::music_nft::MusicNFTMinted`,
+      },
+    },
+    {
+      select: (data) => data.data.flatMap((x) => x.parsedJson),
+    }
+  );
 
-        useEffect(() => {
-          if(objectData) {
-            const allNftIds = objectData.map((nft) => nft.nft_id)
-            console.log(allNftIds)
-            setNftIds(allNftIds)
-          }
-        },[objectData])
+  useEffect(() => {
+    if (objectData) {
+      console.log(objectData);
 
-      
-        const { data: musicData, isPending: musicPending } = useSuiClientQuery(
-          "multiGetObjects", {
-            ids: NftIds,
-            options: {
-               showOwner: true,
-               showContent: true
-            }
-          },
-          {
-            select: (data => data.flatMap(x => x.data.content.fields))
-          }
-        )
+      const allNftIds = objectData.map((nft) => nft.nft_id);
+      console.log(allNftIds);
+      setNftIds(allNftIds);
+    }
+  }, [objectData]);
 
-        useEffect(() =>{
-          if (musicData) {
-            const musicNfts = musicData
-            setUserNfts(musicNfts)
-          }
-        }, [musicData])
+  const { data: musicData, isPending: musicPending } = useSuiClientQuery(
+    "multiGetObjects",
+    {
+      ids: NftIds,
+      options: {
+        showOwner: true,
+        showContent: true,
+      },
+    },
+    {
+      select: (data) => data.flatMap((x) => x.data.content.fields),
+    }
+  );
 
-        return {
-          userNfts,
-          isPending: objectPending || musicPending,
-        }
-    
+  useEffect(() => {
+    if (musicData) {
+      const musicNfts = musicData;
+      setUserNfts(musicNfts);
+    }
+  }, [musicData]);
 
-}; export default useFetchAllNfts
+  return {
+    userNfts,
+    isPending: objectPending || musicPending,
+  };
+};
+export default useFetchAllNfts;
