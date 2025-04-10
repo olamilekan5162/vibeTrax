@@ -31,7 +31,8 @@ const useFetchAllNfts = () => {
         useEffect(() => {
           if(objectData) {
             const allNftIds = objectData.map((nft) => nft.nft_id)
-            setNftIds(...NftIds, allNftIds)
+            console.log(allNftIds)
+            setNftIds(allNftIds)
           }
         },[objectData])
 
