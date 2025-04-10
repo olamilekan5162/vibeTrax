@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./Login.module.css";
 import { Link } from 'react-router-dom';
-
+import { ConnectButton } from "@mysten/dapp-kit";
 const Login = () => {
-  const [isConnecting, setIsConnecting] = useState(false);
   const [isZkLoading, setIsZkLoading] = useState(false);
   const [showZkForm, setShowZkForm] = useState(false);
   
@@ -12,12 +11,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
-  
-  const handleWalletConnect = () => {
-    setIsConnecting(true);
-    // Simulate connection process
-    setTimeout(() => setIsConnecting(false), 2000);
-  };
 
   const handleZkLogin = () => {
     setIsZkLoading(true);
@@ -102,7 +95,7 @@ const Login = () => {
           <button 
             className={`${styles.zkLogin} ${isZkLoading ? styles.loading : ''}`}
             onClick={handleZkLogin}
-            disabled={isZkLoading || isConnecting}
+            disabled={isZkLoading}
           >
             {isZkLoading ? (
               <span className={styles.loader}></span>
@@ -119,20 +112,8 @@ const Login = () => {
           </div>
           
           <div className={styles.walletConnectWrapper}>
-            <button 
-              className={`${styles.walletConnect} ${isConnecting ? styles.loading : ''}`}
-              onClick={handleWalletConnect}
-              disabled={isConnecting || isZkLoading}
-            >
-              {isConnecting ? (
-                <span className={styles.loader}></span>
-              ) : (
-                <>
-                  <span className={styles.buttonIcon}>💼</span>
-                  Connect Wallet
-                </>
-              )}
-            </button>
+            {/* Replace custom wallet connect button with Sui's ConnectWallet component */}
+            <ConnectButton/>
           </div>
         </div>
         

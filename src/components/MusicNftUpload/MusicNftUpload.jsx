@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styles from "./MusicNftUpload.module.css";
-import {
-  useNetworkVariables,
-} from "../../config/networkConfig";
+import { useNetworkVariables } from "../../config/networkConfig";
 import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 import { Transaction } from "@mysten/sui/transactions";
 
@@ -45,13 +43,19 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
     tx.moveCall({
       arguments: [
         tx.object(tunflowNFTRegistryId),
-        tx.pure.string("Lovey Dovey"),
-        tx.pure.string("Another hit gem from oracleLoaded"),
-        tx.pure.string("https://usercontent.jamendo.com?type=album&id=452525&width=300&trackid=1880336"),
-        tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
-        tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+        tx.pure.string(formData.title),
+        tx.pure.string(formData.description),
+        tx.pure.string(
+          "https://usercontent.jamendo.com?type=album&id=452525&width=300&trackid=1880336"
+        ),
+        tx.pure.string(
+          "https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"
+        ),
+        tx.pure.string(
+          "https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"
+        ),
         tx.pure.u64(100),
-        tx.pure.u64(5),
+        tx.pure.u64(10),
         tx.pure.vector("address", [
           "0xa35e89e56f9064f5c64edbcdd54cec51f7622720c942c2810809792af97c1359",
         ]),
@@ -751,7 +755,7 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
                     onChange={handleChange}
                     className={styles.currencySelect}
                   >
-                    <option value="ethereum">ETH</option>
+                    <option value="sui">SUI</option>
                     <option value="polygon">MATIC</option>
                     <option value="solana">SOL</option>
                     <option value="arbitrum">ARB</option>
@@ -980,7 +984,7 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
                 Back
               </button>
             )}
-
+            <button onClick={uploadMusic}>Upload</button>
             {activeStep < 2 ? (
               <button
                 type="button"
@@ -994,6 +998,7 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
               <button
                 type="submit"
                 className={styles.mintButton}
+                onClick={uploadMusic}
                 disabled={!isStepValid() || isUploading || !walletConnected}
               >
                 {isUploading ? (
