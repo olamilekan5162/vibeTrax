@@ -43,12 +43,12 @@ const MusicNFTUpload = ({ onSubmit, walletConnected }) => {
     tx.moveCall({
       arguments: [
         tx.object(tunflowNFTRegistryId),
-        tx.pure.string(formData.title),
-        tx.pure.string(formData.description),
-        tx.pure.string("https://usercontent.jamendo.com?type=album&id=588228&width=300&trackid=2219326"),
+        tx.pure.string("Sui Jam"),
+        tx.pure.string("Another hit gem from oracleLoaded"),
+        tx.pure.string("https://usercontent.jamendo.com?type=album&id=252044&width=300&trackid=1709361"),
         tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
         tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
-        tx.pure.u64(3),
+        tx.pure.u64(1),
         tx.pure.u64(5),
         tx.pure.vector("address", [
           "0xa35e89e56f9064f5c64edbcdd54cec51f7622720c942c2810809792af97c1359",

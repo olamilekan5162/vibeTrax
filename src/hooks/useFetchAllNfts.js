@@ -25,10 +25,7 @@ const useFetchAllNfts = () => {
 
   useEffect(() => {
     if (objectData) {
-      console.log(objectData);
-
       const allNftIds = objectData.map((nft) => nft.nft_id);
-      console.log(allNftIds);
       setNftIds(allNftIds);
     }
   }, [objectData]);

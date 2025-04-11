@@ -215,14 +215,18 @@ const Library = () => {
         </div>
 
         <div className={styles.nftGrid}>
-          {userNfts.map((nft, index) => (
+          {!isPending && userNfts.length > 0 ? (
+          userNfts.map((nft, index) => (
             <NFTCard
               key={index}
               {...nft}
               onClick={() => handleCardClick(nft)}
               onBuy={() => handleBuyClick(nft)}
             />
-          ))}
+          )) ): (
+            "Loading..."
+          )
+        }
           {/* {nfts.map((nft) => (
             <NFTCard
               key={nft.id}

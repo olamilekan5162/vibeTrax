@@ -27,6 +27,7 @@ const BuyNFTModal = ({ nft, onClose }) => {
 
     const [coin] = tx.splitCoins(tx.gas, [tx.pure("u64", amountMist)]);
 
+
     tx.moveCall({
       arguments: [tx.object(tunflowNFTRegistryId), tx.object(nft.id.id), coin],
       target: `${tunflowPackageId}::music_nft::purchase_music_nft`,
