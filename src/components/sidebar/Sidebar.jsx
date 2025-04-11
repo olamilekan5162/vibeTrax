@@ -1,12 +1,12 @@
 import styles from "./sidebar.module.css";
 import { NavLink, Link } from "react-router-dom";
 import { SiBluesound } from "react-icons/si";
-import profilePic from "/assets/austin.jpg";
 import { RiHome9Fill, RiSettings5Line } from "react-icons/ri";
 import { MdOutlineLibraryMusic } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
+import Jazzicon from "react-jazzicon";
 
 
 
@@ -25,7 +25,8 @@ const Sidebar = () => {
 
       <div className={styles.profileContainer}>
         <div className={styles.imgContainer}>
-          <img src={profilePic} alt="profilePic" />
+          {/* <img src={profilePic} alt="profilePic" /> */}
+          <Jazzicon diameter={35} slice={currentAccount.address.slice(0,10)} />
         </div>
         {
           currentAccount ? <h4>{`${currentAccount.address.slice(0,6)}...${currentAccount.address.slice(-4)}`}</h4>
