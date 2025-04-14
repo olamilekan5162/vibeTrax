@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import NFTCard from "../../components/NftCard/NftCard";
-import BuyNFTModal from "../../components/BuyNftModal/BuyNftModal";
+import NFTCard from "../../../trash/NftCard/NftCard";
+import BuyNFTModal from "../../../trash/BuyNftModal/BuyNftModal";
 // import MusicNFTUpload from "../../components/MusicNFTUpload/MusicNFTUpload";
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../../../trash/navbar/Navbar";
 import styles from "./Library.module.css";
 import img1 from "../../assets/sui-bears.png";
 import img2 from "../../assets/sui-bears1.png";
@@ -11,7 +11,7 @@ import full1 from "../../assets/MichaelJackson-SmoothCriminalHigh.mp3";
 import preview2 from "../../assets/MichaelJackson-SmoothCriminalLow.mp3";
 import full2 from "../../assets/MichaelJackson-SmoothCriminalHigh.mp3";
 import { useNavigate } from "react-router-dom";
-import MusicNFTUpload from "../../components/MusicNftUpload/MusicNftUpload";
+import MusicNFTUpload from "../../../trash/MusicNftUpload/MusicNftUpload";
 import useFetchAllNfts from "../../hooks/useFetchAllNfts";
 
 const Library = () => {
@@ -215,18 +215,16 @@ const Library = () => {
         </div>
 
         <div className={styles.nftGrid}>
-          {!isPending && userNfts.length > 0 ? (
-          userNfts.map((nft, index) => (
-            <NFTCard
-              key={index}
-              {...nft}
-              onClick={() => handleCardClick(nft)}
-              onBuy={() => handleBuyClick(nft)}
-            />
-          )) ): (
-            "Loading..."
-          )
-        }
+          {!isPending && userNfts.length > 0
+            ? userNfts.map((nft, index) => (
+                <NFTCard
+                  key={index}
+                  {...nft}
+                  onClick={() => handleCardClick(nft)}
+                  onBuy={() => handleBuyClick(nft)}
+                />
+              ))
+            : "Loading..."}
           {/* {nfts.map((nft) => (
             <NFTCard
               key={nft.id}

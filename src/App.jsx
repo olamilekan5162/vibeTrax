@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "./components/sidebar/Sidebar";
-import Navbar from "./components/navbar/Navbar";
-import AudioPlayer from "./components/AudioPlayer/AudioPlayer";
+import Sidebar from "../trash/sidebar/Sidebar";
+import Navbar from "../trash/navbar/Navbar";
+import AudioPlayer from "../trash/AudioPlayer/AudioPlayer";
 
 function App() {
   return (

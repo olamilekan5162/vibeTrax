@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./homepage.module.css";
-import ArtistCard from "../../components/artist-card/ArtistCard";
-import MusicNft from "../../components/musicNft/MusicNft";
+import ArtistCard from "../../artist-card/ArtistCard";
+import MusicNft from "../../musicNft/MusicNft";
 import MyNFTs from "../MyNfts/MyNfts";
-
 
 const HomePage = () => {
   const backgroundImages = [
@@ -35,7 +34,6 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
 
-
   return (
     <div className={styles.homeContainer}>
       <main className={styles.mainContent}>
@@ -50,7 +48,6 @@ const HomePage = () => {
             <p>Collect, trade, and earn with your favorite artists.</p>
           </div>
         </section>
-
 
         <section className={styles.nftCollection}>
           <MusicNft />

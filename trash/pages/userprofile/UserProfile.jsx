@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styles from "./userProfile.module.css";
 import profilePic from "../../assets/sui-bears.png";
 import MyNFTs from "../MyNfts/MyNfts";
-import Navbar from "../../components/navbar/Navbar";
-
+import Navbar from "../../../trash/navbar/Navbar";
 
 const UserProfile = () => {
   const [user, setUser] = useState({
@@ -23,7 +22,6 @@ const UserProfile = () => {
 
   return (
     <div className={styles.profileContainer}>
-      
       <div className={styles.userInfo}>
         <img src={profilePic} alt="Profile" className={styles.profilePic} />
         <h2>{user.name}</h2>
@@ -41,7 +39,7 @@ const UserProfile = () => {
       </div>
 
       <div className={styles.nftSection}>
-        <MyNFTs/>
+        <MyNFTs />
       </div>
     </div>
   );

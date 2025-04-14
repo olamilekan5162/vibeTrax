@@ -1,6 +1,6 @@
 import styles from "./BuyNftModal.module.css";
 import React, { useState } from "react";
-import { useNetworkVariables } from "../../config/networkConfig";
+import { useNetworkVariables } from "../../src/config/networkConfig";
 import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 import { Transaction } from "@mysten/sui/transactions";
 
@@ -26,7 +26,6 @@ const BuyNFTModal = ({ nft, onClose }) => {
     const tx = new Transaction();
 
     const [coin] = tx.splitCoins(tx.gas, [tx.pure("u64", amountMist)]);
-
 
     tx.moveCall({
       arguments: [tx.object(tunflowNFTRegistryId), tx.object(nft.id.id), coin],

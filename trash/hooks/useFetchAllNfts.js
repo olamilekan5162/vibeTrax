@@ -1,6 +1,6 @@
 import { useSuiClientQuery } from "@mysten/dapp-kit";
 import { useEffect, useState } from "react";
-import { useNetworkVariables } from "../config/networkConfig";
+import { useNetworkVariables } from "../../src/config/networkConfig";
 
 const useFetchAllNfts = () => {
   const [userNfts, setUserNfts] = useState([]);

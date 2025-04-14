@@ -8,25 +8,22 @@ import TopArtist from "../../components/topArtist/TopArtist";
 import styles from "./ArtistCard.module.css";
 import { useState } from "react";
 import { GrNext as Nexticon, GrPrevious as Previcon } from "react-icons/gr";
-import useFetchAllNfts from "../../hooks/useFetchAllNfts";
+import useFetchAllNfts from "../hooks/useFetchAllNfts";
 
 const ArtistCard = () => {
-    const { isPending, userNfts} = useFetchAllNfts()
+  const { isPending, userNfts } = useFetchAllNfts();
 
-    const topArtist = [...new Set(userNfts.map((artist) => artist.artist))]
+  const topArtist = [...new Set(userNfts.map((artist) => artist.artist))];
 
- const [index, setIndex] = useState(0);
- const showingCards = topArtist.slice(index, index + 3);
- const nextCards = () => {
-    setIndex((prev) => (
-        prev + 3 < topArtist.length ? prev + 3 : 0
-));
- };
+  const [index, setIndex] = useState(0);
+  const showingCards = topArtist.slice(index, index + 3);
+  const nextCards = () => {
+    setIndex((prev) => (prev + 3 < topArtist.length ? prev + 3 : 0));
+  };
 
- const prevCards = () => {
-   setIndex((prev => prev - 3 >= 0 ? prev - 3 : topArtist.length-3));
- };
-
+  const prevCards = () => {
+    setIndex((prev) => (prev - 3 >= 0 ? prev - 3 : topArtist.length - 3));
+  };
 
   return (
     <section className={styles.artistSection}>
@@ -44,17 +41,15 @@ const ArtistCard = () => {
 
       <div className={styles.artistContainer}>
         <div className={styles.artistGrid}>
-          {!isPending && topArtist.length > 0 ? (
-          showingCards.map((artist, index) => (
-            <TopArtist
-              key={index}
-              name={artist}
-              follower={artist.follower}
-            />
-          ))) : (
-            "Loading..."
-          )
-        }
+          {!isPending && topArtist.length > 0
+            ? showingCards.map((artist, index) => (
+                <TopArtist
+                  key={index}
+                  name={artist}
+                  follower={artist.follower}
+                />
+              ))
+            : "Loading..."}
         </div>
       </div>
     </section>

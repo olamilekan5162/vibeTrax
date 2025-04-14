@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NFTCard from "../../components/NftCard/NftCard";
+import NFTCard from "../../NftCard/NftCard";
 import styles from "./MyNfts.module.css";
 import img1 from "../../assets/sui-bears.png";
 import img2 from "../../assets/sui-bears1.png";
@@ -7,7 +7,7 @@ import preview1 from "../../assets/MichaelJackson-SmoothCriminalLow.mp3";
 import full1 from "../../assets/MichaelJackson-SmoothCriminalHigh.mp3";
 import preview2 from "../../assets/MichaelJackson-SmoothCriminalLow.mp3";
 import full2 from "../../assets/MichaelJackson-SmoothCriminalHigh.mp3";
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import useFetchAllNfts from "../../hooks/useFetchAllNfts";
@@ -18,7 +18,9 @@ const MyNFTs = () => {
 
   const { userNfts, isPending } = useFetchAllNfts();
 
-  const myNfts = userNfts.filter((nft) => nft.current_owner === currentAccount.address)
+  const myNfts = userNfts.filter(
+    (nft) => nft.current_owner === currentAccount.address
+  );
 
   useEffect(() => {
     if (isPending) {
