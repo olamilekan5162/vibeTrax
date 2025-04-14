@@ -1,38 +1,53 @@
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+:root {
+  /* Primary Colors */
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-primary-darker: #4338ca;
 
+  /* Background Colors */
+  --color-bg-primary: #0a0a16;
+  --color-bg-secondary: #0d0d1d;
+  --color-bg-dark: #070712;
+  --color-bg-card: rgba(255, 255, 255, 0.05);
+  --color-bg-navbar: rgba(10, 10, 22, 0.85);
+
+  /* Text Colors */
+  --color-text-primary: #f5f5f7;
+  --color-text-secondary: #d1d1d1;
+  --color-text-muted: #a1a1a1;
+
+  /* Border Colors */
+  --color-border: rgba(255, 255, 255, 0.1);
+
+  /* Gradient */
+  --gradient-primary: linear-gradient(135deg, #4338ca, #6366f1);
+
+  /* Button Colors */
+  --color-btn-white: white;
+  --color-btn-white-hover: #f5f5f7;
+}
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  list-style: none;
+  text-decoration: none;
 }
 
-:root {
-  --prim-OSWALD: "Oswald", sans-serif;
-  --prim-ROBOTO: "Roboto", sans-serif;
-  --prim-VT323: "VT323", monospace;
-  --prim-ORBITRON: "Orbitron", sans-serif;
-  --prim-CHAKRA: "Chakra Petch", sans-serif;
-  --bg-color: linear-gradient(135deg, #0a0f24, #1a1f3d);
-  --prim-color: #00ffa3;
-  --prim-color-2: #fff;
-  --prim-color-3: #075f3f;
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
 }
 
-body{
-  margin: 0;
-  padding: 0;
-  background: var(--bg-color);
+a {
+  color: var(--color-text-primary);
+  transition: color 0.3s;
+  font-weight: 500;
 }
 
-ul,
-h1,
-h2,
-h3,
-h4,
-p {
-  margin: 0;
-  padding: 0;
+a:hover {
+  color: var(--color-primary);
 }
