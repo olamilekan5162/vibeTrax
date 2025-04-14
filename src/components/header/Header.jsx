@@ -28,6 +28,14 @@ const Header = () => {
           </li>
           <li>
             <NavLink
+              to={"upload"}
+              className={({ isActive }) => (isActive ? styles.active : "")}
+            >
+              Upload Music
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to={"artist"}
               className={({ isActive }) => (isActive ? styles.active : "")}
             >
