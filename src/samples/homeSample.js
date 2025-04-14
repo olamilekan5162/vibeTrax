@@ -69,18 +69,18 @@ export const testimonialsData = [
     text: "TuneFlow has completely changed how I release music. I can finally ensure everyone who contributed gets paid fairly and instantly.",
     authorName: "Michael Rivers",
     authorTitle: "Independent Artist",
-    authorImage: "/api/placeholder/50/50",
+    authorImage: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     text: "As a producer, I often had to chase payments. With TuneFlow, I get my fair share instantly whenever a track sells or streams.",
     authorName: "Jenna Kim",
     authorTitle: "Music Producer",
-    authorImage: "/api/placeholder/50/50",
+    authorImage: "https://randomuser.me/api/portraits/women/44.jpg",
   },
   {
     text: "The transparency is incredible. I can see exactly how my music is performing and where my royalties are coming from in real-time.",
     authorName: "David Okafor",
     authorTitle: "Singer-Songwriter",
-    authorImage: "/api/placeholder/50/50",
+    authorImage: "https://randomuser.me/api/portraits/men/74.jpg",
   },
 ];
