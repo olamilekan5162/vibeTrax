@@ -80,45 +80,54 @@ const Form = ({showPreview}) => {
           {/* Contributors */}
           <h3 className={styles["section-title"]}>Revenue Distribution</h3>
           <div className={styles["contributor"]}>
-            <div className={styles["contributor-info"]}>
+            {/* <div className={styles["contributor-info"]}> */}
               <div className={styles["contributor-role"]}>You (Artist)</div>
               <div>Your wallet</div>
+            {/* </div> */}
+            <div className={styles["contributor-input-container"]}>
+              <input
+                type="number"
+                className={styles["contributor-input"]}
+                value="60"
+                min="1"
+                max="100"
+              />
+              <span>%</span>
             </div>
-            <input
-              type="number"
-              className={styles["contributor-input"]}
-              value="60"
-              min="1"
-              max="100"
-            />%
           </div>
 
           <div className={styles["contributor"]}>
-            <div className={styles["contributor-info"]}>
+            {/* <div className={styles["contributor-info"]}> */}
               <div className={styles["contributor-role"]}>Producer</div>
               <div>0x71C7...F5E2</div>
+            {/* </div> */}
+            <div className={styles["contributor-input-container"]}>
+              <input
+                type="number"
+                className={styles["contributor-input"]}
+                value="20"
+                min="1"
+                max="100"
+              />
+              <span>%</span>
             </div>
-            <input
-              type="number"
-              className={styles["contributor-input"]}
-              value="20"
-              min="1"
-              max="100"
-            />%
           </div>
 
           <div className={styles["contributor"]}>
-            <div className={styles["contributor-info"]}>
+            {/* <div className={styles["contributor-info"]}> */}
               <div className={styles["contributor-role"]}>Writer</div>
               <div>0x92A3...B7D1</div>
+            {/* </div> */}
+            <div className={styles["contributor-input-container"]}>
+              <input
+                type="number"
+                className={styles["contributor-input"]}
+                value="40"
+                min="1"
+                max="100"
+              />
+              <span>%</span>
             </div>
-            <input
-              type="number"
-              className={styles["contributor-input"]}
-              value="20"
-              min="1"
-              max="100"
-            />%
           </div>
 
           <div className={styles["add-contributor"]}>
