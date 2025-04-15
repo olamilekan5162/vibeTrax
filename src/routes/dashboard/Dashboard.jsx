@@ -73,7 +73,7 @@ const Dashboard = () => {
                                 <p>by User029 • 2 hours ago</p>
                             </div>
                         </div>
-                        <div className={styles["transaction-amount amount-positive"]}>+0.25 SUI</div>
+                        <div className={`${styles["transaction-amount"]} ${styles["amount-positive"]}`}>+0.25 SUI</div>
                     </div>
                     <div className={styles["transaction-item"]}>
                         <div className={styles["transaction-info"]}>
@@ -83,7 +83,7 @@ const Dashboard = () => {
                                 <p>Weekly Payout • Yesterday</p>
                             </div>
                         </div>
-                        <div className={styles["transaction-amount amount-positive"]}>+0.18 SUI</div>
+                        <div className={`${styles["transaction-amount"]} ${styles["amount-positive"]}`}>+0.18 SUI</div>
                     </div>
                     <div className={styles["transaction-item"]}>
                         <div className={styles["transaction-info"]}>
@@ -93,7 +93,7 @@ const Dashboard = () => {
                                 <p>by User125 • 3 days ago</p>
                             </div>
                         </div>
-                        <div className={styles["transaction-amount amount-positive"]}>+0.25 SUI</div>
+                        <div className={`${styles["transaction-amount"]} ${styles["amount-positive"]}`}>+0.25 SUI</div>
                     </div>
                 </div>
             </div>
