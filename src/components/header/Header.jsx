@@ -1,6 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 import Button from "../button/Button";
+import { useState } from "react";
+import { ConnectButton } from '@mysten/dapp-kit';
+
 
 const Header = () => {
   return (
@@ -42,7 +45,8 @@ const Header = () => {
                 Library
                 </NavLink>
             </li> */}
-          <Button text={"Connect Wallet"} btnClass={"primary"} />
+             <ConnectButton />;
+          {/* <Button text={"Connect Wallet"} btnClass={"primary"}/> */}
         </ul>
       </nav>
     </header>

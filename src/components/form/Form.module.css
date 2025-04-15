@@ -99,6 +99,15 @@
     margin-right: 1rem;
   }
 
+  .contributor-input-address{
+    padding: 1rem;
+    outline: none;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-size: 0.85rem;
+  }
+
   .contributor-input-container {
     display: flex;
     align-items: center;
