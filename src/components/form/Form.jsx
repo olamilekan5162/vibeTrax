@@ -1,8 +1,77 @@
+import { useSignAndExecuteTransaction, useSuiClient, useCurrentAccount } from '@mysten/dapp-kit';
 import Button from '../button/Button';
 import styles from './Form.module.css'
-const Form = () => {
+import { useState } from 'react';
+import { Transaction } from '@mysten/sui/transactions';
+import { useNetworkVariables } from '../../config/networkConfig';
+
+const Form = ({showPreview}) => {
+
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [genre, setGenre] = useState("")
+  const [producerAddress, setProducerAddress] = useState("")
+  const [writerAddress, setWriterAddress] = useState("")
+  const [ownerRevenue, setOwnerRevenue] = useState(0)
+  const [producerRevenue, setProducerRevenue] = useState(0)
+  const [writerRevenue, setWriterRevenue] = useState(0)
+  const [price, setPrice] = useState(0)
+  const currentAccount = useCurrentAccount()
+
+  const { tunflowNFTRegistryId, tunflowPackageId } = useNetworkVariables(
+      "tunflowNFTRegistryId",
+      "tunflowPackageId"
+    );
+
+    const suiClient = useSuiClient();
+      const {
+        mutate: signAndExecute,
+      } = useSignAndExecuteTransaction();  
+
+  const handleUpload = (e) => {
+    e.preventDefault
+    const tx = new Transaction();
+    
+        tx.moveCall({
+          arguments: [
+            tx.object(tunflowNFTRegistryId),
+            tx.pure.string(title),
+            tx.pure.string(description),
+            tx.pure.string("https://usercontent.jamendo.com?type=album&id=252044&width=300&trackid=1709361"),
+            tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+            tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+            tx.pure.u64(price),
+            tx.pure.u64(producerRevenue),
+            tx.pure.vector("address", [
+              producerAddress,
+            ]),
+            tx.pure.vector("u64", [10000]),
+          ],
+          target: `${tunflowPackageId}::music_nft::mint_music_nft`,
+        });
+    
+        signAndExecute(
+          {
+            transaction: tx,
+          },
+          {
+            onSuccess: async ({ digest }) => {
+              const { effects } = await suiClient.waitForTransaction({
+                digest: digest,
+                options: {
+                  showEffects: true,
+                },
+              });
+    
+              console.log(effects?.created?.[0]?.reference?.objectId);
+              console.log("Uploaded!!!");
+            },
+          }
+        );
+
+  }
     return ( 
-        <form>
+        <form action={handleUpload}>
           {/* <Basic Info */}
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]} for="title">Track Title</label>
@@ -11,6 +80,8 @@ const Form = () => {
               id="title"
               className={styles["form-input"]}
               placeholder="Enter track title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
 
@@ -20,12 +91,14 @@ const Form = () => {
               id="description"
               className={styles["form-textarea"]}
               placeholder="Tell us about your track..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
 
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]} for="genre">Genre</label>
-            <select id="genre" className={styles["form-select"]}>
+            <select id="genre" className={styles["form-select"]} value={genre} onChange={(e) => setGenre(e.target.value)}>
               <option value="" disabled selected>Select a genre</option>
               <option value="pop">Pop</option>
               <option value="hiphop">Hip Hop</option>
@@ -80,45 +153,72 @@ const Form = () => {
           {/* Contributors */}
           <h3 className={styles["section-title"]}>Revenue Distribution</h3>
           <div className={styles["contributor"]}>
-            <div className={styles["contributor-info"]}>
+            {/* <div className={styles["contributor-info"]}> */}
               <div className={styles["contributor-role"]}>You (Artist)</div>
-              <div>Your wallet</div>
+              <input 
+                type="text"
+                value={currentAccount?.address}
+                className={styles["contributor-input-address"]}
+                />
+              
+            {/* </div> */}
+            <div className={styles["contributor-input-container"]}>
+              <input
+                type="number"
+                className={styles["contributor-input"]}
+                value={ownerRevenue}
+                onChange={(e) => setOwnerRevenue(e.target.value)}
+                min="1"
+                max="100"
+              />
+              <span>%</span>
             </div>
-            <input
-              type="number"
-              className={styles["contributor-input"]}
-              value="60"
-              min="1"
-              max="100"
-            />%
           </div>
 
           <div className={styles["contributor"]}>
-            <div className={styles["contributor-info"]}>
+            {/* <div className={styles["contributor-info"]}> */}
               <div className={styles["contributor-role"]}>Producer</div>
-              <div>0x71C7...F5E2</div>
+              <input 
+                type="text"
+                value={producerAddress}
+                onChange={(e) => setProducerAddress(e.target.value)}
+                className={styles["contributor-input-address"]}
+              />
+            {/* </div> */}
+            <div className={styles["contributor-input-container"]}>
+              <input
+                type="number"
+                className={styles["contributor-input"]}
+                value={producerRevenue}
+                onChange={(e) => setProducerRevenue(e.target.value)}
+                min="1"
+                max="100"
+              />
+              <span>%</span>
             </div>
-            <input
-              type="number"
-              className={styles["contributor-input"]}
-              value="20"
-              min="1"
-              max="100"
-            />%
           </div>
 
           <div className={styles["contributor"]}>
-            <div className={styles["contributor-info"]}>
+            {/* <div className={styles["contributor-info"]}> */}
               <div className={styles["contributor-role"]}>Writer</div>
-              <div>0x92A3...B7D1</div>
+              <input 
+                type="text"
+                value={writerAddress}
+                onChange={(e) => setWriterAddress(e.target.value)}
+                className={styles["contributor-input-address"]}
+              />
+            {/* </div> */}
+            <div className={styles["contributor-input-container"]}>
+              <input
+                type="number"
+                className={styles["contributor-input"]}
+                value={writerRevenue}
+                onChange={(e) => setWriterRevenue(e.target.value)}
+                min="1"
+                max="100"
+              />
+              <span>%</span>
             </div>
-            <input
-              type="number"
-              className={styles["contributor-input"]}
-              value="20"
-              min="1"
-              max="100"
-            />%
           </div>
 
           <div className={styles["add-contributor"]}>
@@ -137,13 +237,15 @@ const Form = () => {
               id="price"
               className={styles["form-input"]}
               placeholder="Enter price in SUI"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
               step="0.01"
               min="0"
             />
           </div>
 
           <div className={styles["upload-actions"]}>
-            <Button btnClass={'secondary'} text={'Preview'} />
+            <Button btnClass={'secondary'} text={'Preview'} onClick={showPreview}/>
             <Button btnClass={'primary'} text={'Upload Track'} />
           </div>
         </form>

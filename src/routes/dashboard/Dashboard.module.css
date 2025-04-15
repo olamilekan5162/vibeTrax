@@ -189,6 +189,7 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    margin-left: 1rem;
 }
 
 .track-stats {

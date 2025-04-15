@@ -1,12 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Dashboard.module.css'
+import Button from '../../components/button/Button';
 const Dashboard = () => {
+    const navigate = useNavigate()
     return ( 
         // Main Content
     <main className={styles["main-content"]}>
         {/* <Dashboard Header */}
         <div className={styles["dashboard-header"]}>
-            <img src="/api/placeholder/120/120" alt="Artist Profile" className={styles["artist-avatar"]} />
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Artist Profile" className={styles["artist-avatar"]} />
             <div className={styles["artist-info"]}>
                 <h1>David Okafor</h1>
                 <p>Singer-Songwriter</p>
@@ -73,7 +75,7 @@ const Dashboard = () => {
                                 <p>by User029 • 2 hours ago</p>
                             </div>
                         </div>
-                        <div className={styles["transaction-amount amount-positive"]}>+0.25 SUI</div>
+                        <div className={`${styles["transaction-amount"]} ${styles["amount-positive"]}`}>+0.25 SUI</div>
                     </div>
                     <div className={styles["transaction-item"]}>
                         <div className={styles["transaction-info"]}>
@@ -83,7 +85,7 @@ const Dashboard = () => {
                                 <p>Weekly Payout • Yesterday</p>
                             </div>
                         </div>
-                        <div className={styles["transaction-amount amount-positive"]}>+0.18 SUI</div>
+                        <div className={`${styles["transaction-amount"]} ${styles["amount-positive"]}`}>+0.18 SUI</div>
                     </div>
                     <div className={styles["transaction-item"]}>
                         <div className={styles["transaction-info"]}>
@@ -93,7 +95,7 @@ const Dashboard = () => {
                                 <p>by User125 • 3 days ago</p>
                             </div>
                         </div>
-                        <div className={styles["transaction-amount amount-positive"]}>+0.25 SUI</div>
+                        <div className={`${styles["transaction-amount"]} ${styles["amount-positive"]}`}>+0.25 SUI</div>
                     </div>
                 </div>
             </div>
@@ -104,7 +106,7 @@ const Dashboard = () => {
                     <div className={styles["upload-icon"]}>↑</div>
                     <h3 className={styles["card-title"]}>Upload New Track</h3>
                     <p className={styles["upload-text"]}>Share your music with the world and earn royalties from every stream and purchase.</p>
-                    <Link to={"/upload"} className={styles["btn"]}>Upload Music</Link>
+                    <Button btnClass='primary' text={'upload Music'} onClick={() => navigate("/upload")}/>
                 </div>
             </div>
         </div>
@@ -115,7 +117,7 @@ const Dashboard = () => {
             <ul className={styles["track-list"]}>
                 <li className={styles["track-item"]}>
                     <span className={styles["track-number"]}>1</span>
-                    <img src="/api/placeholder/50/50" alt="Track Artwork" className={styles["track-artwork"]} />
+                    <img src="https://picsum.photos/seed/track2/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
                     <div className={styles["track-info"]}>
                         <h4 className={styles["track-title"]}>Summer Rain</h4>
                         <div className={styles["track-meta"]}>
@@ -129,12 +131,12 @@ const Dashboard = () => {
                         <span>320 purchases</span>
                     </div>
                     <div className={styles["track-actions"]}>
-                        <a href="music-player.html" className={styles["btn"]}>Manage</a>
+                        <Button btnClass='primary' text={'Manage'}/>
                     </div>
                 </li>
                 <li className={styles["track-item"]}>
                     <span className={styles["track-number"]}>2</span>
-                    <img src="/api/placeholder/50/50" alt="Track Artwork" className={styles["track-artwork"]} />
+                    <img src="https://picsum.photos/seed/track3/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
                     <div className={styles["track-info"]}>
                         <h4 className={styles["track-title"]}>Midnight Dreams</h4>
                         <div className={styles["track-meta"]}>
@@ -148,12 +150,12 @@ const Dashboard = () => {
                         <span>215 purchases</span>
                     </div>
                     <div className={styles["track-actions"]}>
-                        <a href="music-player.html" className={styles["btn"]}>Manage</a>
+                        <Button btnClass='primary' text={'Manage'}/>    
                     </div>
                 </li>
                 <li className={styles["track-item"]}>
                     <span className={styles["track-number"]}>3</span>
-                    <img src="/api/placeholder/50/50" alt="Track Artwork" className={styles["track-artwork"]} />
+                    <img src="https://picsum.photos/seed/track1/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
                     <div className={styles["track-info"]}>
                         <h4 className={styles["track-title"]}>Urban Echoes</h4>
                         <div className={styles["track-meta"]}>
@@ -167,7 +169,7 @@ const Dashboard = () => {
                         <span>405 purchases</span>
                     </div>
                     <div className={styles["track-actions"]}>
-                        <a href="music-player.html" className={styles["btn"]}>Manage</a>
+                        <Button btnClass='primary' text={'Manage'}/>
                     </div>
                 </li>
             </ul>
