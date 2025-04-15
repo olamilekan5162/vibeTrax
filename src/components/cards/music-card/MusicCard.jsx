@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import styles from "./MusicCard.module.css";
 
 const MusicCard = ({ title, artist, duration, plays, imageSrc, quality }) => {
   const isPremium = quality === "Premium";
   return (
-    <div className={styles.musicCard}>
+    <Link to="/music-player" className={styles.musicCard}>
       <img src={imageSrc} alt="Music Artwork" className={styles.musicImg} />
       <div
         className={`${styles.qualityBadge} ${
@@ -20,7 +21,7 @@ const MusicCard = ({ title, artist, duration, plays, imageSrc, quality }) => {
           <span>{plays} plays</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -4,6 +4,10 @@ import Home from "./routes/home/Home";
 import Discover from "./routes/discover/Discover";
 import UploadMusic from "./routes/upload-music/UploadMusic";
 import Dashboard from "./routes/dashboard/Dashboard";
+import MusicPlayer from "./components/music-player/MusicPlayer";
+
+
+
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +21,10 @@ export const router = createBrowserRouter([
       {
         path: "discover",
         Component: Discover,
-      },
+      },{
+        path: "music-player",
+        Component: MusicPlayer,
+      }
       {
         path: "upload",
         Component: UploadMusic,
