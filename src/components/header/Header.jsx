@@ -28,7 +28,7 @@ const Header = () => {
           </li>
           <li>
             <NavLink
-              to={"artist"}
+              to={"dashboard"}
               className={({ isActive }) => (isActive ? styles.active : "")}
             >
               For artist

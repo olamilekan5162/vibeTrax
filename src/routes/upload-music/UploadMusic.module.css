@@ -1,0 +1,18 @@
+
+.main-content {
+    padding: 120px 5% 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+
+  .page-subtitle{
+    color: #a1a1a1;
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
