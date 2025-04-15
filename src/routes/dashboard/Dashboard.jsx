@@ -6,7 +6,7 @@ const Dashboard = () => {
     <main className={styles["main-content"]}>
         {/* <Dashboard Header */}
         <div className={styles["dashboard-header"]}>
-            <img src="/api/placeholder/120/120" alt="Artist Profile" className={styles["artist-avatar"]} />
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Artist Profile" className={styles["artist-avatar"]} />
             <div className={styles["artist-info"]}>
                 <h1>David Okafor</h1>
                 <p>Singer-Songwriter</p>
@@ -115,7 +115,7 @@ const Dashboard = () => {
             <ul className={styles["track-list"]}>
                 <li className={styles["track-item"]}>
                     <span className={styles["track-number"]}>1</span>
-                    <img src="/api/placeholder/50/50" alt="Track Artwork" className={styles["track-artwork"]} />
+                    <img src="https://picsum.photos/seed/track2/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
                     <div className={styles["track-info"]}>
                         <h4 className={styles["track-title"]}>Summer Rain</h4>
                         <div className={styles["track-meta"]}>
@@ -134,7 +134,7 @@ const Dashboard = () => {
                 </li>
                 <li className={styles["track-item"]}>
                     <span className={styles["track-number"]}>2</span>
-                    <img src="/api/placeholder/50/50" alt="Track Artwork" className={styles["track-artwork"]} />
+                    <img src="https://picsum.photos/seed/track3/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
                     <div className={styles["track-info"]}>
                         <h4 className={styles["track-title"]}>Midnight Dreams</h4>
                         <div className={styles["track-meta"]}>
@@ -153,7 +153,7 @@ const Dashboard = () => {
                 </li>
                 <li className={styles["track-item"]}>
                     <span className={styles["track-number"]}>3</span>
-                    <img src="/api/placeholder/50/50" alt="Track Artwork" className={styles["track-artwork"]} />
+                    <img src="https://picsum.photos/seed/track1/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
                     <div className={styles["track-info"]}>
                         <h4 className={styles["track-title"]}>Urban Echoes</h4>
                         <div className={styles["track-meta"]}>
