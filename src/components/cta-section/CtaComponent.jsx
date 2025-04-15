@@ -8,7 +8,8 @@ const CtaComponent = ({
   buttonLink = "#",
   variant = "section", // "section" or "box"
   customBackground,
-  customClassName
+  customClassName,
+  toggleModal
 }) => {
   // Determine which class to use based on variant
   const containerClass = variant === "box" 
@@ -31,15 +32,24 @@ const CtaComponent = ({
     : {};
 
   return (
-    <div 
-      className={`${containerClass} ${customClassName || ''}`} 
+    <div
+      className={`${containerClass} ${customClassName || ""}`}
       style={backgroundStyle}
     >
       <h2 className={titleClass}>{title}</h2>
       <p className={descriptionClass}>{subtitle}</p>
-      <a href={buttonLink} className={styles.button}>
+      {toggleModal ? (
+        <button className={styles.button} onClick={toggleModal}>
+          {buttonText}
+        </button>
+      ) : (
+        <a href={buttonLink} className={styles.button}>
+          {buttonText}
+        </a>
+      )}
+      {/* <a href={buttonLink} className={styles.button}>
         {buttonText}
-      </a>
+      </a> */}
     </div>
   );
 };
