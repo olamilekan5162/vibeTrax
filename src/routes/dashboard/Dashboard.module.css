@@ -1,0 +1,329 @@
+/* Main Content */
+.main-content {
+    padding: 120px 5% 50px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.artist-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 2rem;
+}
+
+.artist-info h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.artist-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #6366f1;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #a1a1a1;
+}
+
+/* Dashboard Cards */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.dashboard-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 2rem;
+    height: 100%;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.card-action {
+    color: #6366f1;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.card-action:hover {
+    text-decoration: underline;
+}
+
+/* Chart Container */
+.chart-container {
+    height: 200px;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.bar-chart {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+    gap: 10px;
+    padding-bottom: 25px;
+}
+
+.bar {
+    flex: 1;
+    background: linear-gradient(to top, #6366f1, #818cf8);
+    border-radius: 5px 5px 0 0;
+    position: relative;
+}
+
+.bar::after {
+    content: attr(data-value);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: #a1a1a1;
+}
+
+.chart-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #d1d1d1;
+}
+
+/* Recent Tracks */
+.recent-tracks {
+    margin-top: 2rem;
+}
+
+.track-list {
+    list-style: none;
+}
+
+.track-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.track-item:last-child {
+    border-bottom: none;
+}
+
+.track-number {
+    width: 30px;
+    font-size: 0.9rem;
+    color: #a1a1a1;
+}
+
+.track-artwork {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 1rem;
+    object-fit: cover;
+}
+
+.track-info {
+    flex: 1;
+}
+
+.track-title {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.track-meta {
+    display: flex;
+    font-size: 0.85rem;
+    color: #a1a1a1;
+}
+
+.track-meta span:not(:last-child)::after {
+    content: '•';
+    margin: 0 0.5rem;
+}
+
+.track-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.track-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: #d1d1d1;
+}
+
+.track-stats span {
+    display: flex;
+    align-items: center;
+}
+
+/* Royalty Distribution */
+.royalty-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.royalty-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(99, 102, 241, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: #6366f1;
+    font-size: 1.2rem;
+}
+
+.royalty-details {
+    flex: 1;
+}
+
+.royalty-role {
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.royalty-recipient {
+    font-size: 0.85rem;
+    color: #a1a1a1;
+}
+
+.royalty-amount {
+    font-weight: 700;
+    color: #6366f1;
+}
+
+/* Transactions */
+.transaction-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+}
+
+.transaction-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgba(99, 102, 241, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: #6366f1;
+}
+
+.transaction-details h4 {
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.transaction-details p {
+    font-size: 0.85rem;
+    color: #a1a1a1;
+}
+
+.transaction-amount {
+    font-weight: 700;
+}
+
+.amount-positive {
+    color: #10b981;
+}
+
+/* Upload Button */
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: #6366f1;
+    margin-bottom: 1.5rem;
+}
+
+.upload-text {
+    margin-bottom: 2rem;
+    color: #d1d1d1;
+}
+
+.btn {
+    background-color: #6366f1;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #4f46e5;
+    transform: translateY(-2px);
+}
