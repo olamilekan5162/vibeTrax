@@ -1,7 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 import Button from "../button/Button";
-import { useState } from "react";
 import { ConnectButton } from '@mysten/dapp-kit';
 
 

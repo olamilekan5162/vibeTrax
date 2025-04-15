@@ -1,10 +1,12 @@
-import { useCurrentAccount } from '@mysten/dapp-kit';
+import { useSignAndExecuteTransaction, useSuiClient, useCurrentAccount } from '@mysten/dapp-kit';
 import Button from '../button/Button';
 import styles from './Form.module.css'
 import { useState } from 'react';
+import { Transaction } from '@mysten/sui/transactions';
+import { useNetworkVariables } from '../../config/networkConfig';
 
 const Form = ({showPreview}) => {
-  
+
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [genre, setGenre] = useState("")
@@ -13,13 +15,59 @@ const Form = ({showPreview}) => {
   const [ownerRevenue, setOwnerRevenue] = useState(0)
   const [producerRevenue, setProducerRevenue] = useState(0)
   const [writerRevenue, setWriterRevenue] = useState(0)
-  const [price, setPrice] = useState("")
-
+  const [price, setPrice] = useState(0)
   const currentAccount = useCurrentAccount()
 
+  const { tunflowNFTRegistryId, tunflowPackageId } = useNetworkVariables(
+      "tunflowNFTRegistryId",
+      "tunflowPackageId"
+    );
+
+    const suiClient = useSuiClient();
+      const {
+        mutate: signAndExecute,
+      } = useSignAndExecuteTransaction();  
 
   const handleUpload = (e) => {
-    e.preventDefault()
+    e.preventDefault
+    const tx = new Transaction();
+    
+        tx.moveCall({
+          arguments: [
+            tx.object(tunflowNFTRegistryId),
+            tx.pure.string(title),
+            tx.pure.string(description),
+            tx.pure.string("https://usercontent.jamendo.com?type=album&id=252044&width=300&trackid=1709361"),
+            tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+            tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+            tx.pure.u64(price),
+            tx.pure.u64(producerRevenue),
+            tx.pure.vector("address", [
+              producerAddress,
+            ]),
+            tx.pure.vector("u64", [10000]),
+          ],
+          target: `${tunflowPackageId}::music_nft::mint_music_nft`,
+        });
+    
+        signAndExecute(
+          {
+            transaction: tx,
+          },
+          {
+            onSuccess: async ({ digest }) => {
+              const { effects } = await suiClient.waitForTransaction({
+                digest: digest,
+                options: {
+                  showEffects: true,
+                },
+              });
+    
+              console.log(effects?.created?.[0]?.reference?.objectId);
+              console.log("Uploaded!!!");
+            },
+          }
+        );
 
   }
     return ( 
