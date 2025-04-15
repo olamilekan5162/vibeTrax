@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
       },{
         path: "music-player",
         Component: MusicPlayer,
-      }
+      },
       {
         path: "upload",
         Component: UploadMusic,
