@@ -1,6 +1,6 @@
 import Button from '../button/Button';
 import styles from './Form.module.css'
-const Form = () => {
+const Form = ({showPreview}) => {
     return ( 
         <form>
           {/* <Basic Info */}
@@ -143,7 +143,7 @@ const Form = () => {
           </div>
 
           <div className={styles["upload-actions"]}>
-            <Button btnClass={'secondary'} text={'Preview'} />
+            <Button btnClass={'secondary'} text={'Preview'} onClick={showPreview}/>
             <Button btnClass={'primary'} text={'Upload Track'} />
           </div>
         </form>
