@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Dashboard.module.css'
+import Button from '../../components/button/Button';
 const Dashboard = () => {
+    const navigate = useNavigate()
     return ( 
         // Main Content
     <main className={styles["main-content"]}>
@@ -104,7 +106,7 @@ const Dashboard = () => {
                     <div className={styles["upload-icon"]}>↑</div>
                     <h3 className={styles["card-title"]}>Upload New Track</h3>
                     <p className={styles["upload-text"]}>Share your music with the world and earn royalties from every stream and purchase.</p>
-                    <Link to={"/upload"} className={styles["btn"]}>Upload Music</Link>
+                    <Button btnClass='primary' text={'upload Music'} onClick={() => navigate("/upload")}/>
                 </div>
             </div>
         </div>
@@ -129,7 +131,7 @@ const Dashboard = () => {
                         <span>320 purchases</span>
                     </div>
                     <div className={styles["track-actions"]}>
-                        <a href="music-player.html" className={styles["btn"]}>Manage</a>
+                        <Button btnClass='primary' text={'Manage'}/>
                     </div>
                 </li>
                 <li className={styles["track-item"]}>
@@ -148,7 +150,7 @@ const Dashboard = () => {
                         <span>215 purchases</span>
                     </div>
                     <div className={styles["track-actions"]}>
-                        <a href="music-player.html" className={styles["btn"]}>Manage</a>
+                        <Button btnClass='primary' text={'Manage'}/>    
                     </div>
                 </li>
                 <li className={styles["track-item"]}>
@@ -167,7 +169,7 @@ const Dashboard = () => {
                         <span>405 purchases</span>
                     </div>
                     <div className={styles["track-actions"]}>
-                        <a href="music-player.html" className={styles["btn"]}>Manage</a>
+                        <Button btnClass='primary' text={'Manage'}/>
                     </div>
                 </li>
             </ul>
