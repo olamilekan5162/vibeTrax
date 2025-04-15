@@ -1,0 +1,262 @@
+/* PremiumModal.module.css */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 200;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.purchaseModal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 450px;
+  height: 100vh;
+  background-color: #0c0c1a;
+  z-index: 300;
+  padding: 2rem;
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    right: -450px;
+  }
+  to {
+    right: 0;
+  }
+}
+
+.modalClose {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: #a1a1a1;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.modalClose:hover {
+  color: #f5f5f7;
+}
+
+.modalHeader {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modalTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #f5f5f7;
+  margin-bottom: 0.5rem;
+}
+
+.modalSubtitle {
+  color: #a1a1a1;
+  font-size: 1rem;
+}
+
+.modalContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.trackPreview {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.previewImg {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.previewDetails {
+  flex: 1;
+}
+
+.previewTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.previewArtist {
+  color: #a1a1a1;
+  margin-bottom: 1rem;
+}
+
+.qualityComparison {
+  margin-bottom: 2rem;
+}
+
+.qualityTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.qualityTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.qualityTable th,
+.qualityTable td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.qualityTable th {
+  color: #a1a1a1;
+  font-weight: 500;
+}
+
+.qualityTable td:last-child,
+.qualityTable th:last-child {
+  text-align: right;
+}
+
+.standardRow {
+  color: #a1a1a1;
+}
+
+.premiumRow {
+  color: #e6a23c;
+  font-weight: 500;
+}
+
+.benefitsList {
+  margin-bottom: 2rem;
+}
+
+.benefitItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.benefitIcon {
+  color: #6366f1;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.benefitText {
+  flex: 1;
+}
+
+.benefitTitle {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.benefitDesc {
+  color: #a1a1a1;
+  font-size: 0.9rem;
+}
+
+.modalFooter {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.priceLabel {
+  font-size: 1.1rem;
+  color: #a1a1a1;
+}
+
+.priceValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e6a23c;
+}
+
+.purchaseBtn {
+  width: 100%;
+  padding: 1rem;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.purchaseBtn:hover {
+  background-color: #4f46e5;
+  transform: translateY(-2px);
+}
+
+.purchaseBtn:active {
+  transform: translateY(0);
+}
+
+.secureNote {
+  text-align: center;
+  margin-top: 1rem;
+  color: #a1a1a1;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #d1d1d1;
+}
+
+.metaIcon {
+  color: #6366f1;
+  font-size: 1.2rem;
+}
