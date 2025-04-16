@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
         path: "discover",
         Component: Discover,
       },{
-        path: "music-player",
+        path: "discover/:id",
         Component: MusicPlayer,
       },
       {

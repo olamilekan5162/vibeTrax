@@ -29,7 +29,10 @@ const Form = ({showPreview}) => {
       } = useSignAndExecuteTransaction();  
 
   const handleUpload = (e) => {
-    e.preventDefault
+    e.preventDefault()
+    console.log(typeof(price))
+    console.log(typeof(ownerRevenue))
+
     const tx = new Transaction();
     
         tx.moveCall({
@@ -40,12 +43,18 @@ const Form = ({showPreview}) => {
             tx.pure.string("https://usercontent.jamendo.com?type=album&id=252044&width=300&trackid=1709361"),
             tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
             tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
-            tx.pure.u64(price),
-            tx.pure.u64(producerRevenue),
+            tx.pure.u64(Number(price)),
+            tx.pure.u64(Number(ownerRevenue)),
             tx.pure.vector("address", [
+              currentAccount.address,
               producerAddress,
+              writerAddress
             ]),
-            tx.pure.vector("u64", [10000]),
+            tx.pure.vector("u64", [
+              ownerRevenue,
+              producerRevenue,
+              writerRevenue
+            ]),
           ],
           target: `${tunflowPackageId}::music_nft::mint_music_nft`,
         });
@@ -71,7 +80,7 @@ const Form = ({showPreview}) => {
 
   }
     return ( 
-        <form action={handleUpload}>
+        <form onSubmit={handleUpload}>
           {/* <Basic Info */}
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]} for="title">Track Title</label>
@@ -169,7 +178,7 @@ const Form = ({showPreview}) => {
                 value={ownerRevenue}
                 onChange={(e) => setOwnerRevenue(e.target.value)}
                 min="1"
-                max="100"
+                max="5000"
               />
               <span>%</span>
             </div>
@@ -192,7 +201,7 @@ const Form = ({showPreview}) => {
                 value={producerRevenue}
                 onChange={(e) => setProducerRevenue(e.target.value)}
                 min="1"
-                max="100"
+                max="5000"
               />
               <span>%</span>
             </div>
@@ -215,7 +224,7 @@ const Form = ({showPreview}) => {
                 value={writerRevenue}
                 onChange={(e) => setWriterRevenue(e.target.value)}
                 min="1"
-                max="100"
+                max="5000"
               />
               <span>%</span>
             </div>
