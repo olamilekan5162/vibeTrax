@@ -212,6 +212,10 @@
   color: #e6a23c;
 }
 
+.modalFooter button{
+  width: 100%;
+}
+
 .purchaseBtn {
   width: 100%;
   padding: 1rem;

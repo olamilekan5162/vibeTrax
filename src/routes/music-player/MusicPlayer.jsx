@@ -1,76 +1,61 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import PremiumModal from "../../modals/premium-modal/PremiumData";
 
 import MusicCard from "../../components/cards/music-card/MusicCard";
 import { trendingTracks } from "../../samples/musicSample";
 import styles from "./MusicPlayer.module.css";
-import SongDetails from "../song-details/SongDetails";
-import CtaComponent from "../cta-section/CtaComponent";
-import Contributors from "../contributors/Contributors";
-import PlayerControls from "../player-controls/PlayerControls";
+import SongDetails from "../../components/song-details/SongDetails";
+import CtaComponent from "../../components/cta-section/CtaComponent";
+import Contributors from "../../components/contributors/Contributors";
+import PlayerControls from "../../components/player-controls/PlayerControls";
+import { useParams } from "react-router-dom";
+import { useSuiClientQuery } from "@mysten/dapp-kit";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { id } = useParams();
+  
 
-  const songData = {
-    title: "Midnight City Lights",
-    artist: "Urban Echoes",
-    albumCover: "/api/placeholder/350/350",
-    duration: "4:35",
-    plays: "4.2k",
-    likes: 326,
-    description:
-      "An ambient journey through the neon-lit streets of a cyberpunk metropolis. This track blends electronic synths with urban beats to create a moody atmosphere that captures the essence of midnight city exploration.",
-    quality: "Standard Quality",
-  };
+  const { data, isPending } = useSuiClientQuery(
+    "getObject",
+    {
+      id: id,
+      options: {
+        showContent: true,
+        showDisplay: true,
+        showOwner: true,
+      },
+    },
+    {
+      select: (data) => data.data.content,
+    }
+  );
+ 
 
-  const contributorsData = [
-    {
-      name: "Urban Echoes",
-      role: "Artist/Producer",
-      share: 60,
-      avatar: "/api/placeholder/60/60",
-    },
-    {
-      name: "Alex Rivera",
-      role: "Songwriter",
-      share: 15,
-      avatar: "/api/placeholder/60/60",
-    },
-    {
-      name: "Synth Masters",
-      role: "Sound Design",
-      share: 15,
-      avatar: "/api/placeholder/60/60",
-    },
-    {
-      name: "Beats Promoter",
-      role: "Marketing",
-      share: 10,
-      avatar: "/api/placeholder/60/60",
-    },
-  ];
+  
 
   return (
     <div className={styles.container}>
       <main className={styles.mainContent}>
-        <div className={styles.playerContainer}>
-          <SongDetails songData={songData} isPlaying={isPlaying} />
-          <PlayerControls />
-        </div>
+        {!isPending && (
+          <div className={styles.playerContainer}>
+            <SongDetails songData={data} isPlaying={isPlaying} />
+            <PlayerControls />
+          </div>
+        )}
 
         <div>
           <CtaComponent
             title="Upgrade to Premium Quality"
             subtitle="Experience this track in high-fidelity 320kbps audio quality.
             Support the artist and unlock premium features with a one-time purchase."
-            buttonText="Purchase for 0.05 SUI"
+            buttonText= {`Purchase for ${data?.fields.price} SUI`}
             toggleModal={() => setIsOpen(!isOpen)}
           />
-          <PremiumModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+          <PremiumModal isOpen={isOpen} onClose={() => setIsOpen(false)} songData={data}/>
         </div>
-        <Contributors contributors={contributorsData} />
+        <Contributors contributors={data?.fields.collaborators} />
 
         <h2 className={styles.sectionTitle}>More from Urban Echoes</h2>
         <div className={styles.musicGrid}>
