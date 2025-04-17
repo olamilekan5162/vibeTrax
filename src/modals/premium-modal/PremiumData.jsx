@@ -1,8 +1,9 @@
 // PremiumModal.jsx
 import { useEffect } from "react";
 import styles from "./PremiumModal.module.css";
+import Button from "../../components/button/Button";
 
-const PremiumModal = ({ isOpen, onClose, track }) => {
+const PremiumModal = ({ isOpen, onClose, track, songData }) => {
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
@@ -50,16 +51,16 @@ const PremiumModal = ({ isOpen, onClose, track }) => {
         <div className={styles.modalContent}>
           <div className={styles.trackPreview}>
             <img
-              src={trackInfo.image}
+              src={songData?.fields.genre}
               alt="Album"
               className={styles.previewImg}
             />
             <div className={styles.previewDetails}>
-              <h3 className={styles.previewTitle}>{trackInfo.title}</h3>
-              <p className={styles.previewArtist}>By {trackInfo.artist}</p>
+              <h3 className={styles.previewTitle}>{songData?.fields.title}</h3>
+              <p className={styles.previewArtist}>By {`${songData?.fields.artist.slice(0,5)}...${songData?.fields.artist.slice(-5)}`}</p>
               <div className={styles.metaItem}>
                 <span className={styles.metaIcon}>♪</span>
-                <span>{trackInfo.duration}</span>
+                <span>4:15</span>
               </div>
             </div>
           </div>
@@ -138,12 +139,12 @@ const PremiumModal = ({ isOpen, onClose, track }) => {
         <div className={styles.modalFooter}>
           <div className={styles.priceContainer}>
             <span className={styles.priceLabel}>One-time purchase</span>
-            <span className={styles.priceValue}>0.05 SUI</span>
+            <span className={styles.priceValue}>{songData?.fields.price} SUI</span>
           </div>
-
-          <button className={styles.purchaseBtn}>
-            <span>Complete Purchase</span>
-          </button>
+          <div>
+            
+          </div>
+          <Button text="Complete Purchase" />
 
           <p className={styles.secureNote}>
             <span>🔒</span> Secure blockchain transaction
