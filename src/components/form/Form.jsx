@@ -9,7 +9,7 @@ const Form = ({showPreview}) => {
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const [genre, setGenre] = useState("")
+  // const [genre, setGenre] = useState("")
   const [producerAddress, setProducerAddress] = useState("")
   const [writerAddress, setWriterAddress] = useState("")
   const [ownerRevenue, setOwnerRevenue] = useState(0)
@@ -17,6 +17,9 @@ const Form = ({showPreview}) => {
   const [writerRevenue, setWriterRevenue] = useState(0)
   const [price, setPrice] = useState(0)
   const currentAccount = useCurrentAccount()
+  const [imageFile, setImageFile] = useState(null);
+  const [highQualityFile, setHighQualityFile] = useState(null);
+  const [lowQualityFile, setLowQualityFile] = useState(null);
 
   const { tunflowNFTRegistryId, tunflowPackageId } = useNetworkVariables(
       "tunflowNFTRegistryId",
@@ -26,12 +29,71 @@ const Form = ({showPreview}) => {
     const suiClient = useSuiClient();
       const {
         mutate: signAndExecute,
-      } = useSignAndExecuteTransaction();  
+      } = useSignAndExecuteTransaction();
 
-  const handleUpload = (e) => {
+  const publisherUrl = "https://publisher.walrus-testnet.walrus.space";
+      
+  const uploadMusicImageFile = async (e) => {
     e.preventDefault()
-    console.log(typeof(price))
-    console.log(typeof(ownerRevenue))
+
+    try {
+      const [res1, res2, res3] = await Promise.all([
+        fetch(`${publisherUrl}/v1/blobs?epochs=5`,{
+          method: "PUT",
+          headers: {
+            "Content-Type": lowQualityFile.type || "application/octet-stream",
+          },
+          body: lowQualityFile,
+        }),
+        fetch(`${publisherUrl}/v1/blobs?epochs=5`,{
+          method: "PUT",
+          headers: {
+            "Content-Type": highQualityFile.type || "application/octet-stream",
+          },
+          body: highQualityFile,
+        }),
+        fetch(`${publisherUrl}/v1/blobs?epochs=5`,{
+          method: "PUT",
+          headers: {
+            "Content-Type": imageFile.type || "application/octet-stream",
+          },
+          body: imageFile,
+        }),
+      ]);
+
+      const [result1, result2, result3] = await Promise.all([
+        res1.json(), 
+        res2.json(), 
+        res3.json()]);
+
+      const [blobId1, blobId2, blobId3] = [
+        result1?.newlyCreated?.blobObject?.blobId || result1?.alreadyCertified?.blobId,
+        result2?.newlyCreated?.blobObject?.blobId || result2?.alreadyCertified?.blobId, 
+        result3?.newlyCreated?.blobObject?.blobId || result3?.alreadyCertified?.blobId
+      ]
+
+      return {
+        lowQualityBlobId: blobId1,
+        highQualityBlobId: blobId2,
+        imageBlobId: blobId3,
+      };
+
+    } catch (err) {
+      console.error("Upload failed", err);
+    } 
+  };
+
+
+  const handleUpload = async (e) => {
+    e.preventDefault()
+
+    const blobIds = await uploadMusicImageFile(e);
+
+    const {
+      lowQualityBlobId,
+      highQualityBlobId,
+      imageBlobId
+    } = blobIds;
 
     const tx = new Transaction();
     
@@ -40,9 +102,9 @@ const Form = ({showPreview}) => {
             tx.object(tunflowNFTRegistryId),
             tx.pure.string(title),
             tx.pure.string(description),
-            tx.pure.string("https://usercontent.jamendo.com?type=album&id=252044&width=300&trackid=1709361"),
-            tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
-            tx.pure.string("https://prod-1.storage.jamendo.com/?trackid=1880336&format=mp31&from=5WWAextcrCNQ0AoHkuxPMw%3D%3D%7CRMvbyM%2FsigD7IrNaX3LLOA%3D%3D"),
+            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${imageBlobId}`),
+            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${highQualityBlobId}`),
+            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${lowQualityBlobId}`),
             tx.pure.u64(Number(price)),
             tx.pure.u64(Number(ownerRevenue)),
             tx.pure.vector("address", [
@@ -105,28 +167,11 @@ const Form = ({showPreview}) => {
             ></textarea>
           </div>
 
-          <div className={styles["form-group"]}>
-            <label className={styles["form-label"]} for="genre">Genre</label>
-            <select id="genre" className={styles["form-select"]} value={genre} onChange={(e) => setGenre(e.target.value)}>
-              <option value="" disabled selected>Select a genre</option>
-              <option value="pop">Pop</option>
-              <option value="hiphop">Hip Hop</option>
-              <option value="rnb">R&B</option>
-              <option value="rock">Rock</option>
-              <option value="electronic">Electronic</option>
-              <option value="jazz">Jazz</option>
-              <option value="classNameical">classNameical</option>
-              <option value="afrobeat">Afrobeat</option>
-              <option value="latin">Latin</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
           {/* File Uploads */}
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]}>Upload Standard Quality Track</label>
             <div className={styles["file-upload"]}>
-              <input type="file" accept="audio/*" />
+              <input type="file" accept="audio/*" onChange={(e) => setLowQualityFile(e.target.files[0])}/>
               <div className={styles["upload-icon"]}>🎵</div>
               <div className={styles["upload-text"]}>
                 <strong>Click or drag to upload standard quality track</strong>
@@ -138,7 +183,7 @@ const Form = ({showPreview}) => {
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]}>Upload Premium Quality Track</label>
             <div className={styles["file-upload"]}>
-              <input type="file" accept="audio/*" />
+              <input type="file" accept="audio/*" onChange={(e) => setHighQualityFile(e.target.files[0])}/>
               <div className={styles["upload-icon"]}>🎧</div>
               <div className={styles["upload-text"]}>
                 <strong>Click or drag to upload high quality track</strong>
@@ -150,7 +195,7 @@ const Form = ({showPreview}) => {
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]}>Upload Artwork</label>
             <div className={styles["file-upload"]}>
-              <input type="file" accept="image/*" />
+              <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])}/>
               <div className={styles["upload-icon"]}>🖼️</div>
               <div className={styles["upload-text"]}>
                 <strong>Click or drag to upload artwork</strong>
