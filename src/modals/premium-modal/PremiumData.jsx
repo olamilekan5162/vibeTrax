@@ -2,8 +2,25 @@
 import { useEffect } from "react";
 import styles from "./PremiumModal.module.css";
 import Button from "../../components/button/Button";
+import { useNetworkVariables } from "../../config/networkConfig";
+import { Transaction } from "@mysten/sui/transactions";
+import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 
 const PremiumModal = ({ isOpen, onClose, track, songData }) => {
+
+  const { tunflowNFTRegistryId, tunflowPackageId } = useNetworkVariables(
+    "tunflowNFTRegistryId",
+    "tunflowPackageId"
+  );
+
+  const suiClient = useSuiClient();
+  const {
+    mutate: signAndExecute,
+    isSuccess,
+    isPending,
+  } = useSignAndExecuteTransaction();
+
+
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
@@ -32,6 +49,41 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
   };
 
   const trackInfo = track || defaultTrack;
+
+  const handleBuy = (e) =>{
+    e.preventDefault();
+    const amountMist = BigInt(Math.floor(songData.fields.price * 1_000_000_000));
+
+    const tx = new Transaction();
+
+    const [coin] = tx.splitCoins(tx.gas, [tx.pure("u64", amountMist)]);
+
+
+    tx.moveCall({
+      arguments: [tx.object(tunflowNFTRegistryId), tx.object(songData.fields.id.id), coin],
+      target: `${tunflowPackageId}::music_nft::purchase_music_nft`,
+    });
+
+    signAndExecute(
+      {
+        transaction: tx,
+      },
+      {
+        onSuccess: async ({ digest }) => {
+          const { effects } = await suiClient.waitForTransaction({
+            digest: digest,
+            options: {
+              showEffects: true,
+            },
+          });
+
+          console.log(effects);
+          console.log(effects?.created?.[0]?.reference?.objectId);
+          console.log("Bought successfully");
+        },
+      }
+    );
+  }
 
   return (
     <>
@@ -144,7 +196,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
           <div>
             
           </div>
-          <Button text="Complete Purchase" />
+          <Button text="Complete Purchase" onClick={handleBuy}/>
 
           <p className={styles.secureNote}>
             <span>🔒</span> Secure blockchain transaction
