@@ -1,5 +1,4 @@
-// CtaComponent.jsx
-import { useCurrentAccount } from '@mysten/dapp-kit';
+// CtaComponent.jsx;
 import styles from './CtaComponent.module.css';
 
 
@@ -11,10 +10,9 @@ const CtaComponent = ({
   variant = "section", // "section" or "box"
   customBackground,
   customClassName,
-  songData
+  disabled
 }) => {
 
-  const currentAccount = useCurrentAccount()
   // Determine which class to use based on variant
   const containerClass = variant === "box" 
     ? styles.ctaBox 
@@ -42,7 +40,7 @@ const CtaComponent = ({
     >
       <h2 className={titleClass}>{title}</h2>
       <p className={descriptionClass}>{subtitle}</p>
-      <button className={styles.button} onClick={handleClick}>
+      <button className={styles.button} onClick={handleClick} disabled={disabled}>
         {buttonText}
       </button>
     </div>
