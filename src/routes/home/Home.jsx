@@ -9,7 +9,9 @@ import {
   testimonialsData,
 } from "../../samples/homeSample";
 import styles from "./Home.module.css";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+  const navigate = useNavigate()
 
   return (
     <main className={styles.home}>
@@ -35,6 +37,7 @@ const Home = () => {
         title="Ready to Transform Your Music Experience?"
         subtitle="Join TuneFlow today and be part of the revolution that's creating a fairer, more transparent music ecosystem for artists and fans alike."
         buttonText="Get Started Today"
+        handleClick={()=>navigate("discover")}
       />
     </main>
   );

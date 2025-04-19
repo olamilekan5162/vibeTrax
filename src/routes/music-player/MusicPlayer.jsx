@@ -51,7 +51,8 @@ const MusicPlayer = () => {
             subtitle="Experience this track in high-fidelity 320kbps audio quality.
             Support the artist and unlock premium features with a one-time purchase."
             buttonText= {`Purchase for ${data?.fields.price} SUI`}
-            toggleModal={() => setIsOpen(!isOpen)}
+            handleClick={() => setIsOpen(!isOpen)}
+            songData={data}
           />
           <PremiumModal isOpen={isOpen} onClose={() => setIsOpen(false)} songData={data}/>
         </div>

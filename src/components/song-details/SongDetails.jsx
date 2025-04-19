@@ -7,7 +7,7 @@ import PlayerControls from '../player-controls/PlayerControls';
 import AudioVisualizer from '../audio-visualizer/AudioVisualizer';
 
 const SongDetails = ({ songData, isPlaying }) => {
-   const music = songData.fields.high_quality_ipfs
+   
   return (
     <div className={styles.container}>
       <div className={styles.albumArt}>
@@ -17,7 +17,7 @@ const SongDetails = ({ songData, isPlaying }) => {
           className={styles.albumImg}
         />
         <div className={styles.qualityBadge}>
-          {songData.quality}
+          {"Premium"}
         </div>
         {isPlaying && (
           <div className={styles.playingIndicator}>

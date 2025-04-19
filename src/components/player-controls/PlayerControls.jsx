@@ -1,8 +1,11 @@
 // import React, { useState, useRef, useEffect } from "react";
 import styles from "./PlayerControls.module.css";
 import music from "../../assets/MichaelJackson-SmoothcriminalHigh.mp3";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 
 const PlayerControls = ({songData}) => {
+
+  const currentAccount = useCurrentAccount()
   // const [isPlaying, setIsPlaying] = useState(false);
   // const [currentTime, setCurrentTime] = useState(0);
   // const [progress, setProgress] = useState(35);
@@ -70,7 +73,17 @@ const PlayerControls = ({songData}) => {
 
   return (
     <div className={styles.container}>
-    <audio className={styles.audio} controls src={songData.fields.high_quality_ipfs}></audio>
+    <audio 
+      className={styles.audio} 
+      controls 
+      src={
+        currentAccount?.address === songData.fields.artist 
+        || currentAccount?.address === songData.fields.current_owner 
+        || songData.fields.collaborators.includes(currentAccount?.address)
+        ? songData.fields.high_quality_ipfs
+        : songData.fields.low_quality_ipfs
+      }>
+    </audio>
       {/* progressbar
       <div className={styles.progressWrapper}>
         <input
