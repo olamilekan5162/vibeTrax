@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import PremiumModal from "../../modals/premium-modal/PremiumData";
 
 import MusicCard from "../../components/cards/music-card/MusicCard";
@@ -62,7 +62,7 @@ const MusicPlayer = () => {
           />
           <PremiumModal isOpen={isOpen} onClose={() => setIsOpen(false)} songData={data}/>
         </div>
-        <Contributors contributors={data?.fields.collaborators} />
+        <Contributors contributors={data?.fields.collaborators} splits={data?.fields.collaborator_splits} />
 
         <h2 className={styles.sectionTitle}>More from Urban Echoes</h2>
         <div className={styles.musicGrid}>
