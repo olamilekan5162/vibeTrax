@@ -41,7 +41,7 @@ const MusicPlayer = () => {
         {!isPending && (
           <div className={styles.playerContainer}>
             <SongDetails songData={data} isPlaying={isPlaying} />
-            <PlayerControls />
+            {/* <PlayerControls songData={data} /> */}
           </div>
         )}
 
