@@ -1,9 +1,13 @@
 // components/MusicPlayer/SongDetails/SongDetails.js 
 import React from 'react';
 
+
 import styles from './SongDetails.module.css';
+import PlayerControls from '../player-controls/PlayerControls';
+import AudioVisualizer from '../audio-visualizer/AudioVisualizer';
 
 const SongDetails = ({ songData, isPlaying }) => {
+   const music = songData.fields.high_quality_ipfs
   return (
     <div className={styles.container}>
       <div className={styles.albumArt}>
@@ -54,8 +58,12 @@ const SongDetails = ({ songData, isPlaying }) => {
           <span className={styles.tag}>Ambient</span>
           <span className={styles.tag}>Cyberpunk</span>
         </div>
-        
-        <audio/>
+
+        <div>
+
+        <AudioVisualizer/>
+        <PlayerControls songData={songData} />
+        </div>
       </div>
     </div>
   );
