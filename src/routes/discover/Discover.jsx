@@ -5,7 +5,7 @@ import {
   newReleases,
 } from "../../samples/musicSample";
 import styles from "./Discover.module.css";
-import { useSuiClientQuery } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import { useEffect, useState } from "react";
 
 
@@ -66,6 +66,7 @@ const Discover = () => {
     }
   }, [musicData, musicPending]);
 
+  const currentAccount = useCurrentAccount()
 
   const genres = [
     "All Genres",
@@ -129,7 +130,12 @@ const Discover = () => {
             artist={track.artist}
             duration={56}
             plays={"4.1k"}
-            quality={"premium"}
+            quality={
+              currentAccount?.address === track.current_owner 
+              || track.collaborators.includes(currentAccount?.address) 
+              ? "Premium"
+              : "Standard" 
+            }
             imageSrc={track.genre}
             objectId={track.id.id}
           />

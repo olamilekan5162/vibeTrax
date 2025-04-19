@@ -1,13 +1,10 @@
-// components/MusicPlayer/SongDetails/SongDetails.js 
-import React from 'react';
-
-
 import styles from './SongDetails.module.css';
 import PlayerControls from '../player-controls/PlayerControls';
 import AudioVisualizer from '../audio-visualizer/AudioVisualizer';
 
-const SongDetails = ({ songData, isPlaying }) => {
-   
+
+const SongDetails = ({ songData, isPlaying, isPremium}) => {
+  
   return (
     <div className={styles.container}>
       <div className={styles.albumArt}>
@@ -17,7 +14,7 @@ const SongDetails = ({ songData, isPlaying }) => {
           className={styles.albumImg}
         />
         <div className={styles.qualityBadge}>
-          {"Premium"}
+          {isPremium ? "Premium" : "Standard"}
         </div>
         {isPlaying && (
           <div className={styles.playingIndicator}>

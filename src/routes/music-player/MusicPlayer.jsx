@@ -37,7 +37,12 @@ const MusicPlayer = () => {
   const forSale = currentAccount?.address === data?.fields.artist 
   || currentAccount?.address === data?.fields.current_owner 
   || data?.fields.for_sale === false 
-  || data?.fields.contributors.includes(currentAccount?.address)
+  || data?.fields.collaborators.includes(currentAccount?.address)
+
+  const isPremium = currentAccount?.address === data?.fields.current_owner 
+  || data?.fields.collaborators.includes(currentAccount?.address)
+
+
   
 
   return (
@@ -45,7 +50,7 @@ const MusicPlayer = () => {
       <main className={styles.mainContent}>
         {!isPending && (
           <div className={styles.playerContainer}>
-            <SongDetails songData={data} isPlaying={isPlaying} />
+            <SongDetails isPremium={isPremium} songData={data} isPlaying={isPlaying} />
             {/* <PlayerControls songData={data} /> */}
           </div>
         )}
