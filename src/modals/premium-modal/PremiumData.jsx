@@ -8,9 +8,10 @@ import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 
 const PremiumModal = ({ isOpen, onClose, track, songData }) => {
 
-  const { tunflowNFTRegistryId, tunflowPackageId } = useNetworkVariables(
+  const {tunflowNFTRegistryId, tunflowPackageId, tunflowTokenId } = useNetworkVariables(
     "tunflowNFTRegistryId",
-    "tunflowPackageId"
+    "tunflowPackageId",
+    "tunflowTokenId"
   );
 
   const suiClient = useSuiClient();
@@ -58,10 +59,14 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
 
     const [coin] = tx.splitCoins(tx.gas, [tx.pure("u64", amountMist)]);
 
-
     tx.moveCall({
-      arguments: [tx.object(tunflowNFTRegistryId), tx.object(songData.fields.id.id), coin],
-      target: `${tunflowPackageId}::music_nft::purchase_music_nft`,
+      arguments: [
+      tx.object(tunflowNFTRegistryId),
+      tx.object(songData.fields.id.id),
+      tx.object(tunflowTokenId),
+      coin
+    ],
+      target: `${tunflowPackageId}::integration::purchase_and_reward`,
     });
 
     signAndExecute(

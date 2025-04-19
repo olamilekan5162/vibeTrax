@@ -38,21 +38,21 @@ const Form = ({showPreview}) => {
 
     try {
       const [res1, res2, res3] = await Promise.all([
-        fetch(`${publisherUrl}/v1/blobs?epochs=5`,{
+        fetch(`${publisherUrl}/v1/blobs?epochs=35`,{
           method: "PUT",
           headers: {
             "Content-Type": lowQualityFile.type || "application/octet-stream",
           },
           body: lowQualityFile,
         }),
-        fetch(`${publisherUrl}/v1/blobs?epochs=5`,{
+        fetch(`${publisherUrl}/v1/blobs?epochs=35`,{
           method: "PUT",
           headers: {
             "Content-Type": highQualityFile.type || "application/octet-stream",
           },
           body: highQualityFile,
         }),
-        fetch(`${publisherUrl}/v1/blobs?epochs=5`,{
+        fetch(`${publisherUrl}/v1/blobs?epochs=35`,{
           method: "PUT",
           headers: {
             "Content-Type": imageFile.type || "application/octet-stream",
@@ -222,7 +222,7 @@ const Form = ({showPreview}) => {
                 className={styles["contributor-input"]}
                 value={ownerRevenue}
                 onChange={(e) => setOwnerRevenue(e.target.value)}
-                min="1"
+                min="0"
                 max="5000"
               />
               <span>%</span>
@@ -245,7 +245,7 @@ const Form = ({showPreview}) => {
                 className={styles["contributor-input"]}
                 value={producerRevenue}
                 onChange={(e) => setProducerRevenue(e.target.value)}
-                min="1"
+                min="0"
                 max="5000"
               />
               <span>%</span>
@@ -268,7 +268,7 @@ const Form = ({showPreview}) => {
                 className={styles["contributor-input"]}
                 value={writerRevenue}
                 onChange={(e) => setWriterRevenue(e.target.value)}
-                min="1"
+                min="0"
                 max="5000"
               />
               <span>%</span>
