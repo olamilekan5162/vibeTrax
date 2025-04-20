@@ -1,16 +1,18 @@
-// CtaComponent.jsx
+// CtaComponent.jsx;
 import styles from './CtaComponent.module.css';
+
 
 const CtaComponent = ({
   title,
   subtitle,
   buttonText,
-  buttonLink = "#",
+  handleClick,
   variant = "section", // "section" or "box"
   customBackground,
   customClassName,
-  toggleModal
+  disabled
 }) => {
+
   // Determine which class to use based on variant
   const containerClass = variant === "box" 
     ? styles.ctaBox 
@@ -38,18 +40,9 @@ const CtaComponent = ({
     >
       <h2 className={titleClass}>{title}</h2>
       <p className={descriptionClass}>{subtitle}</p>
-      {toggleModal ? (
-        <button className={styles.button} onClick={toggleModal}>
-          {buttonText}
-        </button>
-      ) : (
-        <a href={buttonLink} className={styles.button}>
-          {buttonText}
-        </a>
-      )}
-      {/* <a href={buttonLink} className={styles.button}>
+      <button className={styles.button} onClick={handleClick} disabled={disabled}>
         {buttonText}
-      </a> */}
+      </button>
     </div>
   );
 };

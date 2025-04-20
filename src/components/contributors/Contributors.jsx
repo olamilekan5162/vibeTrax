@@ -1,9 +1,9 @@
-
-import React from 'react';
 import styles from './Contributors.module.css';
 import Jazzicon from 'react-jazzicon'
+import { useCurrentAccount } from '@mysten/dapp-kit';
 
-const Contributors = ({ contributors }) => {
+const Contributors = ({ contributors, splits }) => {
+  const currentAccount = useCurrentAccount()
   return (
     <section className={styles.contributors}>
       <h2 className={styles.sectionTitle}>Contributors</h2>
@@ -14,7 +14,11 @@ const Contributors = ({ contributors }) => {
             <div className={styles.contributorInfo}>
               <h3 className={styles.contributorName}>{`${contributor.slice(0,5)}...${contributor.slice(-5)}`}</h3>
               {/* <p className={styles.contributorRole}>{contributor.role}</p> */}
-              {/* <p className={styles.contributorShare}>{contributor.share}% Share</p> */}
+              {contributors.includes(currentAccount?.address) 
+                ? <p className={styles.contributorShare}>{splits[index]/100}% Share</p>
+                : " "
+
+              }
             </div>
           </div>
         ))}

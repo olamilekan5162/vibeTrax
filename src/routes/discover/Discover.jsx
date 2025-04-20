@@ -2,17 +2,17 @@ import ArtistCard from "../../components/cards/artist-card/ArtistCard";
 import MusicCard from "../../components/cards/music-card/MusicCard";
 import { useNetworkVariable } from "../../config/networkConfig";
 import {
-  featuredArtists,
   newReleases,
 } from "../../samples/musicSample";
 import styles from "./Discover.module.css";
-import { useSuiClientQuery } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import { useEffect, useState } from "react";
 
 
 const Discover = () => {
   const [userNfts, setUserNfts] = useState([]);
   const [NftIds, setNftIds] = useState([]);
+  const [artists, setArtists] = useState([])
 
   const tunflowPackageId = useNetworkVariable(
     "tunflowPackageId"
@@ -59,11 +59,14 @@ const Discover = () => {
       console.log("Pending")
     }else if (musicData) {
       const musicNfts = musicData;
-      console.log(musicNfts)
+      const allArtist = [...new Set(musicNfts.map((artist) => artist.artist))]
+      setArtists(allArtist)
+      console.log(musicNfts);
       setUserNfts(musicNfts);
     }
   }, [musicData, musicPending]);
 
+  const currentAccount = useCurrentAccount()
 
   const genres = [
     "All Genres",
@@ -127,7 +130,12 @@ const Discover = () => {
             artist={track.artist}
             duration={56}
             plays={"4.1k"}
-            quality={"premium"}
+            quality={
+              currentAccount?.address === track.current_owner 
+              || track.collaborators.includes(currentAccount?.address) 
+              ? "Premium"
+              : "Standard" 
+            }
             imageSrc={track.genre}
             objectId={track.id.id}
           />
@@ -136,12 +144,10 @@ const Discover = () => {
 
       <h2 className={styles.sectionTitle}>Featured Artists</h2>
       <div className={styles.artistsRow}>
-        {featuredArtists.map((artist) => (
+        {artists.map((artist, index) => (
           <ArtistCard
-            key={artist.id}
-            name={artist.name}
-            followers={artist.followers}
-            imageSrc={artist.imageSrc}
+            key={index}
+            name={artist}
           />
         ))}
       </div>

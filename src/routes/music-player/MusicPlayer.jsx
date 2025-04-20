@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import PremiumModal from "../../modals/premium-modal/PremiumData";
 
 import MusicCard from "../../components/cards/music-card/MusicCard";
@@ -9,7 +9,7 @@ import CtaComponent from "../../components/cta-section/CtaComponent";
 import Contributors from "../../components/contributors/Contributors";
 import PlayerControls from "../../components/player-controls/PlayerControls";
 import { useParams } from "react-router-dom";
-import { useSuiClientQuery } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -31,7 +31,17 @@ const MusicPlayer = () => {
       select: (data) => data.data.content,
     }
   );
- 
+
+  const currentAccount = useCurrentAccount()
+
+  const forSale = currentAccount?.address === data?.fields.artist 
+  || currentAccount?.address === data?.fields.current_owner 
+  || data?.fields.for_sale === false 
+  || data?.fields.collaborators.includes(currentAccount?.address)
+
+  const isPremium = currentAccount?.address === data?.fields.current_owner 
+  || data?.fields.collaborators.includes(currentAccount?.address)
+
 
   
 
@@ -40,7 +50,7 @@ const MusicPlayer = () => {
       <main className={styles.mainContent}>
         {!isPending && (
           <div className={styles.playerContainer}>
-            <SongDetails songData={data} isPlaying={isPlaying} />
+            <SongDetails isPremium={isPremium} songData={data} isPlaying={isPlaying} />
             {/* <PlayerControls songData={data} /> */}
           </div>
         )}
@@ -50,12 +60,14 @@ const MusicPlayer = () => {
             title="Upgrade to Premium Quality"
             subtitle="Experience this track in high-fidelity 320kbps audio quality.
             Support the artist and unlock premium features with a one-time purchase."
-            buttonText= {`Purchase for ${data?.fields.price} SUI`}
-            toggleModal={() => setIsOpen(!isOpen)}
+            buttonText= {forSale ? "Already Sold" : `Purchase for ${data?.fields.price} SUI`}
+            handleClick={() => setIsOpen(!isOpen)}
+            songData={data}
+            disabled={forSale}
           />
           <PremiumModal isOpen={isOpen} onClose={() => setIsOpen(false)} songData={data}/>
         </div>
-        <Contributors contributors={data?.fields.collaborators} />
+        <Contributors contributors={data?.fields.collaborators} splits={data?.fields.collaborator_splits} />
 
         <h2 className={styles.sectionTitle}>More from Urban Echoes</h2>
         <div className={styles.musicGrid}>
