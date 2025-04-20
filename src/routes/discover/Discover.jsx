@@ -1,5 +1,6 @@
 import ArtistCard from "../../components/cards/artist-card/ArtistCard";
 import MusicCard from "../../components/cards/music-card/MusicCard";
+import SubscribeBanner from "../../components/subscribe-banner/SubscribeBanner";
 import { useNetworkVariable } from "../../config/networkConfig";
 import {
   newReleases,
@@ -85,6 +86,7 @@ const Discover = () => {
 
   return (
     <main className={styles.mainContent}>
+      <SubscribeBanner/>
       <h1 className={styles.pageTitle}>Discover Music</h1>
 
       <div className={styles.searchFilter}>

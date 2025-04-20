@@ -4,6 +4,8 @@ import {
   DEVNET_TUNE_FLOW_NFT_REGISTRY_ID,
   DEVNET_TUNE_FLOW_SUBSCRIPTION_ID,
   DEVNET_TUNE_FLOW_TOKEN_ID,
+  DEVNET_TUNE_FLOW_TREASURY_ID
+
 } from "./constants.js";
 import { createNetworkConfig } from "@mysten/dapp-kit";
 
@@ -16,6 +18,7 @@ const { networkConfig, useNetworkVariable, useNetworkVariables } =
         tunflowTokenId: DEVNET_TUNE_FLOW_TOKEN_ID,
         tunflowNFTRegistryId: DEVNET_TUNE_FLOW_NFT_REGISTRY_ID,
         tunflowSubscriptionId: DEVNET_TUNE_FLOW_SUBSCRIPTION_ID,
+        tunflowTreasuryId: DEVNET_TUNE_FLOW_TREASURY_ID,
       },
     },
     // testnet: {
