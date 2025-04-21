@@ -10,10 +10,8 @@ const SubscribeBanner = () => {
   const [isOpen, setIsOpen] = useState(false);
   const currentAccount = useCurrentAccount();
 
-  const {tunflowNFTRegistryId, tunflowPackageId, tunflowTokenId, tunflowTreasuryId, tunflowSubscriptionId} = useNetworkVariables(
-    "tunflowNFTRegistryId",
+  const {tunflowPackageId, tunflowTreasuryId, tunflowSubscriptionId} = useNetworkVariables(
     "tunflowPackageId",
-    "tunflowTokenId",
     "tunflowTreasuryId",
     "tunflowSubscriptionId",
   );
@@ -21,8 +19,8 @@ const SubscribeBanner = () => {
   const suiClient = useSuiClient();
   const {
     mutate: signAndExecute,
-    isSuccess,
-    isPending,
+    // isSuccess,
+    // isPending,
   } = useSignAndExecuteTransaction();
 
   const handleOpen = () => {
@@ -39,19 +37,18 @@ const SubscribeBanner = () => {
 
    const handleSubscribe = (e) =>{
       e.preventDefault();
-      const amountMist = BigInt(Math.floor(0.01 * 1_000_000_000));
+      const amountMist = BigInt(Math.floor(50 * 1_000_000_000));
   
       const tx = new Transaction();
   
       const [coin] = tx.splitCoins(tx.gas, [tx.pure("u64", amountMist)]);
-  
+         
       tx.moveCall({
         arguments: [
         tx.object(tunflowSubscriptionId),
         tx.object(tunflowTreasuryId),
-        tx.pure.string(currentAccount?.address),
-        // coin
-        tx.pure.u64(0.01 * 1_000_000_000),
+        tx.pure.address(currentAccount?.address),
+        coin
       ],
         target: `${tunflowPackageId}::governance::subscribe`,
       });
@@ -72,9 +69,11 @@ const SubscribeBanner = () => {
             console.log(effects);
             console.log(effects?.created?.[0]?.reference?.objectId);
             console.log("Subscribed successfully");
+            setIsOpen(false);
           },
         }
       );
+
     }
 
   return (
