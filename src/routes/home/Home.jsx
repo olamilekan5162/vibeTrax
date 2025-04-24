@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Banner from "../../components/banner/Banner";
 import CtaComponent from "../../components/cta-section/CtaComponent";
 import SectionContainer from "../../components/section-container/SectionContainer";
@@ -11,7 +10,7 @@ import {
 import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <main className={styles.home}>
@@ -37,7 +36,7 @@ const Home = () => {
         title="Ready to Transform Your Music Experience?"
         subtitle="Join TuneFlow today and be part of the revolution that's creating a fairer, more transparent music ecosystem for artists and fans alike."
         buttonText="Get Started Today"
-        handleClick={()=>navigate("discover")}
+        handleClick={() => navigate("discover")}
       />
     </main>
   );
