@@ -72,6 +72,9 @@ const Form = ({showPreview}) => {
         result3?.newlyCreated?.blobObject?.blobId || result3?.alreadyCertified?.blobId
       ]
 
+      console.log("image uploaded to walrus");
+      
+
       return {
         lowQualityBlobId: blobId1,
         highQualityBlobId: blobId2,
