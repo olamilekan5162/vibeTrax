@@ -5,8 +5,10 @@ import Button from "../../components/button/Button";
 import { useNetworkVariables } from "../../config/networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
+import { useNavigate } from "react-router-dom";
 
 const PremiumModal = ({ isOpen, onClose, track, songData }) => {
+  const navigate = useNavigate()
 
   const {tunflowNFTRegistryId, tunflowPackageId, tunflowTokenId } = useNetworkVariables(
     "tunflowNFTRegistryId",
@@ -85,6 +87,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
           console.log(effects);
           console.log(effects?.created?.[0]?.reference?.objectId);
           console.log("Bought successfully");
+          navigate("/discover")
         },
       }
     );

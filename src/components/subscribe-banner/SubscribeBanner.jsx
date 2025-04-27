@@ -4,11 +4,13 @@ import styles from "./SubscribeBanner.module.css";
 import { useNetworkVariables } from "../../config/networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction, useSuiClient, useCurrentAccount } from "@mysten/dapp-kit";
+import { useNavigate } from "react-router-dom";
 
 
 const SubscribeBanner = ({subscriberData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const currentAccount = useCurrentAccount();
+  const navigate = useNavigate
 
   const {tunflowPackageId, tunflowTreasuryId, tunflowSubscriptionId} = useNetworkVariables(
     "tunflowPackageId",
@@ -70,6 +72,7 @@ const SubscribeBanner = ({subscriberData}) => {
             console.log(effects?.created?.[0]?.reference?.objectId);
             console.log("Subscribed successfully");
             setIsOpen(false);
+            navigate("/discover")
           },
         }
       );
