@@ -8,13 +8,14 @@ import SongDetails from "../../components/song-details/SongDetails";
 import CtaComponent from "../../components/cta-section/CtaComponent";
 import Contributors from "../../components/contributors/Contributors";
 import PlayerControls from "../../components/player-controls/PlayerControls";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
+   const subscriberData = useOutletContext()
   
 
   const { data, isPending } = useSuiClientQuery(
@@ -41,6 +42,7 @@ const MusicPlayer = () => {
 
   const isPremium = currentAccount?.address === data?.fields.current_owner 
   || data?.fields.collaborators.includes(currentAccount?.address)
+  || subscriberData.lenght > 0
 
 
   

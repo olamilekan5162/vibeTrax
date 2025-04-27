@@ -1,3 +1,4 @@
+import { useOutletContext } from "react-router-dom";
 import ArtistCard from "../../components/cards/artist-card/ArtistCard";
 import MusicCard from "../../components/cards/music-card/MusicCard";
 import SubscribeBanner from "../../components/subscribe-banner/SubscribeBanner";
@@ -14,7 +15,8 @@ const Discover = () => {
   const [userNfts, setUserNfts] = useState([]);
   const [NftIds, setNftIds] = useState([]);
   const [artists, setArtists] = useState([])
-
+  const subscriberData = useOutletContext()
+  
   const tunflowPackageId = useNetworkVariable(
     "tunflowPackageId"
   );
@@ -86,7 +88,7 @@ const Discover = () => {
 
   return (
     <main className={styles.mainContent}>
-      <SubscribeBanner/>
+      <SubscribeBanner subscriberData={subscriberData}/>
       <h1 className={styles.pageTitle}>Discover Music</h1>
 
       <div className={styles.searchFilter}>
@@ -135,6 +137,7 @@ const Discover = () => {
             quality={
               currentAccount?.address === track.current_owner 
               || track.collaborators.includes(currentAccount?.address) 
+              || subscriberData.length > 0
               ? "Premium"
               : "Standard" 
             }
