@@ -6,7 +6,7 @@ import { Transaction } from '@mysten/sui/transactions';
 import { useNetworkVariables } from '../../config/networkConfig';
 import { useNavigate } from 'react-router-dom';
 
-const Form = ({showPreview}) => {
+const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setPreviewImage}) => {
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -157,7 +157,12 @@ const Form = ({showPreview}) => {
               className={styles["form-input"]}
               placeholder="Enter track title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={
+                (e) => {
+                  setTitle(e.target.value)
+                  setPreviewTitle(e.target.value)
+                }
+              }
             />
           </div>
 
@@ -176,7 +181,11 @@ const Form = ({showPreview}) => {
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]}>Upload Standard Quality Track</label>
             <div className={styles["file-upload"]}>
-              <input type="file" accept="audio/*" onChange={(e) => setLowQualityFile(e.target.files[0])}/>
+              <input type="file" accept="audio/*" onChange={(e) => {
+                setLowQualityFile(e.target.files[0])
+                setLowQuality(e.target.files[0])
+              }}
+                />
               <div className={styles["upload-icon"]}>🎵</div>
               <div className={styles["upload-text"]}>
                 <strong>Click or drag to upload standard quality track</strong>
@@ -188,7 +197,11 @@ const Form = ({showPreview}) => {
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]}>Upload Premium Quality Track</label>
             <div className={styles["file-upload"]}>
-              <input type="file" accept="audio/*" onChange={(e) => setHighQualityFile(e.target.files[0])}/>
+              <input type="file" accept="audio/*" onChange={(e) => {
+                setHighQualityFile(e.target.files[0])
+                setHighQuality(e.target.files[0])
+                }}
+                />
               <div className={styles["upload-icon"]}>🎧</div>
               <div className={styles["upload-text"]}>
                 <strong>Click or drag to upload high quality track</strong>
@@ -200,7 +213,11 @@ const Form = ({showPreview}) => {
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]}>Upload Artwork</label>
             <div className={styles["file-upload"]}>
-              <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])}/>
+              <input type="file" accept="image/*" onChange={(e) => {
+                setImageFile(e.target.files[0])
+                setPreviewImage(e.target.files[0])
+              }}
+                />
               <div className={styles["upload-icon"]}>🖼️</div>
               <div className={styles["upload-text"]}>
                 <strong>Click or drag to upload artwork</strong>
