@@ -1,9 +1,11 @@
 // import React, { useState, useRef, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import styles from "./PlayerControls.module.css";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 
 const PlayerControls = ({ songData }) => {
   const currentAccount = useCurrentAccount();
+  const subscriberData = useOutletContext()
   // const [isPlaying, setIsPlaying] = useState(false);
   // const [currentTime, setCurrentTime] = useState(0);
   // const [progress, setProgress] = useState(35);
@@ -78,6 +80,7 @@ const PlayerControls = ({ songData }) => {
           currentAccount?.address === songData.fields.artist ||
           currentAccount?.address === songData.fields.current_owner ||
           songData.fields.collaborators.includes(currentAccount?.address)
+          || subscriberData && subscriberData.length > 0
             ? songData.fields.high_quality_ipfs
             : songData.fields.low_quality_ipfs
         }

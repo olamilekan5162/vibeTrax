@@ -4,12 +4,12 @@ import styles from './Form.module.css'
 import { useState } from 'react';
 import { Transaction } from '@mysten/sui/transactions';
 import { useNetworkVariables } from '../../config/networkConfig';
+import { useNavigate } from 'react-router-dom';
 
 const Form = ({showPreview}) => {
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  // const [genre, setGenre] = useState("")
   const [producerAddress, setProducerAddress] = useState("")
   const [writerAddress, setWriterAddress] = useState("")
   const [ownerRevenue, setOwnerRevenue] = useState(0)
@@ -20,6 +20,7 @@ const Form = ({showPreview}) => {
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
+  const navigate = useNavigate()
 
   const { tunflowNFTRegistryId, tunflowPackageId } = useNetworkVariables(
       "tunflowNFTRegistryId",
@@ -116,9 +117,9 @@ const Form = ({showPreview}) => {
               writerAddress
             ]),
             tx.pure.vector("u64", [
-              ownerRevenue,
-              producerRevenue,
-              writerRevenue
+              ownerRevenue*100,
+              producerRevenue*100,
+              writerRevenue*100
             ]),
           ],
           target: `${tunflowPackageId}::music_nft::mint_music_nft`,
@@ -139,6 +140,7 @@ const Form = ({showPreview}) => {
     
               console.log(effects?.created?.[0]?.reference?.objectId);
               console.log("Uploaded!!!");
+              navigate("/dashboard")
             },
           }
         );

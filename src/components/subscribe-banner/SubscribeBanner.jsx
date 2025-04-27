@@ -4,11 +4,13 @@ import styles from "./SubscribeBanner.module.css";
 import { useNetworkVariables } from "../../config/networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction, useSuiClient, useCurrentAccount } from "@mysten/dapp-kit";
+import { useNavigate } from "react-router-dom";
 
 
-const SubscribeBanner = () => {
+const SubscribeBanner = ({subscriberData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const currentAccount = useCurrentAccount();
+  const navigate = useNavigate
 
   const {tunflowPackageId, tunflowTreasuryId, tunflowSubscriptionId} = useNetworkVariables(
     "tunflowPackageId",
@@ -70,6 +72,7 @@ const SubscribeBanner = () => {
             console.log(effects?.created?.[0]?.reference?.objectId);
             console.log("Subscribed successfully");
             setIsOpen(false);
+            navigate("/discover")
           },
         }
       );
@@ -80,11 +83,18 @@ const SubscribeBanner = () => {
     <>
       <div className={styles.infoBanner}>
         <p>Subscribe to enjoy premium quality music and exclusive content.</p>
-        <Button 
-          text="Subscribe" 
-          onClick={handleOpen} 
-          className={styles.subscribeButton} 
+        {subscriberData && subscriberData.length > 0
+        ? <Button
+        text="Subscribed"
+        disabled={true}
         />
+
+        : <Button 
+            text="Subscribe" 
+            onClick={handleOpen} 
+            // className={styles.subscribeButton} 
+          />
+        }
       </div>
 
       {isOpen && (
