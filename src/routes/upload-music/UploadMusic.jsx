@@ -5,6 +5,10 @@ import styles from "./UploadMusic.module.css"
 
 const UploadMusic = () => {
     const [previewClicked, setPreviewClicked] = useState(false)
+    const [previewTitle, setPreviewTitle] = useState("")
+    const [previewImage, setPreviewImage] = useState(null)
+    const [highQuality, setHighQuality] = useState(null)
+    const [lowQuality, setLowQuality] = useState(null)
 
     const showPreview = (e) => {
         e.preventDefault()
@@ -18,10 +22,20 @@ const UploadMusic = () => {
                 all your contributors.
             </p>
             <div className={styles["upload-container"]}>
-                <Form showPreview={showPreview} />
+                <Form 
+                showPreview={showPreview} 
+                setPreviewTitle={setPreviewTitle} 
+                setPreviewImage={setPreviewImage}
+                setHighQuality={setHighQuality} 
+                setLowQuality={setLowQuality}
+                />
             </div>
             {previewClicked && 
-            <Preview />
+            <Preview 
+            previewTitle={previewTitle}
+            PreviewImage={previewImage} 
+            highQuality={highQuality} 
+            lowQuality={lowQuality}/>
             }
         </main>
     );
