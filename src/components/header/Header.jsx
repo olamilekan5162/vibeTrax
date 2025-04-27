@@ -44,7 +44,7 @@ const Header = () => {
                 Library
                 </NavLink>
             </li> */}
-             <ConnectButton />;
+             <ConnectButton />
           {/* <Button text={"Connect Wallet"} btnClass={"primary"}/> */}
         </ul>
       </nav>

@@ -3,9 +3,9 @@ import ArtistCard from "../../components/cards/artist-card/ArtistCard";
 import MusicCard from "../../components/cards/music-card/MusicCard";
 import SubscribeBanner from "../../components/subscribe-banner/SubscribeBanner";
 import { useNetworkVariable } from "../../config/networkConfig";
-import {
-  newReleases,
-} from "../../samples/musicSample";
+// import {
+//   newReleases,
+// } from "../../samples/musicSample";
 import styles from "./Discover.module.css";
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import { useEffect, useState } from "react";
@@ -140,8 +140,8 @@ const Discover = () => {
             duration={56}
             plays={"4.1k"}
             quality={
-              currentAccount?.address === track.current_owner 
-              || track.collaborators.includes(currentAccount?.address) 
+              currentAccount?.address === track?.current_owner 
+              || track?.collaborators.includes(currentAccount?.address) 
               || subscriberData && subscriberData.length > 0
               ? "Premium"
               : "Standard" 
@@ -164,15 +164,22 @@ const Discover = () => {
 
       <h2 className={styles.sectionTitle}>New Releases</h2>
       <div className={styles.musicGrid}>
-        {newReleases.map((track) => (
+        {userNfts.map((track) => (
           <MusicCard
-            key={track.id}
+            key={track.id.id}
             title={track.title}
             artist={track.artist}
-            duration={track.duration}
-            plays={track.plays}
-            quality={track.quality}
-            imageSrc={track.imageSrc}
+            duration={56}
+            plays={"4.1k"}
+            quality={
+              currentAccount?.address === track?.current_owner 
+              || track?.collaborators.includes(currentAccount?.address) 
+              || subscriberData && subscriberData.length > 0
+              ? "Premium"
+              : "Standard" 
+            }
+            imageSrc={track.genre}
+            objectId={track.id.id}
           />
         ))}
       </div>
