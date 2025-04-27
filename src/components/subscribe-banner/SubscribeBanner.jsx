@@ -4,13 +4,11 @@ import styles from "./SubscribeBanner.module.css";
 import { useNetworkVariables } from "../../config/networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction, useSuiClient, useCurrentAccount } from "@mysten/dapp-kit";
-import { useOutletContext } from "react-router-dom";
 
 
-const SubscribeBanner = () => {
+const SubscribeBanner = ({subscriberData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const currentAccount = useCurrentAccount();
-  const subscriberData = useOutletContext()
 
   const {tunflowPackageId, tunflowTreasuryId, tunflowSubscriptionId} = useNetworkVariables(
     "tunflowPackageId",

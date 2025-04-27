@@ -42,7 +42,7 @@ const MusicPlayer = () => {
 
   const isPremium = currentAccount?.address === data?.fields.current_owner 
   || data?.fields.collaborators.includes(currentAccount?.address)
-  || subscriberData.lenght > 0
+  || subscriberData && subscriberData.length > 0
 
 
   

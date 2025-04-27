@@ -16,6 +16,11 @@ const Discover = () => {
   const [NftIds, setNftIds] = useState([]);
   const [artists, setArtists] = useState([])
   const subscriberData = useOutletContext()
+
+  useEffect(() => {
+    console.log("subscribers", subscriberData);
+    
+  },[subscriberData])
   
   const tunflowPackageId = useNetworkVariable(
     "tunflowPackageId"
@@ -137,7 +142,7 @@ const Discover = () => {
             quality={
               currentAccount?.address === track.current_owner 
               || track.collaborators.includes(currentAccount?.address) 
-              || subscriberData.length > 0
+              || subscriberData && subscriberData.length > 0
               ? "Premium"
               : "Standard" 
             }
