@@ -1,5 +1,5 @@
 // PremiumModal.jsx
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./PremiumModal.module.css";
 import Button from "../../components/button/Button";
 import { useNetworkVariables } from "../../config/networkConfig";
@@ -8,13 +8,15 @@ import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 import { useNavigate } from "react-router-dom";
 
 const PremiumModal = ({ isOpen, onClose, track, songData }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [paymentStatus, setPaymentStatus] = useState("idle");
 
-  const {tunflowNFTRegistryId, tunflowPackageId, tunflowTokenId } = useNetworkVariables(
-    "tunflowNFTRegistryId",
-    "tunflowPackageId",
-    "tunflowTokenId"
-  );
+  const { tunflowNFTRegistryId, tunflowPackageId, tunflowTokenId } =
+    useNetworkVariables(
+      "tunflowNFTRegistryId",
+      "tunflowPackageId",
+      "tunflowTokenId"
+    );
 
   const suiClient = useSuiClient();
   const {
@@ -22,7 +24,6 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
     isSuccess,
     isPending,
   } = useSignAndExecuteTransaction();
-
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -53,9 +54,12 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
 
   const trackInfo = track || defaultTrack;
 
-  const handleBuy = (e) =>{
+  const handleBuy = (e) => {
     e.preventDefault();
-    const amountMist = BigInt(Math.floor(songData.fields.price * 1_000_000_000));
+    setPaymentStatus("pending");
+    const amountMist = BigInt(
+      Math.floor(songData.fields.price * 1_000_000_000)
+    );
 
     const tx = new Transaction();
 
@@ -63,11 +67,11 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
 
     tx.moveCall({
       arguments: [
-      tx.object(tunflowNFTRegistryId),
-      tx.object(songData.fields.id.id),
-      tx.object(tunflowTokenId),
-      coin
-    ],
+        tx.object(tunflowNFTRegistryId),
+        tx.object(songData.fields.id.id),
+        tx.object(tunflowTokenId),
+        coin,
+      ],
       target: `${tunflowPackageId}::integration::purchase_and_reward`,
     });
 
@@ -83,15 +87,19 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
               showEffects: true,
             },
           });
-
+          setPaymentStatus("success");
           console.log(effects);
           console.log(effects?.created?.[0]?.reference?.objectId);
           console.log("Bought successfully");
-          navigate("/discover")
+          navigate("/discover");
+        },
+        onError: (error) => {
+          console.error("Purchase failed:", error);
+          setPaymentStatus("failed");
         },
       }
     );
-  }
+  };
 
   return (
     <>
@@ -117,7 +125,13 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
             />
             <div className={styles.previewDetails}>
               <h3 className={styles.previewTitle}>{songData?.fields.title}</h3>
-              <p className={styles.previewArtist}>By {`${songData?.fields.artist.slice(0,5)}...${songData?.fields.artist.slice(-5)}`}</p>
+              <p className={styles.previewArtist}>
+                By{" "}
+                {`${songData?.fields.artist.slice(
+                  0,
+                  5
+                )}...${songData?.fields.artist.slice(-5)}`}
+              </p>
               <div className={styles.metaItem}>
                 <span className={styles.metaIcon}>♪</span>
                 <span>4:15</span>
@@ -199,13 +213,33 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
         <div className={styles.modalFooter}>
           <div className={styles.priceContainer}>
             <span className={styles.priceLabel}>One-time purchase</span>
-            <span className={styles.priceValue}>{songData?.fields.price} SUI</span>
+            <span className={styles.priceValue}>
+              {songData?.fields.price} SUI
+            </span>
           </div>
-          <div>
-            
-          </div>
-          <Button text="Complete Purchase" onClick={handleBuy}/>
+          <div></div>
+          <Button
+            text={
+              paymentStatus === "pending"
+                ? "Please wait..."
+                : paymentStatus === "success"
+                ? "Purchase Successful"
+                : "Complete Purchase"
+            }
+            onClick={handleBuy}
+            disabled={paymentStatus === "pending"}
+          />
 
+          {paymentStatus === "success" && (
+            <div className={styles.paymentAlert}>
+              <p>Purchase successful!</p>
+            </div>
+          )}
+          {paymentStatus === "failed" && (
+            <div className={styles.failedAlert}>
+              <p>Payment failed. Please try again.</p>
+            </div>
+          )}
           <p className={styles.secureNote}>
             <span>🔒</span> Secure blockchain transaction
           </p>

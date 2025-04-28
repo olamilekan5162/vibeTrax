@@ -9,8 +9,9 @@ import { useNavigate } from "react-router-dom";
 
 const SubscribeBanner = ({subscriberData}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [subscriptionStatus, setSubscriptionStatus] = useState('idle');
   const currentAccount = useCurrentAccount();
-  const navigate = useNavigate
+  const navigate = useNavigate()
 
   const {tunflowPackageId, tunflowTreasuryId, tunflowSubscriptionId} = useNetworkVariables(
     "tunflowPackageId",
@@ -39,6 +40,7 @@ const SubscribeBanner = ({subscriberData}) => {
 
    const handleSubscribe = (e) =>{
       e.preventDefault();
+      setSubscriptionStatus('subscribing');
       const amountMist = BigInt(Math.floor(50 * 1_000_000_000));
   
       const tx = new Transaction();
@@ -67,14 +69,19 @@ const SubscribeBanner = ({subscriberData}) => {
                 showEffects: true,
               },
             });
-  
+            setSubscriptionStatus('subscribed');
             console.log(effects);
             console.log(effects?.created?.[0]?.reference?.objectId);
             console.log("Subscribed successfully");
-            setIsOpen(false);
+            // setIsOpen(false);
             navigate("/discover")
           },
+          onError: (error) => {
+            console.error("Subscription failed:", error);
+            setSubscriptionStatus('failed');
+          },
         }
+        
       );
 
     }
@@ -158,7 +165,8 @@ const SubscribeBanner = ({subscriberData}) => {
               </p>
               <div className={styles.buttonGroup}>
                 <Button 
-                  text="Subscribe Now" 
+                  text={subscriptionStatus === 'subscribing' ? 'Please wait...' : subscriptionStatus === 'subscribed' ? 'Subscribed ✓' : 'Subscribe Now'} 
+                  disabled={subscriptionStatus === 'subscribing'}
                   onClick={handleSubscribe} 
                   className={styles.primaryButton} 
                 />
@@ -168,6 +176,16 @@ const SubscribeBanner = ({subscriberData}) => {
                   className={styles.secondaryButton} 
                 />
               </div>
+              {subscriptionStatus === 'subscribed' && (
+                <div className={styles.successAlert}>
+                  <p>Subscription successful!</p>
+                </div>
+              )}
+              {subscriptionStatus === 'failed' && (
+                <div className={styles.failedAlert}>
+                  <p>Subscription failed. Please try again.</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
