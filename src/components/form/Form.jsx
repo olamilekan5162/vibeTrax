@@ -110,7 +110,9 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
       const lowQualityCid = lowQualityUpload.cid
 
       console.log("files uploaded successfully")
-      toast.success("files uploaded successfully")
+      toast.success("files uploaded successfully, creating transaction", {
+        duration: 5000
+      })
       
       return{
         imageCid: imageCid,
@@ -121,6 +123,9 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
     }
     catch(e){
       console(e)
+      toast.error("failed to upload files",{
+        duration: 5000
+      })
     }
 
     
@@ -128,7 +133,7 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
 
   const handleUpload = async (e) => {
     e.preventDefault()
-    toast.loading("Loading...")
+    const toastId = toast.loading("Loading...")
 
     const cIds = await uploadMusicImageFile(e);
 
@@ -164,6 +169,10 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
           ],
           target: `${tunflowPackageId}::music_nft::mint_music_nft`,
         });
+
+        toast.success("Transaction created successfuly, wiating for signature", {
+          duration: 5000
+        })
     
         signAndExecute(
           {
@@ -180,7 +189,10 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
     
               console.log(effects?.created?.[0]?.reference?.objectId);
               console.log("Uploaded!!!");
-              toast.success("Music uploaded successfully")
+              toast.success("Music uploaded successfully", {
+                duration: 5000
+              })
+              toast.dismiss(toastId)
               navigate("/dashboard")
             },
           }
