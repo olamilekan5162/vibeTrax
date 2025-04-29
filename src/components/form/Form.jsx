@@ -180,11 +180,8 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
     
               console.log(effects?.created?.[0]?.reference?.objectId);
               console.log("Uploaded!!!");
-              toast.success("Music uploaded successfully", {
-                duration: 5000
-              })
+              toast.success("Music uploaded successfully")
               navigate("/dashboard")
-              toast.dismiss()
             },
           }
         );
