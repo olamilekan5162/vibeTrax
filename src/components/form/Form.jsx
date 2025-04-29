@@ -12,6 +12,7 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+  const [genre, setGenre] = useState("")
   const [producerAddress, setProducerAddress] = useState("")
   const [writerAddress, setWriterAddress] = useState("")
   const [ownerRevenue, setOwnerRevenue] = useState(0)
@@ -143,9 +144,10 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
             tx.object(tunflowNFTRegistryId),
             tx.pure.string(title),
             tx.pure.string(description),
-            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${imageCid}`),
-            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${highQualityCid}`),
-            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${lowQualityCid}`),
+            tx.pure.string(genre),
+            tx.pure.string(`https://black-far-coyote-812.mypinata.cloud/ipfs/${imageCid}`),
+            tx.pure.string(`https://black-far-coyote-812.mypinata.cloud/ipfs/${highQualityCid}`),
+            tx.pure.string(`https://black-far-coyote-812.mypinata.cloud/ipfs/${lowQualityCid}`),
             tx.pure.u64(Number(price)),
             tx.pure.u64(Number(ownerRevenue)),
             tx.pure.vector("address", [
