@@ -6,6 +6,7 @@ import { Transaction } from '@mysten/sui/transactions';
 import { useNetworkVariables } from '../../config/networkConfig';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { PinataSDK } from "pinata";
 
 const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setPreviewImage}) => {
 
@@ -28,10 +29,17 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
       "tunflowPackageId"
     );
 
-    const suiClient = useSuiClient();
-      const {
-        mutate: signAndExecute,
-      } = useSignAndExecuteTransaction();
+  const suiClient = useSuiClient();
+    const {
+      mutate: signAndExecute,
+    } = useSignAndExecuteTransaction();
+
+    const pinata = new PinataSDK({
+      pinataJwt: import.meta.env.VITE_PINATA_JWT,
+      pinataGateway: import.meta.env.VITE_GATEWAY_UR
+    });
+
+    
 
   // const publisherUrl = "https://publisher.walrus-testnet.walrus.space";
       
@@ -90,7 +98,29 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
 
   const uploadMusicImageFile = async (e) => {
     e.preventDefault()
-    console.log("pinata");
+    try {
+      const ImageUpload = await pinata.upload.public.file(imageFile);
+      const imageCid = ImageUpload.cid
+
+      const highQualityUpload = await pinata.upload.public.file(highQualityFile);
+      const highQualityCid = highQualityUpload.cid
+
+      const lowQualityUpload = await pinata.upload.public.file(lowQualityFile);
+      const lowQualityCid = lowQualityUpload.cid
+
+      console.log("files uploaded successfully")
+      
+      return{
+        imageCid: imageCid,
+        highQualityCid: highQualityCid,
+        lowQualityCid: lowQualityCid
+  
+      }
+    }
+    catch(e){
+      console(e)
+    }
+
     
   }
 
@@ -98,13 +128,13 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
     e.preventDefault()
     toast.loading("Loading...")
 
-    const Links = await uploadMusicImageFile(e);
+    const cIds = await uploadMusicImageFile(e);
 
-    // const {
-    //   lowQualityBlobId,
-    //   highQualityBlobId,
-    //   imageBlobId
-    // } = blobIds;
+    const {
+      lowQualityCid,
+      highQualityCid,
+      imageCid
+    } = cIds;
 
     const tx = new Transaction();
     
@@ -113,9 +143,9 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
             tx.object(tunflowNFTRegistryId),
             tx.pure.string(title),
             tx.pure.string(description),
-            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${imageBlobId}`),
-            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${highQualityBlobId}`),
-            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${lowQualityBlobId}`),
+            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${imageCid}`),
+            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${highQualityCid}`),
+            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${lowQualityCid}`),
             tx.pure.u64(Number(price)),
             tx.pure.u64(Number(ownerRevenue)),
             tx.pure.vector("address", [
