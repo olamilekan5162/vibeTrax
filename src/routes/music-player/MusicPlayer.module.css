@@ -1,157 +1,155 @@
 .mainContent {
-    padding: 120px 5% 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
+  padding: 120px 5% 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 
 .sectionTitle {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-  }
-  
-  .musicGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-  
-  .artistsRow {
-    display: flex;
-    gap: 1.5rem;
-    overflow-x: auto;
-    padding-bottom: 1rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-primary) var(--color-border);
-    margin-bottom: 3rem;
-  }
-  
-  .artistsRow::-webkit-scrollbar {
-    height: 6px;
-  }
-  
-  .artistsRow::-webkit-scrollbar-track {
-    background: var(--color-border);
-    border-radius: 3px;
-  }
-  
-  .artistsRow::-webkit-scrollbar-thumb {
-    background-color: var(--color-primary);
-    border-radius: 3px;
-  }
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
 
+.musicGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
 
+.artistsRow {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-border);
+  margin-bottom: 3rem;
+}
+
+.artistsRow::-webkit-scrollbar {
+  height: 6px;
+}
+
+.artistsRow::-webkit-scrollbar-track {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.artistsRow::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 3px;
+}
 
 /* Comments section styling */
 .commentsSection {
-    margin-bottom: 3rem;
+  margin-bottom: 3rem;
 }
 
 .sectionTitle {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-    color: #f5f5f7;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: #f5f5f7;
 }
 
 .commentForm {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .commentAvatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .commentInputContainer {
-    flex: 1;
-    position: relative;
+  flex: 1;
+  position: relative;
 }
 
 .commentInput {
-    width: 100%;
-    padding: 1rem;
-    border-radius: 30px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #f5f5f7;
-    font-size: 1rem;
-    outline: none;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 30px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f5f5f7;
+  font-size: 1rem;
+  outline: none;
 }
 
 .commentInput::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .commentBtn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background: none;
-    color: #6366f1;
-    font-weight: 600;
-    cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: #6366f1;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .commentsList {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .comment {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .commentContent {
-    flex: 1;
-    background-color: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    padding: 1rem;
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 1rem;
 }
 
 .commentHeader {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
 
 .commentUser {
-    font-weight: 600;
-    color: #f5f5f7;
+  font-weight: 600;
+  color: #f5f5f7;
 }
 
 .commentTime {
-    color: #a1a1a1;
-    font-size: 0.85rem;
+  color: #a1a1a1;
+  font-size: 0.85rem;
 }
 
 .commentText {
-    color: #d1d1d1;
-    line-height: 1.5;
+  color: #d1d1d1;
+  line-height: 1.5;
 }
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
-    .commentForm {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .commentAvatar {
-        margin-bottom: 0.5rem;
-    }
-    
-    .commentInputContainer {
-        width: 100%;
-    }
+  .commentForm {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .commentAvatar {
+    margin-bottom: 0.5rem;
+  }
+
+  .commentInputContainer {
+    width: 100%;
+  }
 }
