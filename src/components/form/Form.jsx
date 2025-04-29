@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { PinataSDK } from "pinata";
 
-const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setPreviewImage}) => {
+const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setPreviewImage, setPreviewGenre}) => {
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -110,6 +110,7 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
       const lowQualityCid = lowQualityUpload.cid
 
       console.log("files uploaded successfully")
+      toast.success("files uploaded successfully")
       
       return{
         imageCid: imageCid,
@@ -183,6 +184,7 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
                 duration: 5000
               })
               navigate("/dashboard")
+              toast.dismiss()
             },
           }
         );
@@ -190,7 +192,6 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
   }
     return ( 
         <form onSubmit={handleUpload}>
-          <button onClick={uploadMusicImageFile}>Pinata</button>
           <Toaster position='top-right'/>
           {/* <Basic Info */}
           <div className={styles["form-group"]}>
@@ -219,6 +220,26 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
+          </div>
+
+          <div className={styles["form-group"]}>
+            <label className={styles["form-label"]} for="genre">Genre</label>
+            <select id="genre" className={styles["form-select"]} value={genre} onChange={(e) => {
+              setGenre(e.target.value)
+              setPreviewGenre(e.target.value)
+            }}>
+              <option value="" disabled selected>Select a genre</option>
+              <option value="pop">Pop</option>
+              <option value="hiphop">Hip Hop</option>
+              <option value="rnb">R&B</option>
+              <option value="rock">Rock</option>
+              <option value="electronic">Electronic</option>
+              <option value="jazz">Jazz</option>
+              <option value="classNameical">classNameical</option>
+              <option value="afrobeat">Afrobeat</option>
+              <option value="latin">Latin</option>
+              <option value="other">Other</option>
+            </select>
           </div>
 
           {/* File Uploads */}
