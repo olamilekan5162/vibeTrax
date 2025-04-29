@@ -146,7 +146,7 @@ const Discover = () => {
               ? "Premium"
               : "Standard" 
             }
-            imageSrc={track.genre}
+            imageSrc={track.music_art}
             objectId={track.id.id}
           />
         ))}
@@ -178,7 +178,7 @@ const Discover = () => {
               ? "Premium"
               : "Standard" 
             }
-            imageSrc={track.genre}
+            imageSrc={track.music_art}
             objectId={track.id.id}
           />
         ))}

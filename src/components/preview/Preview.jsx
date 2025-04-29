@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '../button/Button'
 import styles from './Preview.module.css'
 import { useCurrentAccount } from '@mysten/dapp-kit';
-const Preview = ({previewTitle, highQuality, lowQuality, PreviewImage}) => {
+const Preview = ({previewTitle, highQuality, lowQuality, PreviewImage, PreviewGenre}) => {
 
   const [activeTab, setActiveTab] = useState("standard")
   const currentAccount = useCurrentAccount()
@@ -33,10 +33,10 @@ const Preview = ({previewTitle, highQuality, lowQuality, PreviewImage}) => {
                 <div className={styles["preview-metadata-label"]}>Artist</div>
                 <div className={styles["preview-metadata-value"]}>{`${currentAccount?.address.slice(0,5)}...${currentAccount?.address.slice(-5)}`}</div>
               </div>
-              {/* <div className={styles["preview-metadata-item"]}>
+              <div className={styles["preview-metadata-item"]}>
                 <div className={styles["preview-metadata-label"]}>Genre</div>
-                <div className={styles["preview-metadata-value"]}>Electronic</div>
-              </div> */}
+                <div className={styles["preview-metadata-value"]}>{PreviewGenre}</div>
+              </div>
             </div>
             <div className={styles["preview-audio"]}>
               <audio src={

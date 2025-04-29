@@ -5,11 +5,14 @@ import { useState } from 'react';
 import { Transaction } from '@mysten/sui/transactions';
 import { useNetworkVariables } from '../../config/networkConfig';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import { PinataSDK } from "pinata";
 
-const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setPreviewImage}) => {
+const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setPreviewImage, setPreviewGenre}) => {
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+  const [genre, setGenre] = useState("")
   const [producerAddress, setProducerAddress] = useState("")
   const [writerAddress, setWriterAddress] = useState("")
   const [ownerRevenue, setOwnerRevenue] = useState(0)
@@ -27,77 +30,118 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
       "tunflowPackageId"
     );
 
-    const suiClient = useSuiClient();
-      const {
-        mutate: signAndExecute,
-      } = useSignAndExecuteTransaction();
+  const suiClient = useSuiClient();
+    const {
+      mutate: signAndExecute,
+    } = useSignAndExecuteTransaction();
 
-  const publisherUrl = "https://publisher.walrus-testnet.walrus.space";
+    const pinata = new PinataSDK({
+      pinataJwt: import.meta.env.VITE_PINATA_JWT,
+      pinataGateway: import.meta.env.VITE_GATEWAY_UR
+    });
+
+    
+
+  // const publisherUrl = "https://publisher.walrus-testnet.walrus.space";
       
+  // const uploadMusicImageFile = async (e) => {
+  //   e.preventDefault()
+  //   try {
+  //     const [res1, res2, res3] = await Promise.all([
+  //       fetch(`${publisherUrl}/v1/blobs?epochs=35`,{
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": lowQualityFile.type || "application/octet-stream",
+  //         },
+  //         body: lowQualityFile,
+  //       }),
+  //       fetch(`${publisherUrl}/v1/blobs?epochs=35`,{
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": highQualityFile.type || "application/octet-stream",
+  //         },
+  //         body: highQualityFile,
+  //       }),
+  //       fetch(`${publisherUrl}/v1/blobs?epochs=35`,{
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": imageFile.type || "application/octet-stream",
+  //         },
+  //         body: imageFile,
+  //       }),
+  //     ]);
+
+  //     const [result1, result2, result3] = await Promise.all([
+  //       res1.json(), 
+  //       res2.json(), 
+  //       res3.json()]);
+
+  //     const [blobId1, blobId2, blobId3] = [
+  //       result1?.newlyCreated?.blobObject?.blobId || result1?.alreadyCertified?.blobId,
+  //       result2?.newlyCreated?.blobObject?.blobId || result2?.alreadyCertified?.blobId, 
+  //       result3?.newlyCreated?.blobObject?.blobId || result3?.alreadyCertified?.blobId
+  //     ]
+
+  //     toast.success("Files uploaded successfully")
+      
+
+  //     return {
+  //       lowQualityBlobId: blobId1,
+  //       highQualityBlobId: blobId2,
+  //       imageBlobId: blobId3,
+  //     };
+
+  //   } catch (err) {
+  //     console.error("Upload failed", err);
+  //     toast.error("File Upload failed")
+  //   } 
+  // };
+
   const uploadMusicImageFile = async (e) => {
     e.preventDefault()
-
     try {
-      const [res1, res2, res3] = await Promise.all([
-        fetch(`${publisherUrl}/v1/blobs?epochs=35`,{
-          method: "PUT",
-          headers: {
-            "Content-Type": lowQualityFile.type || "application/octet-stream",
-          },
-          body: lowQualityFile,
-        }),
-        fetch(`${publisherUrl}/v1/blobs?epochs=35`,{
-          method: "PUT",
-          headers: {
-            "Content-Type": highQualityFile.type || "application/octet-stream",
-          },
-          body: highQualityFile,
-        }),
-        fetch(`${publisherUrl}/v1/blobs?epochs=35`,{
-          method: "PUT",
-          headers: {
-            "Content-Type": imageFile.type || "application/octet-stream",
-          },
-          body: imageFile,
-        }),
-      ]);
+      const ImageUpload = await pinata.upload.public.file(imageFile);
+      const imageCid = ImageUpload.cid
 
-      const [result1, result2, result3] = await Promise.all([
-        res1.json(), 
-        res2.json(), 
-        res3.json()]);
+      const highQualityUpload = await pinata.upload.public.file(highQualityFile);
+      const highQualityCid = highQualityUpload.cid
 
-      const [blobId1, blobId2, blobId3] = [
-        result1?.newlyCreated?.blobObject?.blobId || result1?.alreadyCertified?.blobId,
-        result2?.newlyCreated?.blobObject?.blobId || result2?.alreadyCertified?.blobId, 
-        result3?.newlyCreated?.blobObject?.blobId || result3?.alreadyCertified?.blobId
-      ]
+      const lowQualityUpload = await pinata.upload.public.file(lowQualityFile);
+      const lowQualityCid = lowQualityUpload.cid
 
-      console.log("image uploaded to walrus");
+      console.log("files uploaded successfully")
+      toast.success("files uploaded successfully, creating transaction", {
+        duration: 5000
+      })
       
+      return{
+        imageCid: imageCid,
+        highQualityCid: highQualityCid,
+        lowQualityCid: lowQualityCid
+  
+      }
+    }
+    catch(e){
+      console(e)
+      toast.error("failed to upload files",{
+        duration: 5000
+      })
+    }
 
-      return {
-        lowQualityBlobId: blobId1,
-        highQualityBlobId: blobId2,
-        imageBlobId: blobId3,
-      };
-
-    } catch (err) {
-      console.error("Upload failed", err);
-    } 
-  };
-
+    
+  }
 
   const handleUpload = async (e) => {
     e.preventDefault()
+    const toastId = toast.loading("Loading...")
 
-    const blobIds = await uploadMusicImageFile(e);
+    const cIds = await uploadMusicImageFile(e);
 
     const {
-      lowQualityBlobId,
-      highQualityBlobId,
-      imageBlobId
-    } = blobIds;
+      lowQualityCid,
+      highQualityCid,
+      imageCid
+    } = cIds;
 
     const tx = new Transaction();
     
@@ -106,9 +150,10 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
             tx.object(tunflowNFTRegistryId),
             tx.pure.string(title),
             tx.pure.string(description),
-            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${imageBlobId}`),
-            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${highQualityBlobId}`),
-            tx.pure.string(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${lowQualityBlobId}`),
+            tx.pure.string(genre),
+            tx.pure.string(`https://black-far-coyote-812.mypinata.cloud/ipfs/${imageCid}`),
+            tx.pure.string(`https://black-far-coyote-812.mypinata.cloud/ipfs/${highQualityCid}`),
+            tx.pure.string(`https://black-far-coyote-812.mypinata.cloud/ipfs/${lowQualityCid}`),
             tx.pure.u64(Number(price)),
             tx.pure.u64(Number(ownerRevenue)),
             tx.pure.vector("address", [
@@ -124,6 +169,10 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
           ],
           target: `${tunflowPackageId}::music_nft::mint_music_nft`,
         });
+
+        toast.success("Transaction created successfuly, wiating for signature", {
+          duration: 5000
+        })
     
         signAndExecute(
           {
@@ -140,6 +189,10 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
     
               console.log(effects?.created?.[0]?.reference?.objectId);
               console.log("Uploaded!!!");
+              toast.success("Music uploaded successfully", {
+                duration: 5000
+              })
+              toast.dismiss(toastId)
               navigate("/dashboard")
             },
           }
@@ -148,6 +201,7 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
   }
     return ( 
         <form onSubmit={handleUpload}>
+          <Toaster position='top-right'/>
           {/* <Basic Info */}
           <div className={styles["form-group"]}>
             <label className={styles["form-label"]} for="title">Track Title</label>
@@ -175,6 +229,26 @@ const Form = ({showPreview, setHighQuality, setLowQuality, setPreviewTitle, setP
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
+          </div>
+
+          <div className={styles["form-group"]}>
+            <label className={styles["form-label"]} for="genre">Genre</label>
+            <select id="genre" className={styles["form-select"]} value={genre} onChange={(e) => {
+              setGenre(e.target.value)
+              setPreviewGenre(e.target.value)
+            }}>
+              <option value="" disabled selected>Select a genre</option>
+              <option value="pop">Pop</option>
+              <option value="hiphop">Hip Hop</option>
+              <option value="rnb">R&B</option>
+              <option value="rock">Rock</option>
+              <option value="electronic">Electronic</option>
+              <option value="jazz">Jazz</option>
+              <option value="classNameical">classNameical</option>
+              <option value="afrobeat">Afrobeat</option>
+              <option value="latin">Latin</option>
+              <option value="other">Other</option>
+            </select>
           </div>
 
           {/* File Uploads */}

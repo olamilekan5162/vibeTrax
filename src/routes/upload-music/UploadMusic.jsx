@@ -7,6 +7,7 @@ const UploadMusic = () => {
     const [previewClicked, setPreviewClicked] = useState(false)
     const [previewTitle, setPreviewTitle] = useState("")
     const [previewImage, setPreviewImage] = useState(null)
+    const [PreviewGenre, setPreviewGenre] = useState(null)
     const [highQuality, setHighQuality] = useState(null)
     const [lowQuality, setLowQuality] = useState(null)
 
@@ -26,6 +27,7 @@ const UploadMusic = () => {
                 showPreview={showPreview} 
                 setPreviewTitle={setPreviewTitle} 
                 setPreviewImage={setPreviewImage}
+                setPreviewGenre={setPreviewGenre}
                 setHighQuality={setHighQuality} 
                 setLowQuality={setLowQuality}
                 />
@@ -34,6 +36,7 @@ const UploadMusic = () => {
             <Preview 
             previewTitle={previewTitle}
             PreviewImage={previewImage} 
+            PreviewGenre={PreviewGenre}
             highQuality={highQuality} 
             lowQuality={lowQuality}/>
             }

@@ -9,7 +9,7 @@ const SongDetails = ({ songData, isPlaying, isPremium}) => {
     <div className={styles.container}>
       <div className={styles.albumArt}>
         <img 
-          src={songData.fields.genre} 
+          src={songData.fields.music_art} 
           alt="Album Cover" 
           className={styles.albumImg}
         />
