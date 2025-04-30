@@ -1,66 +1,16 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import styles from './Profile.module.css'
 import Button from '../../components/button/Button';
-import { useSuiClientQuery} from '@mysten/dapp-kit';
 import Jazzicon from 'react-jazzicon';
-import { useNetworkVariable } from '../../config/networkConfig';
-import { useEffect, useState } from 'react';
 import useMusicNfts from '../../hooks/useMusicNfts';
 
 const Profile = () => {
-    // const [userNfts, setUserNfts] = useState([]);
-    const [NftIds, setNftIds] = useState([]);
+
     const { address } = useParams();
     const { musicNfts } = useMusicNfts()
     const navigate = useNavigate()
-    const tunflowPackageId = useNetworkVariable("tunflowPackageId");
 
     const userNfts = musicNfts.filter((music) => music.artist === address);
-
-    const { data: objectData, isPending: objectPending } = useSuiClientQuery(
-        "queryEvents",
-        {
-        query: {
-            MoveEventType: `${tunflowPackageId}::music_nft::MusicNFTMinted`,
-        },
-        },
-        {
-        select: (data) => data.data.flatMap((x) => x.parsedJson),
-        }
-    );
-
-    useEffect(() => {
-        if (objectPending) {
-        console.log("pending");
-        } else if (objectData) {
-        const allNftIds = objectData.map((nft) => nft.nft_id);
-        setNftIds(allNftIds);
-        }
-    }, [objectData, objectPending]);
-
-    const { data: musicData, isPending: musicPending } = useSuiClientQuery(
-        "multiGetObjects",
-        {
-        ids: NftIds,
-        options: {
-            showOwner: true,
-            showContent: true,
-        },
-        },
-        {
-        select: (data) => data.flatMap((x) => x.data.content.fields),
-        }
-    );
-
-    useEffect(() => {
-        if (musicPending) {
-        console.log("Pending");
-        } else if (musicData) {
-        const musicNfts = musicData
-        console.log(musicNfts)
-        }
-    }, [musicData, musicPending, address]);
-
 
     return ( 
         // Main Content

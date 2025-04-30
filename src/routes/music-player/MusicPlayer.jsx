@@ -11,13 +11,14 @@ import PlayerControls from "../../components/player-controls/PlayerControls";
 import { useOutletContext, useParams } from "react-router-dom";
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import Jazzicon from "react-jazzicon";
+import useMusicNfts from "../../hooks/useMusicNfts";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-   const subscriberData = useOutletContext()
-  
+  const { musicNfts } = useMusicNfts()
+  const subscriberData = useOutletContext()  
 
   const { data, isPending } = useSuiClientQuery(
     "getObject",
@@ -34,6 +35,7 @@ const MusicPlayer = () => {
     }
   );
 
+  const userNfts = musicNfts.filter((music) => music.artist === data?.fields?.artist && music?.id?.id !== id);
   const currentAccount = useCurrentAccount()
 
   const forSale = currentAccount?.address === data?.fields.artist 
@@ -74,15 +76,22 @@ const MusicPlayer = () => {
 
         <h2 className={styles.sectionTitle}>More from Artist {data?.fields?.artist.slice(0,5)}...{data?.fields?.artist.slice(-5)}</h2>
         <div className={styles.musicGrid}>
-          {trendingTracks.map((track) => (
+          {userNfts.map((track) => (
             <MusicCard
-              key={track.id}
+              key={track.id.id}
+              objectId={track.id.id}
               title={track.title}
               artist={track.artist}
               duration={track.duration}
               plays={track.plays}
-              quality={track.quality}
-              imageSrc={track.imageSrc}
+              quality={
+                currentAccount?.address === track?.current_owner ||
+                track?.collaborators.includes(currentAccount?.address) ||
+                (subscriberData && subscriberData.length > 0)
+                  ? "Premium"
+                  : "Standard"
+              }
+              imageSrc={track.music_art}
             />
           ))}
         </div>
