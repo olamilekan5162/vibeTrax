@@ -1,11 +1,62 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Profile.module.css'
 import Button from '../../components/button/Button';
-import { useCurrentAccount } from '@mysten/dapp-kit';
+import { useSuiClientQuery, useCurrentAccount } from '@mysten/dapp-kit';
 import Jazzicon from 'react-jazzicon';
+import { useNetworkVariable } from '../../config/networkConfig';
+import { useEffect, useState } from 'react';
 const Profile = () => {
+    const [userNfts, setUserNfts] = useState([]);
+    const [NftIds, setNftIds] = useState([]);
     const navigate = useNavigate()
     const currentAccount = useCurrentAccount()
+    const tunflowPackageId = useNetworkVariable("tunflowPackageId");
+
+    const { data: objectData, isPending: objectPending } = useSuiClientQuery(
+        "queryEvents",
+        {
+        query: {
+            MoveEventType: `${tunflowPackageId}::music_nft::MusicNFTMinted`,
+        },
+        },
+        {
+        select: (data) => data.data.flatMap((x) => x.parsedJson),
+        }
+    );
+
+    useEffect(() => {
+        if (objectPending) {
+        console.log("pending");
+        } else if (objectData) {
+        const allNftIds = objectData.map((nft) => nft.nft_id);
+        setNftIds(allNftIds);
+        }
+    }, [objectData, objectPending]);
+
+    const { data: musicData, isPending: musicPending } = useSuiClientQuery(
+        "multiGetObjects",
+        {
+        ids: NftIds,
+        options: {
+            showOwner: true,
+            showContent: true,
+        },
+        },
+        {
+        select: (data) => data.flatMap((x) => x.data.content.fields),
+        }
+    );
+
+    useEffect(() => {
+        if (musicPending) {
+        console.log("Pending");
+        } else if (musicData) {
+        const musicNfts = musicData.filter((music) => music.artist === currentAccount.address);
+        setUserNfts(musicNfts);
+        }
+    }, [musicData, musicPending]);
+
+
     return ( 
         // Main Content
     <main className={styles["main-content"]}>
@@ -14,13 +65,12 @@ const Profile = () => {
             <div className={styles["artist-avatar"]}>
                 <Jazzicon  diameter={100} seed={currentAccount?.address}/>
             </div>
-            {/* <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Artist Profile"  /> */}
             <div className={styles["artist-info"]}>
                 <h1>{currentAccount?.address}</h1>
                 <p>Tuneflow user</p>
                 <div className={styles["artist-stats"]}>
                     <div className={styles["stat"]}>
-                        <span className={styles["stat-value"]}>12</span>
+                        <span className={styles["stat-value"]}>{userNfts.length}</span>
                         <span className={styles["stat-label"]}>Tracks</span>
                     </div>
                     {/* <div className={styles["stat"]}>
@@ -121,6 +171,7 @@ const Profile = () => {
         <h2 className={styles["section-title"]}>Your Recent Tracks</h2>
         <div className={styles["dashboard-card"]}>
             <ul className={styles["track-list"]}>
+                
                 <li className={styles["track-item"]}>
                     <span className={styles["track-number"]}>1</span>
                     <img src="https://picsum.photos/seed/track2/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
@@ -140,7 +191,7 @@ const Profile = () => {
                         <Button btnClass='primary' text={'Manage'}/>
                     </div>
                 </li>
-                <li className={styles["track-item"]}>
+                {/* <li className={styles["track-item"]}>
                     <span className={styles["track-number"]}>2</span>
                     <img src="https://picsum.photos/seed/track3/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
                     <div className={styles["track-info"]}>
@@ -158,8 +209,8 @@ const Profile = () => {
                     <div className={styles["track-actions"]}>
                         <Button btnClass='primary' text={'Manage'}/>    
                     </div>
-                </li>
-                <li className={styles["track-item"]}>
+                </li> */}
+                {/* <li className={styles["track-item"]}>
                     <span className={styles["track-number"]}>3</span>
                     <img src="https://picsum.photos/seed/track1/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
                     <div className={styles["track-info"]}>
@@ -177,7 +228,7 @@ const Profile = () => {
                     <div className={styles["track-actions"]}>
                         <Button btnClass='primary' text={'Manage'}/>
                     </div>
-                </li>
+                </li> */}
             </ul>
         </div>
         

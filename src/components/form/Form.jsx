@@ -8,7 +8,6 @@ import styles from "./Form.module.css";
 import { useState } from "react";
 import { Transaction } from "@mysten/sui/transactions";
 import { useNetworkVariables } from "../../config/networkConfig";
-import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { PinataSDK } from "pinata";
 
@@ -28,7 +27,6 @@ const Form = ({
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
-  const navigate = useNavigate();
 
   // Contributors state management
   const [contributors, setContributors] = useState([
@@ -205,7 +203,7 @@ const Form = ({
             duration: 5000,
           });
           toast.dismiss(toastId);
-          navigate("/dashboard");
+          window.location.reload
         },
       }
     );
