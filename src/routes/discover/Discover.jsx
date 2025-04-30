@@ -18,6 +18,10 @@ const Discover = () => {
   const subscriberData = useOutletContext();
   const navigate = useNavigate();
 
+  const isSubscribed = () => {
+    return subscriberData && subscriberData.length <= 0;
+  };
+
   const tunflowPackageId = useNetworkVariable("tunflowPackageId");
 
   const { data: objectData, isPending: objectPending } = useSuiClientQuery(
@@ -111,7 +115,7 @@ const Discover = () => {
 
   return (
     <main className={styles.mainContent}>
-      <SubscribeBanner subscriberData={subscriberData} />
+      {isSubscribed() && <SubscribeBanner subscriberData={subscriberData} />}
 
       <div className={styles.headerSection}>
         <h1 className={styles.pageTitle}>Discover Music</h1>

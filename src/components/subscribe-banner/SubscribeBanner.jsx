@@ -5,6 +5,14 @@ import SubscribeModal from "../../modals/subscribe-modal/SubscribeModal";
 
 const SubscribeBanner = ({ subscriberData }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+
+
+  const handleCloseButtonClick = () => {
+    setIsVisible(false);
+    // localStorage.setItem("subscribeBannerClosed", "true");
+    
+  }
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -12,24 +20,37 @@ const SubscribeBanner = ({ subscriberData }) => {
     document.body.style.overflow = "hidden";
   };
 
+
+
   const handleClose = () => {
     setIsOpen(false);
 
     document.body.style.overflow = "auto";
   };
+
+  if (subscriberData > 0) {
+    return null;
+  }
+
+  // Only check visibility if we've already determined user is not subscribed
+  if (!isVisible) {
+    return null;
+  }
   return (
     <>
       <div className={styles.infoBanner}>
         <p>Subscribe to enjoy premium quality music and exclusive content.</p>
-        {subscriberData && subscriberData.length > 0 ? (
-          <Button text="Subscribed" disabled={true} />
-        ) : (
+        
           <Button
             text="Subscribe"
             onClick={handleOpen}
             // className={styles.subscribeButton}
           />
-        )}
+          
+        
+      <button onClick={handleCloseButtonClick} className={styles.closeButton}>×</button>
+        
+        
       </div>
       <SubscribeModal isOpen={isOpen} onClose={handleClose} subscriberData={subscriberData}/>
     </>
