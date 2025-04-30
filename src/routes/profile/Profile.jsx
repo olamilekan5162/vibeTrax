@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styles from './Profile.module.css'
 import Button from '../../components/button/Button';
 import { useSuiClientQuery, useCurrentAccount } from '@mysten/dapp-kit';
@@ -9,6 +9,7 @@ const Profile = () => {
     const [userNfts, setUserNfts] = useState([]);
     const [NftIds, setNftIds] = useState([]);
     const navigate = useNavigate()
+    const { address } = useParams();
     const currentAccount = useCurrentAccount()
     const tunflowPackageId = useNetworkVariable("tunflowPackageId");
 
@@ -51,10 +52,11 @@ const Profile = () => {
         if (musicPending) {
         console.log("Pending");
         } else if (musicData) {
-        const musicNfts = musicData.filter((music) => music.artist === currentAccount.address);
+        const musicNfts = musicData.filter((music) => music.artist === address);
+        console.log(musicNfts)
         setUserNfts(musicNfts);
         }
-    }, [musicData, musicPending]);
+    }, [musicData, musicPending, address]);
 
 
     return ( 
@@ -63,10 +65,10 @@ const Profile = () => {
         {/* <Dashboard Header */}
         <div className={styles["dashboard-header"]}>
             <div className={styles["artist-avatar"]}>
-                <Jazzicon  diameter={100} seed={currentAccount?.address}/>
+                <Jazzicon  diameter={100} seed={address}/>
             </div>
             <div className={styles["artist-info"]}>
-                <h1>{currentAccount?.address}</h1>
+                <h1>{`${address.slice(0,5)}...${address.slice(0,5)}`}</h1>
                 <p>Tuneflow user</p>
                 <div className={styles["artist-stats"]}>
                     <div className={styles["stat"]}>
@@ -171,143 +173,62 @@ const Profile = () => {
         <h2 className={styles["section-title"]}>Your Recent Tracks</h2>
         <div className={styles["dashboard-card"]}>
             <ul className={styles["track-list"]}>
+                {userNfts.map((track) =>(
                 
-                <li className={styles["track-item"]}>
-                    <span className={styles["track-number"]}>1</span>
-                    <img src="https://picsum.photos/seed/track2/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
-                    <div className={styles["track-info"]}>
-                        <h4 className={styles["track-title"]}>Summer Rain</h4>
-                        <div className={styles["track-meta"]}>
-                            <span>3:45</span>
-                            <span>2 weeks ago</span>
-                            <span>Pop</span>
+                    <li key={track?.id?.id} className={styles["track-item"]}>
+                        <span className={styles["track-number"]}>1</span>
+                        <img src={track.music_art} alt="Track Artwork" className={styles["track-artwork"]} />
+                        <div className={styles["track-info"]}>
+                            <h4 className={styles["track-title"]}>{track?.title}</h4>
+                            <div className={styles["track-meta"]}>
+                                <span>3:45</span>
+                                <span>2 weeks ago</span>
+                                <span>{track.genre}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className={styles["track-stats"]}>
-                        <span>5.2K plays</span>
-                        <span>320 purchases</span>
-                    </div>
-                    <div className={styles["track-actions"]}>
-                        <Button btnClass='primary' text={'Manage'}/>
-                    </div>
-                </li>
-                {/* <li className={styles["track-item"]}>
-                    <span className={styles["track-number"]}>2</span>
-                    <img src="https://picsum.photos/seed/track3/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
-                    <div className={styles["track-info"]}>
-                        <h4 className={styles["track-title"]}>Midnight Dreams</h4>
-                        <div className={styles["track-meta"]}>
-                            <span>4:12</span>
-                            <span>1 month ago</span>
-                            <span>R&B</span>
+                        <div className={styles["track-stats"]}>
+                            <span>5.2K plays</span>
+                            <span>320 purchases</span>
                         </div>
-                    </div>
-                    <div className={styles["track-stats"]}>
-                        <span>3.8K plays</span>
-                        <span>215 purchases</span>
-                    </div>
-                    <div className={styles["track-actions"]}>
-                        <Button btnClass='primary' text={'Manage'}/>    
-                    </div>
-                </li> */}
-                {/* <li className={styles["track-item"]}>
-                    <span className={styles["track-number"]}>3</span>
-                    <img src="https://picsum.photos/seed/track1/200/200" alt="Track Artwork" className={styles["track-artwork"]} />
-                    <div className={styles["track-info"]}>
-                        <h4 className={styles["track-title"]}>Urban Echoes</h4>
-                        <div className={styles["track-meta"]}>
-                            <span>3:28</span>
-                            <span>2 months ago</span>
-                            <span>Hip Hop</span>
+                        <div className={styles["track-actions"]}>
+                            <Button btnClass='primary' text={'Manage'}/>
                         </div>
-                    </div>
-                    <div className={styles["track-stats"]}>
-                        <span>6.1K plays</span>
-                        <span>405 purchases</span>
-                    </div>
-                    <div className={styles["track-actions"]}>
-                        <Button btnClass='primary' text={'Manage'}/>
-                    </div>
-                </li> */}
+                    </li>
+                
+                ))}
             </ul>
         </div>
         
         {/* Royalty Distribution */}
         <h2 className={styles["section-title"]}>Royalty Distribution</h2>
         <div className={styles["dashboard-grid"]}>
-            <div className={styles["dashboard-card"]}>
-                <div className={styles["card-header"]}>
-                    <h3 className={styles["card-title"]}>Summer Rain</h3>
-                    <a href="#" className={styles["card-action"]}>Edit</a>
-                </div>
-                <div className={styles["royalty-list"]}>
-                    <div className={styles["royalty-item"]}>
-                        <div className={styles["royalty-icon"]}>A</div>
-                        <div className={styles["royalty-details"]}>
-                            <div className={styles["royalty-role"]}>Artist (You)</div>
-                            <div className={styles["royalty-recipient"]}>David Okafor</div>
-                        </div>
-                        <div className={styles["royalty-amount"]}>65%</div>
+            {
+                userNfts.map((track) => (
+                <div key={track?.id?.id} className={styles["dashboard-card"]}>
+                    <div className={styles["card-header"]}>
+                        <h3 className={styles["card-title"]}>{track?.title}</h3>
+                        <a href="#" className={styles["card-action"]}>Edit</a>
                     </div>
-                    <div className={styles["royalty-item"]}>
-                        <div className={styles["royalty-icon"]}>P</div>
-                        <div className={styles["royalty-details"]}>
-                            <div className={styles["royalty-role"]}>Producer</div>
-                            <div className={styles["royalty-recipient"]}>Michael Johnson</div>
-                        </div>
-                        <div className={styles["royalty-amount"]}>20%</div>
-                    </div>
-                    <div className={styles["royalty-item"]}>
-                        <div className={styles["royalty-icon"]}>W</div>
-                        <div className={styles["royalty-details"]}>
-                            <div className={styles["royalty-role"]}>Writer</div>
-                            <div className={styles["royalty-recipient"]}>Sarah Williams</div>
-                        </div>
-                        <div className={styles["royalty-amount"]}>10%</div>
-                    </div>
-                    <div className={styles["royalty-item"]}>
-                        <div className={styles["royalty-icon"]}>M</div>
-                        <div className={styles["royalty-details"]}>
-                            <div className={styles["royalty-role"]}>Marketing</div>
-                            <div className={styles["royalty-recipient"]}>PromoTeam</div>
-                        </div>
-                        <div className={styles["royalty-amount"]}>5%</div>
+                    <div className={styles["royalty-list"]}>
+                        {
+                            track.collaborators.map((c, index) =>(
+                                <div key={index} className={styles["royalty-item"]}>
+                                    <div className={styles["royalty-icon"]}>
+                                        <Jazzicon diameter={25} seed={c}/>
+                                    </div>
+                                    <div className={styles["royalty-details"]}>
+                                        <div className={styles["royalty-role"]}>{c.role || 'NA'}</div>
+                                        <Link className={styles["royalty-recipient"]} to={`/profile/${c}`} >{`${c.slice(0,5)}...${c.slice(-5)}`}</Link>
+                                    </div>
+                                    <div className={styles["royalty-amount"]}>{track.collaborator_splits[index]/100}%</div>
+                                </div>
+                            ))
+
+                        }
                     </div>
                 </div>
-            </div>
-            
-            <div className={styles["dashboard-card"]}>
-                <div className={styles["card-header"]}>
-                    <h3 className={styles["card-title"]}>Midnight Dreams</h3>
-                    <a href="#" className={styles["card-action"]}>Edit</a>
-                </div>
-                <div className={styles["royalty-list"]}>
-                    <div className={styles["royalty-item"]}>
-                        <div className={styles["royalty-icon"]}>A</div>
-                        <div className={styles["royalty-details"]}>
-                            <div className={styles["royalty-role"]}>Artist (You)</div>
-                            <div className={styles["royalty-recipient"]}>David Okafor</div>
-                        </div>
-                        <div className={styles["royalty-amount"]}>60%</div>
-                    </div>
-                    <div className={styles["royalty-item"]}>
-                        <div className={styles["royalty-icon"]}>P</div>
-                        <div className={styles["royalty-details"]}>
-                            <div className={styles["royalty-role"]}>Producer</div>
-                            <div className={styles["royalty-recipient"]}>Beat Masters</div>
-                        </div>
-                        <div className={styles["royalty-amount"]}>25%</div>
-                    </div>
-                    <div className={styles["royalty-item"]}>
-                        <div className={styles["royalty-icon"]}>W</div>
-                        <div className={styles["royalty-details"]}>
-                            <div className={styles["royalty-role"]}>Writer</div>
-                            <div className={styles["royalty-recipient"]}>Jessica Lee</div>
-                        </div>
-                        <div className={styles["royalty-amount"]}>15%</div>
-                    </div>
-                </div>
-            </div>
+                ))
+            }
         </div>
     </main>
      );
