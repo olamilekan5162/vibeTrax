@@ -3,6 +3,7 @@ import styles from './Profile.module.css'
 import Button from '../../components/button/Button';
 import Jazzicon from 'react-jazzicon';
 import useMusicNfts from '../../hooks/useMusicNfts';
+import MusicCard from '../../components/cards/music-card/MusicCard';
 
 const Profile = () => {
 
@@ -11,6 +12,8 @@ const Profile = () => {
     const navigate = useNavigate()
 
     const userNfts = musicNfts.filter((music) => music.artist === address);
+    const ownedNfts = musicNfts.filter((music) => music.owner === address);
+
 
     return ( 
         // Main Content
@@ -122,6 +125,46 @@ const Profile = () => {
             </div>
         </div>
         
+        {/* your Tracks */}
+        <h2 className={styles["section-title"]}>My Tracks</h2>
+        <div className={styles["dashboard-music-grid"]}>
+            {userNfts.map((track) =>(
+                <MusicCard
+                key={track.id.id}
+                objectId={track.id.id}
+                title={track.title}
+                artist={track.artist}
+                duration={track.duration}
+                plays={track.plays}
+                quality={"Premium"}
+                imageSrc={track.music_art}
+                />
+            
+            ))}
+        </div>
+
+        {/* owned Tracks */}
+        <h2 className={styles["section-title"]}>Owned Tracks</h2>
+        {ownedNfts.length>0 ?
+            <div className={styles["dashboard-music-grid"]}>
+                {ownedNfts.map((track) =>(
+                    <MusicCard
+                    key={track.id.id}
+                    objectId={track.id.id}
+                    title={track.title}
+                    artist={track.artist}
+                    duration={track.duration}
+                    plays={track.plays}
+                    quality={"Premium"}
+                    imageSrc={track.music_art}
+                    />
+                
+                ))}
+            </div>
+
+            : <p>You do not own any track</p> 
+        }
+
         {/* Recent Tracks */}
         <h2 className={styles["section-title"]}>Your Recent Tracks</h2>
         <div className={styles["dashboard-card"]}>
