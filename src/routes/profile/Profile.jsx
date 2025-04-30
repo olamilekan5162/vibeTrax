@@ -1,9 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './Dashboard.module.css'
+import styles from './Profile.module.css'
 import Button from '../../components/button/Button';
 import { useCurrentAccount } from '@mysten/dapp-kit';
 import Jazzicon from 'react-jazzicon';
-const Dashboard = () => {
+const Profile = () => {
     const navigate = useNavigate()
     const currentAccount = useCurrentAccount()
     return ( 
@@ -262,4 +262,4 @@ const Dashboard = () => {
      );
 }
  
-export default Dashboard;
+export default Profile;

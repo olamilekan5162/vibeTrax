@@ -1,10 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 import Button from "../button/Button";
-import { ConnectButton } from '@mysten/dapp-kit';
+import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
 
 
 const Header = () => {
+  const currentAccount = useCurrentAccount()
   return (
     <header className={styles.header}>
       <Link to="/" className={styles.logo}>
@@ -30,10 +31,10 @@ const Header = () => {
           </li>
           <li>
             <NavLink
-              to={"dashboard"}
+              to={`profile/${currentAccount?.address}`}
               className={({ isActive }) => (isActive ? styles.active : "")}
             >
-              For artist
+              Profile
             </NavLink>
           </li>
           {/* <li>
