@@ -35,4 +35,10 @@
   }
   
   
- 
+  .closeButton{
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+  }
