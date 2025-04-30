@@ -3,8 +3,8 @@ import Root from "./routes/root/Root";
 import Home from "./routes/home/Home";
 import Discover from "./routes/discover/Discover";
 import UploadMusic from "./routes/upload-music/UploadMusic";
-import Dashboard from "./routes/dashboard/Dashboard";
 import MusicPlayer from "./routes/music-player/MusicPlayer";
+import Profile from "./routes/profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -28,8 +28,8 @@ export const router = createBrowserRouter([
         Component: UploadMusic,
       },
       {
-        path: "dashboard",
-        Component: Dashboard,
+        path: "profile/:address",
+        Component: Profile,
       },
     ],
   },
