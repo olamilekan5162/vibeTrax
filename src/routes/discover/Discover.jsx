@@ -250,7 +250,7 @@ const Discover = () => {
                     ? "Premium"
                     : "Standard"
                 }
-                imageSrc={track.music_art}
+                imageSrc={track?.music_art}
                 objectId={track.id.id}
               />
             ))

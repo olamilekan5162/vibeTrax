@@ -1,26 +1,32 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Dashboard.module.css'
 import Button from '../../components/button/Button';
+import { useCurrentAccount } from '@mysten/dapp-kit';
+import Jazzicon from 'react-jazzicon';
 const Dashboard = () => {
     const navigate = useNavigate()
+    const currentAccount = useCurrentAccount()
     return ( 
         // Main Content
     <main className={styles["main-content"]}>
         {/* <Dashboard Header */}
         <div className={styles["dashboard-header"]}>
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Artist Profile" className={styles["artist-avatar"]} />
+            <div className={styles["artist-avatar"]}>
+                <Jazzicon  diameter={100} seed={currentAccount?.address}/>
+            </div>
+            {/* <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Artist Profile"  /> */}
             <div className={styles["artist-info"]}>
-                <h1>David Okafor</h1>
-                <p>Singer-Songwriter</p>
+                <h1>{currentAccount?.address}</h1>
+                <p>Tuneflow user</p>
                 <div className={styles["artist-stats"]}>
                     <div className={styles["stat"]}>
                         <span className={styles["stat-value"]}>12</span>
                         <span className={styles["stat-label"]}>Tracks</span>
                     </div>
-                    <div className={styles["stat"]}>
+                    {/* <div className={styles["stat"]}>
                         <span className={styles["stat-value"]}>8.7K</span>
                         <span className={styles["stat-label"]}>Followers</span>
-                    </div>
+                    </div> */}
                     <div className={styles["stat"]}>
                         <span className={styles["stat-value"]}>245K</span>
                         <span className={styles["stat-label"]}>Total Plays</span>

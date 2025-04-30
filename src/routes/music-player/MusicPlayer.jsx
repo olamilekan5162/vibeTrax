@@ -10,6 +10,7 @@ import Contributors from "../../components/contributors/Contributors";
 import PlayerControls from "../../components/player-controls/PlayerControls";
 import { useOutletContext, useParams } from "react-router-dom";
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
+import Jazzicon from "react-jazzicon";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -71,7 +72,7 @@ const MusicPlayer = () => {
         </div>
         <Contributors contributors={data?.fields.collaborators} splits={data?.fields.collaborator_splits} />
 
-        <h2 className={styles.sectionTitle}>More from Urban Echoes</h2>
+        <h2 className={styles.sectionTitle}>More from Artist {data?.fields?.artist.slice(0,5)}...{data?.fields?.artist.slice(-5)}</h2>
         <div className={styles.musicGrid}>
           {trendingTracks.map((track) => (
             <MusicCard
@@ -90,11 +91,11 @@ const MusicPlayer = () => {
           <h2 className={styles.sectionTitle}>Comments</h2>
 
           <div className={styles.commentForm}>
-            <img
+            {/* <img
               src="/api/placeholder/50/50"
               alt="Your Avatar"
               className={styles.commentAvatar}
-            />
+            /> */}
             <div className={styles.commentInputContainer}>
               <input
                 type="text"
@@ -107,11 +108,12 @@ const MusicPlayer = () => {
 
           <div className={styles.commentsList}>
             <div className={styles.comment}>
-              <img
+              {/* <img
                 src="/api/placeholder/50/50"
                 alt="SynthWave92 Avatar"
                 className={styles.commentAvatar}
-              />
+              /> */}
+              <Jazzicon diameter={50} seed={Math.round(Math.random() * 10000000)}/>
               <div className={styles.commentContent}>
                 <div className={styles.commentHeader}>
                   <span className={styles.commentUser}>SynthWave92</span>
@@ -126,11 +128,7 @@ const MusicPlayer = () => {
             </div>
 
             <div className={styles.comment}>
-              <img
-                src="/api/placeholder/50/50"
-                alt="BeatMaker404 Avatar"
-                className={styles.commentAvatar}
-              />
+              <Jazzicon diameter={50} seed={Math.round(Math.random() * 10000000)}/>
               <div className={styles.commentContent}>
                 <div className={styles.commentHeader}>
                   <span className={styles.commentUser}>BeatMaker404</span>
@@ -144,11 +142,7 @@ const MusicPlayer = () => {
             </div>
 
             <div className={styles.comment}>
-              <img
-                src="/api/placeholder/50/50"
-                alt="MusicCollector Avatar"
-                className={styles.commentAvatar}
-              />
+              <Jazzicon diameter={50} seed={Math.round(Math.random() * 10000000)}/>
               <div className={styles.commentContent}>
                 <div className={styles.commentHeader}>
                   <span className={styles.commentUser}>MusicCollector</span>
