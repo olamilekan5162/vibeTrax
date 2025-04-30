@@ -1,6 +1,7 @@
 import styles from './Contributors.module.css';
 import Jazzicon from 'react-jazzicon'
 import { useCurrentAccount } from '@mysten/dapp-kit';
+import { Link } from 'react-router-dom';
 
 const Contributors = ({ contributors, splits }) => {
   const currentAccount = useCurrentAccount()
@@ -12,7 +13,7 @@ const Contributors = ({ contributors, splits }) => {
           <div key={index} className={styles.contributorCard}>
             <Jazzicon diameter={50} seed={contributor}/>
             <div className={styles.contributorInfo}>
-              <h3 className={styles.contributorName}>{`${contributor.slice(0,5)}...${contributor.slice(-5)}`}</h3>
+              <Link to={`/profile/${contributor}`} className={styles.contributorName}>{`${contributor.slice(0,5)}...${contributor.slice(-5)}`}</Link>
               {/* <p className={styles.contributorRole}>{contributor.role}</p> */}
               {contributors.includes(currentAccount?.address) 
                 ? <p className={styles.contributorShare}>{splits[index]/100}% Share</p>
