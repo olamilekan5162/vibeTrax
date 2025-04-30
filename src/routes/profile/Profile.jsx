@@ -1,17 +1,21 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import styles from './Profile.module.css'
 import Button from '../../components/button/Button';
-import { useSuiClientQuery, useCurrentAccount } from '@mysten/dapp-kit';
+import { useSuiClientQuery} from '@mysten/dapp-kit';
 import Jazzicon from 'react-jazzicon';
 import { useNetworkVariable } from '../../config/networkConfig';
 import { useEffect, useState } from 'react';
+import useMusicNfts from '../../hooks/useMusicNfts';
+
 const Profile = () => {
-    const [userNfts, setUserNfts] = useState([]);
+    // const [userNfts, setUserNfts] = useState([]);
     const [NftIds, setNftIds] = useState([]);
-    const navigate = useNavigate()
     const { address } = useParams();
-    const currentAccount = useCurrentAccount()
+    const { musicNfts } = useMusicNfts()
+    const navigate = useNavigate()
     const tunflowPackageId = useNetworkVariable("tunflowPackageId");
+
+    const userNfts = musicNfts.filter((music) => music.artist === address);
 
     const { data: objectData, isPending: objectPending } = useSuiClientQuery(
         "queryEvents",
@@ -52,9 +56,8 @@ const Profile = () => {
         if (musicPending) {
         console.log("Pending");
         } else if (musicData) {
-        const musicNfts = musicData.filter((music) => music.artist === address);
+        const musicNfts = musicData
         console.log(musicNfts)
-        setUserNfts(musicNfts);
         }
     }, [musicData, musicPending, address]);
 

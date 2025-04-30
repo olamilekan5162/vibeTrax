@@ -91,11 +91,6 @@ const MusicPlayer = () => {
           <h2 className={styles.sectionTitle}>Comments</h2>
 
           <div className={styles.commentForm}>
-            {/* <img
-              src="/api/placeholder/50/50"
-              alt="Your Avatar"
-              className={styles.commentAvatar}
-            /> */}
             <div className={styles.commentInputContainer}>
               <input
                 type="text"
@@ -108,11 +103,6 @@ const MusicPlayer = () => {
 
           <div className={styles.commentsList}>
             <div className={styles.comment}>
-              {/* <img
-                src="/api/placeholder/50/50"
-                alt="SynthWave92 Avatar"
-                className={styles.commentAvatar}
-              /> */}
               <Jazzicon diameter={50} seed={Math.round(Math.random() * 10000000)}/>
               <div className={styles.commentContent}>
                 <div className={styles.commentHeader}>
