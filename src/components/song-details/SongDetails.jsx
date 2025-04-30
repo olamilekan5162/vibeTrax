@@ -1,6 +1,7 @@
 import styles from './SongDetails.module.css';
 import PlayerControls from '../player-controls/PlayerControls';
 import AudioVisualizer from '../audio-visualizer/AudioVisualizer';
+import { Link } from 'react-router-dom';
 
 
 const SongDetails = ({ songData, isPlaying, isPremium}) => {
@@ -27,7 +28,7 @@ const SongDetails = ({ songData, isPlaying, isPremium}) => {
       <div className={styles.details}>
         <h1 className={styles.title}>{songData.fields.title}</h1>
         <div className={styles.artist}>
-          By <a href="#" className={styles.artistLink}>{`${songData.fields.artist.slice(0,5)}...${songData.fields.artist.slice(-5)}`}</a>
+          By <Link to={`/profile/${songData.fields.artist}`} className={styles.artistLink}>{`${songData.fields.artist.slice(0,5)}...${songData.fields.artist.slice(-5)}`}</Link>
           <div className={styles.artistBadge}>Verified Artist</div>
         </div>
         
@@ -38,11 +39,11 @@ const SongDetails = ({ songData, isPlaying, isPremium}) => {
           </div>
           <div className={styles.metaItem}>
             <span className={styles.metaIcon}>👁️</span>
-            <span>{songData.plays} plays</span>
+            <span>{5} plays</span>
           </div>
           <div className={styles.metaItem}>
             <span className={styles.metaIcon}>❤️</span>
-            <span>{songData.likes} likes</span>
+            <span>{12} likes</span>
           </div>
         </div>
         
