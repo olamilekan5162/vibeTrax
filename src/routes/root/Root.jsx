@@ -5,6 +5,7 @@ import Footer from "../../components/footer/Footer";
 import MusicPlayer from "../music-player/MusicPlayer";
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import { useNetworkVariable } from "../../config/networkConfig";
+import { Toaster } from "react-hot-toast";
 
 const Root = () => {
 
@@ -30,6 +31,7 @@ const Root = () => {
   return (
     <div className={styles.root}>
       <Header />
+      <Toaster position="top-right" />
       <Outlet context={subscriberData}/>
       <Footer />
     </div>

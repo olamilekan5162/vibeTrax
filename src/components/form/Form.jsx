@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Transaction } from "@mysten/sui/transactions";
 import { useNetworkVariables } from "../../config/networkConfig";
 import { useNavigate } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { PinataSDK } from "pinata";
 
 const Form = ({
@@ -98,7 +98,7 @@ const Form = ({
 
   const pinata = new PinataSDK({
     pinataJwt: import.meta.env.VITE_PINATA_JWT,
-    pinataGateway: import.meta.env.VITE_GATEWAY_UR,
+    pinataGateway: import.meta.env.VITE_GATEWAY_URL,
   });
 
   const uploadMusicImageFile = async (e) => {
@@ -167,13 +167,13 @@ const Form = ({
         tx.pure.string(description),
         tx.pure.string(genre),
         tx.pure.string(
-          `https://black-far-coyote-812.mypinata.cloud/ipfs/${imageCid}`
+          `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${imageCid}`
         ),
         tx.pure.string(
-          `https://black-far-coyote-812.mypinata.cloud/ipfs/${highQualityCid}`
+          `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${highQualityCid}`
         ),
         tx.pure.string(
-          `https://black-far-coyote-812.mypinata.cloud/ipfs/${lowQualityCid}`
+          `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`
         ),
         tx.pure.u64(Number(price)),
         tx.pure.u64(Number(contributors[0].percentage)),
@@ -215,7 +215,6 @@ const Form = ({
 
   return (
     <form onSubmit={handleUpload}>
-      <Toaster position="top-right" />
       {/* Basic Info */}
       <div className={styles["form-group"]}>
         <label className={styles["form-label"]} htmlFor="title">

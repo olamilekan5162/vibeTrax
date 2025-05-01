@@ -184,7 +184,7 @@ const Profile = () => {
             title={track.title}
             artist={track.artist}
             duration={track.duration}
-            plays={track.plays}
+            votes={track.vote_count}
             quality={"Premium"}
             imageSrc={track.music_art}
           />
@@ -202,7 +202,7 @@ const Profile = () => {
               title={track.title}
               artist={track.artist}
               duration={track.duration}
-              plays={track.plays}
+              votes={track.vote_count}
               quality={"Premium"}
               imageSrc={track.music_art}
             />
