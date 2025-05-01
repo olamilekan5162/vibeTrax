@@ -314,3 +314,31 @@ public fun get_proposal_details(
 
     (description, votes_for, votes_against, status)
 }
+
+    // public entry fun vote_for_nft(
+    //     nft: &mut MusicNFT,
+    //     payment: Coin<SUI>,
+    //     ctx: &mut TxContext
+    // ) {
+    //     let vote_amount = coin::value(&payment);
+    //     assert!(vote_amount > 0, EINSUFFICIENT_AMOUNT);
+
+    //     // Price increases by 50% of vote amount
+    //     let price_increase = vote_amount / 2;
+    //     nft.price = nft.price + price_increase;
+    //     nft.vote_count = nft.vote_count + 1;
+
+    //     coin::destroy_zero(payment);
+        
+    //     emit(NFTVoted {
+    //         nft_id: object::uid_to_inner(&nft.id),
+    //         voter: tx_context::sender(ctx),
+    //         amount: vote_amount,
+    //         new_price: nft.price
+    //     });
+    // }
+
+    //         while (i < vector::length(&collaborator_roles)) {
+    //         vector::push_back(&mut roles_vector, string::utf8(*vector::borrow(&collaborator_roles, i)));
+    //         i = i + 1;
+    //     };

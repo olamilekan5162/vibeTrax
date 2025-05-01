@@ -8,6 +8,7 @@ import styles from "./Form.module.css";
 import { useState } from "react";
 import { Transaction } from "@mysten/sui/transactions";
 import { useNetworkVariables } from "../../config/networkConfig";
+import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { PinataSDK } from "pinata";
 
@@ -27,6 +28,7 @@ const Form = ({
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
+  const navigate = useNavigate();
 
   // Contributors state management
   const [contributors, setContributors] = useState([
@@ -151,8 +153,9 @@ const Form = ({
 
     const { lowQualityCid, highQualityCid, imageCid } = cIds;
 
-    // Extract addresses and percentages for the contract
+    // Extract addresses, roles, and percentages for the contract
     const addresses = contributors.map((c) => c.address);
+    const roles = contributors.map((c) => c.role);
     const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
 
     const tx = new Transaction();
@@ -175,6 +178,7 @@ const Form = ({
         tx.pure.u64(Number(price)),
         tx.pure.u64(Number(contributors[0].percentage)),
         tx.pure.vector("address", addresses),
+        tx.pure.vector("string", roles), // Add roles to the transaction
         tx.pure.vector("u64", percentages),
       ],
       target: `${tunflowPackageId}::music_nft::mint_music_nft`,
@@ -203,7 +207,7 @@ const Form = ({
             duration: 5000,
           });
           toast.dismiss(toastId);
-          window.location.reload
+          navigate("/discover");
         },
       }
     );
@@ -472,7 +476,7 @@ const Form = ({
             }
             placeholder="Enter wallet address"
             className={styles["contributor-input-address"]}
-            disabled={index === 0} // Disable editing for the main artist
+            disabled={index === 0}
           />
 
           <div className={styles["contributor-input-container"]}>
