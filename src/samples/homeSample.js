@@ -1,36 +1,47 @@
+import {
+  FaSearch as SearchIcon,
+  FaHeadphones as HeadPhoneIcon,
+} from "react-icons/fa";
+import { TbBrandCashapp as CashIcon } from "react-icons/tb";
+import { LiaHandshake as ShakeIcon} from "react-icons/lia";
+import {
+  MdOutlineElectricBolt as BoltIcon,
+  MdOutlineInsertChart as ChartIcon} from "react-icons/md";
+
+
 export const featuresData = [
   {
-    icon: "💰",
+    icon: CashIcon,
     title: "Fair Revenue Distribution",
     description:
       "Artists and contributors receive automatic royalty payments with predetermined splits, ensuring fair compensation for everyone involved.",
   },
   {
-    icon: "🔍",
+    icon: SearchIcon,
     title: "Full Transparency",
     description:
       "Real-time visibility into royalties, streaming data, and fan engagement through blockchain technology.",
   },
   {
-    icon: "🎧",
+    icon: HeadPhoneIcon,
     title: "Quality Tiers",
     description:
       "Sample music in standard quality, then unlock premium high-fidelity streaming by supporting your favorite artists.",
   },
   {
-    icon: "🤝",
+    icon: ShakeIcon,
     title: "Direct Artist-Fan Connection",
     description:
       "Support artists directly and gain access to exclusive content, early releases, and special perks.",
   },
   {
-    icon: "⚡",
+    icon: BoltIcon,
     title: "Instant Payments",
     description:
       "Smart contracts handle automatic royalty splits on every sale and stream, with instant payouts to all contributors.",
   },
   {
-    icon: "📊",
+    icon: ChartIcon,
     title: "Performance Analytics",
     description:
       "Comprehensive dashboard with real-time data on streams, sales, and royalties for artists.",

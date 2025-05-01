@@ -29,7 +29,12 @@ const SectionContainer = ({
                     activeIndex === index ? "translateY(-5px)" : "none",
                 }}
               >
-                <div className={styles.featureIcon}>{item.icon}</div>
+                <div className={styles.featureIcon}>
+                  {/* {item.icon && <item.icon color="#444" />} */}
+                  {typeof item.icon === "string"
+                    ? item.icon
+                    : item.icon && <item.icon size={55} color="#6366f1" />}
+                </div>
                 <h3 className={styles.featureTitle}>{item.title}</h3>
                 <p className={styles.featureDesc}>{item.description}</p>
               </div>
