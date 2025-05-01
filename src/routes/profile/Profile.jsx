@@ -4,7 +4,7 @@ import Button from "../../components/button/Button";
 import Jazzicon from "react-jazzicon";
 import useMusicNfts from "../../hooks/useMusicNfts";
 import MusicCard from "../../components/cards/music-card/MusicCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
   const { address } = useParams();
@@ -13,7 +13,12 @@ const Profile = () => {
   const [track, setTrack] = useState("uploaded")
 
   const userNfts = musicNfts.filter((music) => music.artist === address);
-  const ownedNfts = musicNfts.filter((music) => music.owner === address);
+  const ownedNfts = musicNfts.filter((music) => music.current_owner === address);
+
+  useEffect(() => {
+    console.log(musicNfts);
+    
+  },[musicNfts])
 
   return (
     // Main Content
