@@ -175,7 +175,7 @@ const Profile = () => {
       </div>
 
       {/* your Tracks */}
-      <h2 className={styles["section-title"]}>My Tracks</h2>
+      {/* <h2 className={styles["section-title"]}>My Tracks</h2>
       <div className={styles["dashboard-music-grid"]}>
         {userNfts.map((track) => (
           <MusicCard
@@ -189,10 +189,10 @@ const Profile = () => {
             imageSrc={track.music_art}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* owned Tracks */}
-      <h2 className={styles["section-title"]}>Owned Tracks</h2>
+      {/* <h2 className={styles["section-title"]}>Owned Tracks</h2>
       {ownedNfts.length > 0 ? (
         <div className={styles["dashboard-music-grid"]}>
           {ownedNfts.map((track) => (
@@ -210,7 +210,7 @@ const Profile = () => {
         </div>
       ) : (
         <p>You do not own any track</p>
-      )}
+      )} */}
 
       {/* Recent Tracks */}
       <h2 className={styles["section-title"]}>Your Recent Tracks</h2>
