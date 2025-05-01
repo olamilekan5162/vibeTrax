@@ -12,6 +12,7 @@ use sui::table::{Self, Table};
 use std::string::{Self, String};
 // use std::vector;
 use std::option::{Self, Option, none, some, is_some, contains, borrow};
+use std::u8;
 
 
 // Error constants
@@ -37,13 +38,15 @@ public struct MusicNFT has key, store {
     high_quality_ipfs: String,
     low_quality_ipfs: String,
     price: u64,
-    royalty_percentage: u64,  // Out of 10000 (e.g., 1000 = 10%)
+    royalty_percentage: u64,
     streaming_count: u64,
     collaborators: vector<address>,
-    collaborator_splits: vector<u64>,  // Percentages out of 10000 for each collaborator
+    collaborator_roles: vector<String>,  // New field for roles
+    collaborator_splits: vector<u64>,
     for_sale: bool,
     escrow: Balance<SUI>,
     creation_time: u64,
+    vote_count: u64
 }
 
 // Registry to keep track of all NFTs
@@ -76,6 +79,13 @@ public struct RoyaltyPaid has copy, drop {
 public struct StreamingRecorded has copy, drop {
     nft_id: ID,
     listener: address
+}
+
+public struct NFTVoted has copy, drop {
+    nft_id: ID,
+    voter: address,
+    amount: u64,
+    new_price: u64
 }
 
 // Module initializer
@@ -152,17 +162,22 @@ public entry fun mint_music_nft(
     price: u64,
     royalty_percentage: u64,
     collaborators: vector<address>,
+    collaborator_roles: vector<vector<u8>>,  // New parameter for roles
     collaborator_splits: vector<u64>,
     ctx: &mut TxContext
 ) {
     // Validations
-    assert!(royalty_percentage <= 5000, EINVALID_ROYALTY); // Max 50% royalty
+    assert!(royalty_percentage <= 5000, EINVALID_ROYALTY);
     assert!(price > 0, EINVALID_PRICE);
     assert!(vector::length(&high_quality_ipfs) > 0 && vector::length(&low_quality_ipfs) > 0, EINVALID_METADATA);
     
-    // Validate collaborator splits if provided
+    // Validate collaborator splits and roles if provided
     if (vector::length(&collaborators) > 0) {
-        assert!(vector::length(&collaborators) == vector::length(&collaborator_splits), EINVALID_METADATA);
+        assert!(
+            vector::length(&collaborators) == vector::length(&collaborator_roles) &&
+            vector::length(&collaborators) == vector::length(&collaborator_splits),
+            EINVALID_METADATA
+        );
         
         // Ensure splits add up to 10000 (100%)
         let mut total_split = 0u64;
@@ -174,12 +189,21 @@ public entry fun mint_music_nft(
         assert!(total_split == 10000, EINVALID_ROYALTY);
     };
 
+    // Convert roles from vector<u8> to String
+    let mut roles_string = vector::empty<String>();
+    let mut i = 0;
+    while (i < vector::length(&collaborator_roles)) {
+        let role = vector::borrow(&collaborator_roles, i);
+        vector::push_back(&mut roles_string, string::utf8(*role));
+        i = i + 1;
+    };
+
     let nft_id = object::new(ctx);
     let nft_object_id = object::uid_to_inner(&nft_id);
     let sender = tx_context::sender(ctx);
     let genre_string = string::utf8(genre);
 
-    // Create the NFT object
+    // Create the NFT object with roles
     let nft = MusicNFT {
         id: nft_id,
         artist: sender,
@@ -194,31 +218,30 @@ public entry fun mint_music_nft(
         royalty_percentage: royalty_percentage,
         streaming_count: 0,
         collaborators: collaborators,
+        collaborator_roles: roles_string,  // Include roles
         collaborator_splits: collaborator_splits,
         for_sale: true,
         escrow: balance::zero(),
-        creation_time: tx_context::epoch(ctx)
+        creation_time: tx_context::epoch(ctx),
+        vote_count: 0
     };
 
+    // Rest of the function remains the same...
     // Update registry
-    // Add to all NFTs list
     vector::push_back(&mut registry.all_nfts, nft_object_id);
     
-    // Add to artist-specific list
     if (!table::contains(&registry.nfts_by_artist, sender)) {
         table::add(&mut registry.nfts_by_artist, sender, vector::empty<ID>());
     };
     let artist_nfts = table::borrow_mut(&mut registry.nfts_by_artist, sender);
     vector::push_back(artist_nfts, nft_object_id);
     
-    // Add to genre-specific list
     if (!table::contains(&registry.nfts_by_genre, genre_string)) {
         table::add(&mut registry.nfts_by_genre, genre_string, vector::empty<ID>());
     };
     let genre_nfts = table::borrow_mut(&mut registry.nfts_by_genre, genre_string);
     vector::push_back(genre_nfts, nft_object_id);
 
-    // Emit event
     emit(MusicNFTMinted {
         nft_id: nft_object_id,
         artist: sender,
@@ -226,7 +249,6 @@ public entry fun mint_music_nft(
         price: price
     });
 
-    // Share the NFT object
     transfer::share_object(nft);
 }
 
@@ -308,6 +330,30 @@ public entry fun purchase_music_nft(
         nft_id: object::uid_to_inner(&nft.id),
         buyer: buyer,
         amount: payment_amount
+    });
+}
+
+public entry fun vote_for_nft(
+    nft: &mut MusicNFT,
+    payment: Coin<SUI>,
+    ctx: &mut TxContext
+) {
+    let vote_amount = coin::value(&payment);
+    assert!(vote_amount > 0, EINSUFFICIENT_AMOUNT);
+
+    // Price increases by 50% of vote amount
+    let price_increase = 5 / 100;
+    nft.price = nft.price + price_increase;
+    nft.vote_count = nft.vote_count + 1;
+
+    // Transfer the payment to the NFT owner instead of destroying
+    transfer::public_transfer(payment, nft.artist);
+    
+    emit(NFTVoted {
+        nft_id: object::uid_to_inner(&nft.id),
+        voter: tx_context::sender(ctx),
+        amount: vote_amount,
+        new_price: nft.price
     });
 }
 

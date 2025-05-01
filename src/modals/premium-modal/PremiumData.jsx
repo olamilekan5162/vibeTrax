@@ -1,14 +1,11 @@
-// PremiumModal.jsx
 import { useEffect, useState } from "react";
 import styles from "./PremiumModal.module.css";
 import Button from "../../components/button/Button";
 import { useNetworkVariables } from "../../config/networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
-import { useNavigate } from "react-router-dom";
 
 const PremiumModal = ({ isOpen, onClose, track, songData }) => {
-  const navigate = useNavigate();
   const [paymentStatus, setPaymentStatus] = useState("idle");
 
   const { tunflowNFTRegistryId, tunflowPackageId, tunflowTokenId } =
@@ -19,11 +16,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
     );
 
   const suiClient = useSuiClient();
-  const {
-    mutate: signAndExecute,
-    isSuccess,
-    isPending,
-  } = useSignAndExecuteTransaction();
+  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -52,7 +45,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
     image: "https://picsum.photos/seed/album120/120/120",
   };
 
-  const trackInfo = track || defaultTrack;
+  const _trackInfo = track || defaultTrack;
 
   const handleBuy = (e) => {
     e.preventDefault();
@@ -72,7 +65,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
         tx.object(tunflowTokenId),
         coin,
       ],
-      target: `${tunflowPackageId}::integration::purchase_and_reward`,
+      target: `${tunflowPackageId}::tuneflow::purchase_and_reward`,
     });
 
     signAndExecute(
@@ -91,7 +84,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
           console.log(effects);
           console.log(effects?.created?.[0]?.reference?.objectId);
           console.log("Bought successfully");
-          navigate("/discover");
+          location.reload();
         },
         onError: (error) => {
           console.error("Purchase failed:", error);
@@ -119,7 +112,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
         <div className={styles.modalContent}>
           <div className={styles.trackPreview}>
             <img
-              src={songData?.fields.genre}
+              src={songData?.fields.music_art}
               alt="Album"
               className={styles.previewImg}
             />
