@@ -4,7 +4,7 @@ import Button from "../../components/button/Button";
 import Jazzicon from "react-jazzicon";
 import useMusicNfts from "../../hooks/useMusicNfts";
 import MusicCard from "../../components/cards/music-card/MusicCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Profile = () => {
   const { address } = useParams();
@@ -14,11 +14,6 @@ const Profile = () => {
 
   const userNfts = musicNfts.filter((music) => music.artist === address);
   const ownedNfts = musicNfts.filter((music) => music.current_owner === address);
-
-  useEffect(() => {
-    console.log(musicNfts);
-    
-  },[musicNfts])
 
   return (
     // Main Content
@@ -52,8 +47,8 @@ const Profile = () => {
 
       <div className={styles["user-musics-container"]}>
         <div className={styles["user-musics-tab"]}>
-            <p className={styles["uploaded"]} onClick={() => setTrack("uploaded")}>Uploaded Music</p>
-            <p className={styles["owned"]} onClick={() => setTrack("owned")}>Owned Music</p>
+            <p className={track === "uploaded" ? `${styles["active"]}` : ""} onClick={() => setTrack("uploaded")}>Uploaded Music</p>
+            <p className={track === "owned" ? `${styles["active"]}` : ""} onClick={() => setTrack("owned")}>Owned Music</p>
         </div>
         {track === "uploaded" ?
 
