@@ -184,3 +184,15 @@
     margin: 0 auto;
   }
 }
+
+.verifiedIcon {
+  margin-right: 5px;
+  color: #6366f1;
+  font-size: 0.9rem;
+}
+
+.metaIcon {
+  color: #6366f1;
+  font-size: 1.2rem;
+  min-width: 20px;
+}
