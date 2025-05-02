@@ -69,12 +69,16 @@ export const useMusicActions = () => {
         { transaction: tx },
         {
           onSuccess: async ({ digest }) => {
-            const { effects } = await suiClient.waitForTransaction({ digest });
+            const { effects } = await suiClient.waitForTransaction({
+              digest,
+              options: { showEffects: true },
+            });
             if (effects?.status?.status === "success") {
               toast.success("Purchase successful!", { id: toastId });
             } else {
               toast.error("Purchase failed", { id: toastId });
             }
+            window.location.reload();
           },
           onError: (error) => {
             toast.error(`Purchase failed: ${error.message}`, { id: toastId });
