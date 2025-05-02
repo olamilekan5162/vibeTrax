@@ -3,9 +3,9 @@
     padding: 120px 5% 50px;
 }
 
-.page-title {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
+.section-title {
+    font-size: 1.5rem;
+    margin: 2rem 0;
     font-weight: 700;
 }
 
@@ -33,6 +33,35 @@
     display: flex;
     gap: 2rem;
     margin-top: 1rem;
+}
+
+.user-musics-container {
+    margin: 2rem 0;
+    display: flex;
+    gap: 3rem;
+    flex-direction: column;
+}
+
+.user-musics-tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.user-musics-tab p{
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: white;
+    padding-bottom: 1rem;
+
+}
+.user-musics-tab .active{
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #6366f1;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid white;
+
 }
 
 .stat {

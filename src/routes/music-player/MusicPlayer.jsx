@@ -133,6 +133,7 @@ const MusicPlayer = () => {
               isPremium={isPremium}
               songData={data}
               isPlaying={isPlaying}
+              handleVote={handleVote}
             />
             {/* <PlayerControls songData={data} /> */}
           </div>
@@ -176,7 +177,7 @@ const MusicPlayer = () => {
               title={track.title}
               artist={track.artist}
               duration={track.duration}
-              plays={track.plays}
+              votes={track.vote_count}
               quality={
                 currentAccount?.address === track?.current_owner ||
                 track?.collaborators.includes(currentAccount?.address) ||
@@ -188,7 +189,7 @@ const MusicPlayer = () => {
             />
           ))}
         </div>
-        <button onClick={handleVote}>vote</button>
+        {/* <button onClick={handleVote}>vote</button> */}
         <section className={styles.commentsSection}>
           <h2 className={styles.sectionTitle}>Comments</h2>
 

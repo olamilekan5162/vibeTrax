@@ -29,6 +29,7 @@ const Header = () => {
               Discover
             </NavLink>
           </li>
+          {currentAccount?.address &&
           <li>
             <NavLink
               to={`profile/${currentAccount?.address}`}
@@ -37,6 +38,7 @@ const Header = () => {
               Profile
             </NavLink>
           </li>
+          }
           {/* <li>
                 <NavLink
                 to={"library"}

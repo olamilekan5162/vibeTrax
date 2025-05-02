@@ -136,6 +136,10 @@
     gap: 0.5rem;
     
   }
+
+  .vote {
+    cursor: pointer;
+  }
   
   .metaIcon {
     color: #6366f1;

@@ -4,6 +4,8 @@ import Button from "../../components/button/Button";
 import { useNetworkVariables } from "../../config/networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
+import toast from "react-hot-toast";
+
 
 const PremiumModal = ({ isOpen, onClose, track, songData }) => {
   const [paymentStatus, setPaymentStatus] = useState("idle");
@@ -49,6 +51,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
 
   const handleBuy = (e) => {
     e.preventDefault();
+    const toastId = toast.loading("Loading...")
     setPaymentStatus("pending");
     const amountMist = BigInt(
       Math.floor(songData.fields.price * 1_000_000_000)
@@ -84,10 +87,17 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
           console.log(effects);
           console.log(effects?.created?.[0]?.reference?.objectId);
           console.log("Bought successfully");
+          toast.success("Bought successfully", {
+            duration: 5000
+          })
           location.reload();
         },
         onError: (error) => {
           console.error("Purchase failed:", error);
+          toast.error("Purchase failed",{
+            duration: 5000
+          })
+          toast.dismiss(toastId)
           setPaymentStatus("failed");
         },
       }

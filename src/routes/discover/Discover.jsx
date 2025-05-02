@@ -103,7 +103,7 @@ const Discover = () => {
   const genres = [
     "All Genres",
     "Pop",
-    "Hip Hop",
+    "HipHop",
     "R&B",
     "Rock",
     "Electronic",
@@ -246,7 +246,7 @@ const Discover = () => {
                 title={track.title}
                 artist={track.artist}
                 duration={56}
-                plays={"4.1k"}
+                votes={track.vote_count}
                 quality={
                   currentAccount?.address === track?.current_owner ||
                   track?.collaborators.includes(currentAccount?.address) ||

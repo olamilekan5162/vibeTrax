@@ -5,7 +5,7 @@ const MusicCard = ({
   title,
   artist,
   duration,
-  plays,
+  votes,
   imageSrc,
   quality,
   objectId,
@@ -29,7 +29,7 @@ const MusicCard = ({
         )}...${artist.slice(-5)}`}</p>
         <div className={styles.musicMeta}>
           <span>{duration}</span>
-          <span>{plays} plays</span>
+          <span>{votes} votes</span>
         </div>
       </div>
     </Link>

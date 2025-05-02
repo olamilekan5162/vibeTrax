@@ -4,14 +4,16 @@ import Button from "../../components/button/Button";
 import Jazzicon from "react-jazzicon";
 import useMusicNfts from "../../hooks/useMusicNfts";
 import MusicCard from "../../components/cards/music-card/MusicCard";
+import { useState } from "react";
 
 const Profile = () => {
   const { address } = useParams();
   const { musicNfts } = useMusicNfts();
   const navigate = useNavigate();
+  const [track, setTrack] = useState("uploaded")
 
   const userNfts = musicNfts.filter((music) => music.artist === address);
-  const ownedNfts = musicNfts.filter((music) => music.owner === address);
+  const ownedNfts = musicNfts.filter((music) => music.current_owner === address);
 
   return (
     // Main Content
@@ -29,10 +31,6 @@ const Profile = () => {
               <span className={styles["stat-value"]}>{userNfts.length}</span>
               <span className={styles["stat-label"]}>Tracks</span>
             </div>
-            {/* <div className={styles["stat"]}>
-                        <span className={styles["stat-value"]}>8.7K</span>
-                        <span className={styles["stat-label"]}>Followers</span>
-                    </div> */}
             <div className={styles["stat"]}>
               <span className={styles["stat-value"]}>245K</span>
               <span className={styles["stat-label"]}>Total Plays</span>
@@ -43,6 +41,57 @@ const Profile = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* user musics */}
+
+      <div className={styles["user-musics-container"]}>
+        <div className={styles["user-musics-tab"]}>
+            <p className={track === "uploaded" ? `${styles["active"]}` : ""} onClick={() => setTrack("uploaded")}>Uploaded Music</p>
+            <p className={track === "owned" ? `${styles["active"]}` : ""} onClick={() => setTrack("owned")}>Owned Music</p>
+        </div>
+        {track === "uploaded" ?
+
+        userNfts.length > 0 ? (
+        <div className={styles["dashboard-music-grid"]}>
+        {userNfts.map((track) => (
+          <MusicCard
+            key={track.id.id}
+            objectId={track.id.id}
+            title={track.title}
+            artist={track.artist}
+            duration={track.duration}
+            votes={track.vote_count}
+            quality={"Premium"}
+            imageSrc={track.music_art}
+          />
+        ))}
+        </div>
+        ):(
+            <p>You have not uploaded any music</p>
+        )
+        :
+        ownedNfts.length > 0 ? (
+        <div className={styles["dashboard-music-grid"]}>
+          {ownedNfts.map((track) => (
+            <MusicCard
+              key={track.id.id}
+              objectId={track.id.id}
+              title={track.title}
+              artist={track.artist}
+              duration={track.duration}
+              votes={track.vote_count}
+              quality={"Premium"}
+              imageSrc={track.music_art}
+            />
+          ))}
+        </div>
+      ) : (
+        <p>You do not own any track</p>
+      )
+
+        }
+
       </div>
 
       {/* <Dashboard Grid */}
@@ -173,44 +222,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
-      {/* your Tracks */}
-      <h2 className={styles["section-title"]}>My Tracks</h2>
-      <div className={styles["dashboard-music-grid"]}>
-        {userNfts.map((track) => (
-          <MusicCard
-            key={track.id.id}
-            objectId={track.id.id}
-            title={track.title}
-            artist={track.artist}
-            duration={track.duration}
-            plays={track.plays}
-            quality={"Premium"}
-            imageSrc={track.music_art}
-          />
-        ))}
-      </div>
-
-      {/* owned Tracks */}
-      <h2 className={styles["section-title"]}>Owned Tracks</h2>
-      {ownedNfts.length > 0 ? (
-        <div className={styles["dashboard-music-grid"]}>
-          {ownedNfts.map((track) => (
-            <MusicCard
-              key={track.id.id}
-              objectId={track.id.id}
-              title={track.title}
-              artist={track.artist}
-              duration={track.duration}
-              plays={track.plays}
-              quality={"Premium"}
-              imageSrc={track.music_art}
-            />
-          ))}
-        </div>
-      ) : (
-        <p>You do not own any track</p>
-      )}
 
       {/* Recent Tracks */}
       <h2 className={styles["section-title"]}>Your Recent Tracks</h2>

@@ -4,7 +4,7 @@ import AudioVisualizer from '../audio-visualizer/AudioVisualizer';
 import { Link } from 'react-router-dom';
 
 
-const SongDetails = ({ songData, isPlaying, isPremium}) => {
+const SongDetails = ({ songData, isPlaying, isPremium, handleVote}) => {
   
   return (
     <div className={styles.container}>
@@ -41,9 +41,9 @@ const SongDetails = ({ songData, isPlaying, isPremium}) => {
             <span className={styles.metaIcon}>👁️</span>
             <span>{5} plays</span>
           </div>
-          <div className={styles.metaItem}>
+          <div className={`${styles.metaItem} ${styles.vote}`}>
             <span className={styles.metaIcon}>❤️</span>
-            <span>{12} likes</span>
+            <span onClick={handleVote}>{songData.fields.vote_count} Votes</span>
           </div>
         </div>
         
@@ -52,9 +52,7 @@ const SongDetails = ({ songData, isPlaying, isPremium}) => {
         </p>
         
         <div className={styles.tags}>
-          <span className={styles.tag}>Electronic</span>
-          <span className={styles.tag}>Ambient</span>
-          <span className={styles.tag}>Cyberpunk</span>
+          <span className={styles.tag}>{songData.fields.genre}</span>
         </div>
 
         <div>
