@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const SongDetails = ({ songData, isPlaying, isPremium, handleVote}) => {
   
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <div className={styles.albumArt}>
         <img 
           src={songData.fields.music_art} 
@@ -61,7 +61,7 @@ const SongDetails = ({ songData, isPlaying, isPremium, handleVote}) => {
         <PlayerControls songData={songData} />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

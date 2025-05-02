@@ -1,104 +1,27 @@
+import { useState, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-// import ArtistCard from "../../components/cards/artist-card/ArtistCard";
+import { FiSearch, FiPlay } from "react-icons/fi";
+import { useCurrentAccount } from "@mysten/dapp-kit";
+import styles from "./Discover.module.css";
+import { useMusicNfts } from "../../hooks/useMusicNfts";
+import { LoadingState } from "../../components/state/LoadingState";
+import { ErrorState } from "../../components/state/ErrorState";
+import { EmptyState } from "../../components/state/EmptyState";
 import MusicCard from "../../components/cards/music-card/MusicCard";
 import SubscribeBanner from "../../components/subscribe-banner/SubscribeBanner";
-import { useNetworkVariable } from "../../config/networkConfig";
-import styles from "./Discover.module.css";
-import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
-import { useEffect, useState } from "react";
 
 const Discover = () => {
-  const [userNfts, setUserNfts] = useState([]);
-  const [NftIds, setNftIds] = useState([]);
-  const [_artists, setArtists] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
   const [activeGenre, setActiveGenre] = useState("All Genres");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
   const subscriberData = useOutletContext();
   const navigate = useNavigate();
-
-  const isSubscribed = () => {
-    return subscriberData && subscriberData.length <= 0;
-  };
-
-  const tunflowPackageId = useNetworkVariable("tunflowPackageId");
-
-  const { data: objectData, isPending: objectPending } = useSuiClientQuery(
-    "queryEvents",
-    {
-      query: {
-        MoveEventType: `${tunflowPackageId}::music_nft::MusicNFTMinted`,
-      },
-    },
-    {
-      select: (data) => data.data.flatMap((x) => x.parsedJson),
-    }
-  );
-
-  useEffect(() => {
-    if (objectPending) {
-      console.log("pending");
-    } else if (objectData) {
-      const allNftIds = objectData.map((nft) => nft.nft_id);
-      setNftIds(allNftIds);
-    }
-  }, [objectData, objectPending]);
-
-  const { data: musicData, isPending: musicPending } = useSuiClientQuery(
-    "multiGetObjects",
-    {
-      ids: NftIds,
-      options: {
-        showOwner: true,
-        showContent: true,
-      },
-    },
-    {
-      select: (data) => data.flatMap((x) => x.data.content.fields),
-    }
-  );
-
-  useEffect(() => {
-    if (musicPending) {
-      console.log("Pending");
-    } else if (musicData) {
-      const musicNfts = musicData;
-      const allArtist = [...new Set(musicNfts.map((artist) => artist.artist))];
-      setArtists(allArtist);
-      setUserNfts(musicNfts);
-    }
-  }, [musicData, musicPending]);
-
   const currentAccount = useCurrentAccount();
-  const featuredMusic = userNfts.slice(0, 3);
-  const otherMusic = userNfts;
 
-  // Auto-rotate carousel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % featuredMusic.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [userNfts, featuredMusic.length]);
+  const { musicNfts, isPending, isError } = useMusicNfts();
 
-  const filteredMusic = otherMusic.filter((track) => {
-    const tabFilter =
-      activeTab === "all" ||
-      (activeTab === "songs" && !track.is_album) ||
-      (activeTab === "albums" && track.is_album);
-
-    const genreFilter =
-      activeGenre === "All Genres" ||
-      track.genre?.toLowerCase() === activeGenre.toLowerCase();
-
-    const searchFilter =
-      searchQuery === "" ||
-      track.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      track.artist.toLowerCase().includes(searchQuery.toLowerCase());
-
-    return tabFilter && genreFilter && searchFilter;
-  });
+  const isSubscribed = subscriberData?.length > 0;
 
   const genres = [
     "All Genres",
@@ -113,9 +36,50 @@ const Discover = () => {
     "Latin",
   ];
 
+  const featuredMusic = musicNfts
+    .filter((track) => track.vote_count > 0)
+    .sort((a, b) => {
+      const aVotes = a.vote_count || 0;
+      const bVotes = b.vote_count || 0;
+      return bVotes - aVotes;
+    })
+    .slice(0, 5);
+
+  const otherMusic = musicNfts;
+
+  useEffect(() => {
+    if (featuredMusic.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % featuredMusic.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [featuredMusic.length]);
+
+  const filteredMusic = otherMusic.filter((track) => {
+    const tabMatch =
+      activeTab === "all" ||
+      (activeTab === "songs" && !track.is_album) ||
+      (activeTab === "albums" && track.is_album);
+
+    const genreMatch =
+      activeGenre === "All Genres" ||
+      track.genre?.toLowerCase() === activeGenre.toLowerCase();
+
+    const searchMatch =
+      searchQuery === "" ||
+      track.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      track.artist.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return tabMatch && genreMatch && searchMatch;
+  });
+
+  if (isPending) return <LoadingState />;
+  if (isError) return <ErrorState />;
+
   return (
     <main className={styles.mainContent}>
-      {isSubscribed() && <SubscribeBanner subscriberData={subscriberData} />}
+      {!isSubscribed && <SubscribeBanner subscriberData={subscriberData} />}
 
       <div className={styles.headerSection}>
         <h1 className={styles.pageTitle}>Discover Music</h1>
@@ -126,30 +90,27 @@ const Discover = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <svg className={styles.searchIcon} viewBox="0 0 24 24">
-            <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-          </svg>
+          <FiSearch className={styles.searchIcon} />
         </div>
       </div>
 
-      {/* Featured Music Carousel */}
-      <section className={styles.featuredSection}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Featured Music</h2>
-          <div className={styles.carouselIndicators}>
-            {featuredMusic.map((_, index) => (
-              <button
-                key={index}
-                className={`${styles.carouselIndicator} ${
-                  index === currentSlide ? styles.active : ""
-                }`}
-                onClick={() => setCurrentSlide(index)}
-              />
-            ))}
+      {featuredMusic.length > 0 && (
+        <section className={styles.featuredSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Featured Music</h2>
+            <div className={styles.carouselIndicators}>
+              {featuredMusic.map((_, i) => (
+                <button
+                  key={i}
+                  className={`${styles.carouselIndicator} ${
+                    i === currentSlide ? styles.active : ""
+                  }`}
+                  onClick={() => setCurrentSlide(i)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-        <div className={styles.carousel}>
-          {featuredMusic.length > 0 && (
+          <div className={styles.carousel}>
             <div
               className={styles.carouselSlide}
               style={{
@@ -167,67 +128,38 @@ const Discover = () => {
                       navigate(`/discover/${featuredMusic[currentSlide].id.id}`)
                     }
                   >
-                    <svg viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
+                    <FiPlay />
                     Play Now
                   </button>
                 </div>
               </div>
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
-      {/* Top Artists Section */}
-      {/* <section className={styles.artistsSection}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Top Artists</h2>
-          <button className={styles.viewAll}>View All</button>
-        </div>
-        <div className={styles.artistsGrid}>
-          {artists.slice(0, 6).map((artist, index) => (
-            <ArtistCard key={index} name={artist} />
-          ))}
-        </div>
-      </section> */}
-
-      {/* Music Content Section */}
       <section className={styles.musicSection}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Browse Music</h2>
           <div className={styles.tabsControls}>
-            <button
-              className={`${styles.tabButton} ${
-                activeTab === "all" ? styles.active : ""
-              }`}
-              onClick={() => setActiveTab("all")}
-            >
-              All
-            </button>
-            <button
-              className={`${styles.tabButton} ${
-                activeTab === "songs" ? styles.active : ""
-              }`}
-              onClick={() => setActiveTab("songs")}
-            >
-              Songs
-            </button>
-            <button
-              className={`${styles.tabButton} ${
-                activeTab === "albums" ? styles.active : ""
-              }`}
-              onClick={() => setActiveTab("albums")}
-            >
-              Albums
-            </button>
+            {["all", "songs", "albums"].map((tab) => (
+              <button
+                key={tab}
+                className={`${styles.tabButton} ${
+                  activeTab === tab ? styles.active : ""
+                }`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
           </div>
         </div>
 
         <div className={styles.genreFilters}>
-          {genres.map((genre, index) => (
+          {genres.map((genre) => (
             <button
-              key={index}
+              key={genre}
               className={`${styles.genrePill} ${
                 genre === activeGenre ? styles.active : ""
               }`}
@@ -243,10 +175,7 @@ const Discover = () => {
             filteredMusic.map((track) => (
               <MusicCard
                 key={track.id.id}
-                title={track.title}
-                artist={track.artist}
-                duration={56}
-                votes={track.vote_count}
+                track={track}
                 quality={
                   currentAccount?.address === track?.current_owner ||
                   track?.collaborators.includes(currentAccount?.address) ||
@@ -254,19 +183,17 @@ const Discover = () => {
                     ? "Premium"
                     : "Standard"
                 }
-                imageSrc={track?.music_art}
-                objectId={track.id.id}
               />
             ))
           ) : (
-            <div className={styles.noResults}>
-              <h3>No music found</h3>
-              <p>
-                {searchQuery
-                  ? `No results for "${searchQuery}". Try a different search term.`
-                  : "No music available in this category. Check back later!"}
-              </p>
-            </div>
+            <EmptyState
+              message={searchQuery ? "No results found" : "No music available"}
+              subMessage={
+                searchQuery
+                  ? `No results for "${searchQuery}"`
+                  : "Check back later!"
+              }
+            />
           )}
         </div>
       </section>

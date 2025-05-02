@@ -1,107 +1,41 @@
 import { useEffect, useState } from "react";
-import styles from "./PremiumModal.module.css";
+import {
+  FiX,
+  FiHeadphones,
+  FiDollarSign,
+  FiDownload,
+  FiAward,
+  FiLock,
+} from "react-icons/fi";
 import Button from "../../components/button/Button";
-import { useNetworkVariables } from "../../config/networkConfig";
-import { Transaction } from "@mysten/sui/transactions";
-import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
-import toast from "react-hot-toast";
+import styles from "./PremiumModal.module.css";
 
-
-const PremiumModal = ({ isOpen, onClose, track, songData }) => {
+const PremiumModal = ({ isOpen, onClose, songData, onPurchase }) => {
   const [paymentStatus, setPaymentStatus] = useState("idle");
-
-  const { tunflowNFTRegistryId, tunflowPackageId, tunflowTokenId } =
-    useNetworkVariables(
-      "tunflowNFTRegistryId",
-      "tunflowPackageId",
-      "tunflowTokenId"
-    );
-
-  const suiClient = useSuiClient();
-  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
 
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
+      if (e.key === "Escape") onClose();
     };
 
     if (isOpen) {
-      document.body.style.overflow = "hidden"; // Prevent scrolling
+      document.body.style.overflow = "hidden";
       document.addEventListener("keydown", handleEscape);
     }
 
     return () => {
-      document.body.style.overflow = ""; // Restore scrolling
+      document.body.style.overflow = "";
       document.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  const defaultTrack = {
-    title: "Midnight City Lights",
-    artist: "Urban Echoes",
-    duration: "4:35",
-    image: "https://picsum.photos/seed/album120/120/120",
-  };
-
-  const _trackInfo = track || defaultTrack;
-
-  const handleBuy = (e) => {
+  const handleBuy = async (e) => {
     e.preventDefault();
-    const toastId = toast.loading("Loading...")
     setPaymentStatus("pending");
-    const amountMist = BigInt(
-      Math.floor(songData.fields.price * 1_000_000_000)
-    );
-
-    const tx = new Transaction();
-
-    const [coin] = tx.splitCoins(tx.gas, [tx.pure("u64", amountMist)]);
-
-    tx.moveCall({
-      arguments: [
-        tx.object(tunflowNFTRegistryId),
-        tx.object(songData.fields.id.id),
-        tx.object(tunflowTokenId),
-        coin,
-      ],
-      target: `${tunflowPackageId}::tuneflow::purchase_and_reward`,
-    });
-
-    signAndExecute(
-      {
-        transaction: tx,
-      },
-      {
-        onSuccess: async ({ digest }) => {
-          const { effects } = await suiClient.waitForTransaction({
-            digest: digest,
-            options: {
-              showEffects: true,
-            },
-          });
-          setPaymentStatus("success");
-          console.log(effects);
-          console.log(effects?.created?.[0]?.reference?.objectId);
-          console.log("Bought successfully");
-          toast.success("Bought successfully", {
-            duration: 5000
-          })
-          location.reload();
-        },
-        onError: (error) => {
-          console.error("Purchase failed:", error);
-          toast.error("Purchase failed",{
-            duration: 5000
-          })
-          toast.dismiss(toastId)
-          setPaymentStatus("failed");
-        },
-      }
-    );
+    const success = await onPurchase();
+    setPaymentStatus(success ? "success" : "failed");
   };
 
   return (
@@ -109,7 +43,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
       <div className={styles.modalOverlay} onClick={onClose}></div>
       <div className={styles.purchaseModal}>
         <button className={styles.modalClose} onClick={onClose}>
-          ✕
+          <FiX />
         </button>
 
         <div className={styles.modalHeader}>
@@ -136,7 +70,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
                 )}...${songData?.fields.artist.slice(-5)}`}
               </p>
               <div className={styles.metaItem}>
-                <span className={styles.metaIcon}>♪</span>
+                <FiHeadphones className={styles.metaIcon} />
                 <span>4:15</span>
               </div>
             </div>
@@ -169,7 +103,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
 
           <div className={styles.benefitsList}>
             <div className={styles.benefitItem}>
-              <div className={styles.benefitIcon}>🎧</div>
+              <FiHeadphones className={styles.benefitIcon} />
               <div className={styles.benefitText}>
                 <h4 className={styles.benefitTitle}>Superior Audio Quality</h4>
                 <p className={styles.benefitDesc}>
@@ -180,7 +114,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
             </div>
 
             <div className={styles.benefitItem}>
-              <div className={styles.benefitIcon}>💰</div>
+              <FiDollarSign className={styles.benefitIcon} />
               <div className={styles.benefitText}>
                 <h4 className={styles.benefitTitle}>Direct Artist Support</h4>
                 <p className={styles.benefitDesc}>
@@ -191,7 +125,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
             </div>
 
             <div className={styles.benefitItem}>
-              <div className={styles.benefitIcon}>⬇️</div>
+              <FiDownload className={styles.benefitIcon} />
               <div className={styles.benefitText}>
                 <h4 className={styles.benefitTitle}>Download Access</h4>
                 <p className={styles.benefitDesc}>
@@ -202,7 +136,7 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
             </div>
 
             <div className={styles.benefitItem}>
-              <div className={styles.benefitIcon}>🏆</div>
+              <FiAward className={styles.benefitIcon} />
               <div className={styles.benefitText}>
                 <h4 className={styles.benefitTitle}>Exclusive Content</h4>
                 <p className={styles.benefitDesc}>
@@ -220,11 +154,11 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
               {songData?.fields.price} SUI
             </span>
           </div>
-          <div></div>
+
           <Button
             text={
               paymentStatus === "pending"
-                ? "Please wait..."
+                ? "Processing..."
                 : paymentStatus === "success"
                 ? "Purchase Successful"
                 : "Complete Purchase"
@@ -232,19 +166,8 @@ const PremiumModal = ({ isOpen, onClose, track, songData }) => {
             onClick={handleBuy}
             disabled={paymentStatus === "pending"}
           />
-
-          {paymentStatus === "success" && (
-            <div className={styles.paymentAlert}>
-              <p>Purchase successful!</p>
-            </div>
-          )}
-          {paymentStatus === "failed" && (
-            <div className={styles.failedAlert}>
-              <p>Payment failed. Please try again.</p>
-            </div>
-          )}
           <p className={styles.secureNote}>
-            <span>🔒</span> Secure blockchain transaction
+            <FiLock /> Secure blockchain transaction
           </p>
         </div>
       </div>

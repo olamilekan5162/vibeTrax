@@ -1,366 +1,404 @@
-/* Main Content */
 .main-content {
-    padding: 120px 5% 50px;
-}
-
-.section-title {
-    font-size: 1.5rem;
-    margin: 2rem 0;
-    font-weight: 700;
+  padding: 120px 5% 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* Dashboard Header */
 .dashboard-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
-.artist-avatar {
-    width: 120px;
-    height: 120px;
-    /* border-radius: 50%;
-    object-fit: cover; */
-    margin-right: 2rem;
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--color-bg-card);
 }
 
 .artist-info h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.artist-info p {
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
 }
 
 .artist-stats {
-    display: flex;
-    gap: 2rem;
-    margin-top: 1rem;
-}
-
-.user-musics-container {
-    margin: 2rem 0;
-    display: flex;
-    gap: 3rem;
-    flex-direction: column;
-}
-
-.user-musics-tab {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.user-musics-tab p{
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: white;
-    padding-bottom: 1rem;
-
-}
-.user-musics-tab .active{
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #6366f1;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid white;
-
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
 }
 
 .stat {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .stat-value {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #6366f1;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
 }
 
 .stat-label {
-    font-size: 0.9rem;
-    color: #a1a1a1;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* User Musics Tabs */
+.user-musics-tab {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 1.5rem;
+}
+
+.user-musics-tab nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.user-musics-tab nav button {
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  padding: 0.75rem 1rem;
+  position: relative;
+  transition: all 0.3s ease;
+  background: none;
+  border: none;
+}
+
+.user-musics-tab nav button:hover {
+  color: var(--color-primary);
+}
+
+.user-musics-tab .active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.user-musics-tab .active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-primary);
+}
+
+.music-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
 }
 
 /* Dashboard Cards */
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
-
-.dashboard-music-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
 .dashboard-card {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    padding: 2rem;
-    height: 100%;
+  background-color: var(--color-bg-card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
 }
 
 .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .card-title {
-    font-size: 1.4rem;
-    font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
 }
 
 .card-action {
-    color: #6366f1;
-    font-size: 0.9rem;
-    cursor: pointer;
-    text-decoration: none;
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .card-action:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-/* Chart Container */
+/* Chart Styles */
 .chart-container {
-    height: 200px;
-    position: relative;
-    margin-bottom: 1rem;
+  height: 200px;
+  position: relative;
 }
 
 .bar-chart {
-    display: flex;
-    height: 100%;
-    align-items: flex-end;
-    gap: 10px;
-    padding-bottom: 25px;
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+  gap: 12px;
+  padding-bottom: 25px;
 }
 
 .bar {
-    flex: 1;
-    background: linear-gradient(to top, #6366f1, #818cf8);
-    border-radius: 5px 5px 0 0;
-    position: relative;
+  flex: 1;
+  background: var(--gradient-primary);
+  border-radius: 5px 5px 0 0;
+  position: relative;
+  min-width: 30px;
+  transition: height 0.5s ease;
 }
 
 .bar::after {
-    content: attr(data-value);
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.8rem;
-    color: #a1a1a1;
+  content: attr(data-value);
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
 }
 
-.chart-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #d1d1d1;
+/* Transaction List */
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-/* Recent Tracks */
-.recent-tracks {
-    margin-top: 2rem;
-}
-
-.track-list {
-    list-style: none;
-}
-
-.track-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.track-item:last-child {
-    border-bottom: none;
-}
-
-.track-number {
-    width: 30px;
-    font-size: 0.9rem;
-    color: #a1a1a1;
-}
-
-.track-artwork {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    margin-right: 1rem;
-    object-fit: cover;
-}
-
-.track-info {
-    flex: 1;
-}
-
-.track-title {
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-}
-
-.track-meta {
-    display: flex;
-    font-size: 0.85rem;
-    color: #a1a1a1;
-}
-
-.track-meta span:not(:last-child)::after {
-    content: '•';
-    margin: 0 0.5rem;
-}
-
-.track-actions {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    margin-left: 1rem;
-}
-
-.track-stats {
-    display: flex;
-    gap: 1rem;
-    font-size: 0.85rem;
-    color: #d1d1d1;
-}
-
-.track-stats span {
-    display: flex;
-    align-items: center;
-}
-
-/* Royalty Distribution */
-.royalty-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.royalty-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba(99, 102, 241, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-    color: #6366f1;
-    font-size: 1.2rem;
-}
-
-.royalty-details {
-    flex: 1;
-}
-
-.royalty-role {
-    font-weight: 600;
-    margin-bottom: 0.2rem;
-}
-
-.royalty-recipient {
-    font-size: 0.85rem;
-    color: #a1a1a1;
-}
-
-.royalty-amount {
-    font-weight: 700;
-    color: #6366f1;
-}
-
-/* Transactions */
 .transaction-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+  transition: background-color 0.3s ease;
 }
 
-.transaction-item:last-child {
-    border-bottom: none;
+.transaction-item:hover {
+  background-color: rgba(255, 255, 255, 0.07);
 }
 
 .transaction-info {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .transaction-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: rgba(99, 102, 241, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-    color: #6366f1;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: rgba(99, 102, 241, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
 }
 
 .transaction-details h4 {
-    font-weight: 600;
-    margin-bottom: 0.2rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  color: var(--color-text-primary);
 }
 
 .transaction-details p {
-    font-size: 0.85rem;
-    color: #a1a1a1;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
 }
 
 .transaction-amount {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .amount-positive {
-    color: #10b981;
+  color: #10b981;
 }
 
-/* Upload Button */
-.upload-container {
-    display: flex;
+/* Track List */
+.track {
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-bg-secondary) var(--color-bg-card);
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.track-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+  transition: background-color 0.3s ease;
+}
+
+.track-item:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.track-number {
+  width: 30px;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.track-artwork {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  margin-right: 1rem;
+  object-fit: cover;
+  background-color: var(--color-bg-secondary);
+}
+
+.track-info {
+  flex: 1;
+}
+
+.track-title {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--color-text-primary);
+}
+
+.track-meta {
+  display: flex;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  gap: 0.5rem;
+}
+
+.track-stats {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-right: 1.5rem;
+}
+
+.track-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.royalty-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+  transition: background-color 0.3s ease;
+}
+
+.royalty-item:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.royalty-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(99, 102, 241, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.royalty-details {
+  flex: 1;
+}
+
+.royalty-role {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  color: var(--color-text-primary);
+}
+
+.royalty-recipient {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  transition: color 0.3s ease;
+}
+
+.royalty-recipient:hover {
+  color: var(--color-primary);
+}
+
+.royalty-amount {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .dashboard-header {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-}
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
 
-.upload-icon {
-    font-size: 3rem;
-    color: #6366f1;
-    margin-bottom: 1.5rem;
-}
+  .artist-stats {
+    width: 100%;
+    justify-content: space-between;
+    gap: 1rem;
+  }
 
-.upload-text {
-    margin-bottom: 2rem;
-    color: #d1d1d1;
-}
+  .track-item {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 
-.btn {
-    background-color: #6366f1;
-    color: white;
-    padding: 0.7rem 1.5rem;
-    border-radius: 30px;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-}
-
-.btn:hover {
-    background-color: #4f46e5;
-    transform: translateY(-2px);
+  .track-stats {
+    width: 100%;
+    order: 1;
+    justify-content: flex-start;
+    margin-top: 0.5rem;
+    margin-left: 80px;
+  }
 }
