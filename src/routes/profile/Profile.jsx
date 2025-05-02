@@ -1,30 +1,39 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import styles from "./Profile.module.css";
-import Button from "../../components/button/Button";
-import Jazzicon from "react-jazzicon";
-import useMusicNfts from "../../hooks/useMusicNfts";
-import MusicCard from "../../components/cards/music-card/MusicCard";
 import { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { FiDollarSign, FiTrendingUp, FiUser, FiPlus } from "react-icons/fi";
+import Button from "../../components/button/Button";
+import MusicCard from "../../components/cards/music-card/MusicCard";
+import styles from "./Profile.module.css";
+import { useMusicNfts } from "../../hooks/useMusicNfts";
+import { LoadingState } from "../../components/state/LoadingState";
+import { ErrorState } from "../../components/state/ErrorState";
+import { EmptyState } from "../../components/state/EmptyState";
+import Jazzicon from "react-jazzicon";
 
 const Profile = () => {
   const { address } = useParams();
-  const { musicNfts } = useMusicNfts();
   const navigate = useNavigate();
-  const [track, setTrack] = useState("uploaded")
+  const { musicNfts, isPending, isError } = useMusicNfts();
+  const [trackType, setTrackType] = useState("uploaded");
 
   const userNfts = musicNfts.filter((music) => music.artist === address);
-  const ownedNfts = musicNfts.filter((music) => music.current_owner === address);
+  const ownedNfts = musicNfts.filter(
+    (music) => music.current_owner === address
+  );
+
+  if (isPending) return <LoadingState />;
+  if (isError) return <ErrorState />;
 
   return (
-    // Main Content
     <main className={styles["main-content"]}>
-      {/* <Dashboard Header */}
       <div className={styles["dashboard-header"]}>
         <div className={styles["artist-avatar"]}>
-          <Jazzicon diameter={100} seed={address} />
+          <div className={styles["avatar-placeholder"]}>
+            <Jazzicon diameter={100} seed={address} />
+          </div>
         </div>
         <div className={styles["artist-info"]}>
-          <h1>{`${address.slice(0, 5)}...${address.slice(0, 5)}`}</h1>
+          <h1>{`${address.slice(0, 5)}...${address.slice(-5)}`}</h1>
           <p>Tuneflow user</p>
           <div className={styles["artist-stats"]}>
             <div className={styles["stat"]}>
@@ -43,104 +52,69 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* user musics */}
-
       <div className={styles["user-musics-container"]}>
         <div className={styles["user-musics-tab"]}>
-            <p className={track === "uploaded" ? `${styles["active"]}` : ""} onClick={() => setTrack("uploaded")}>Uploaded Music</p>
-            <p className={track === "owned" ? `${styles["active"]}` : ""} onClick={() => setTrack("owned")}>Owned Music</p>
-        </div>
-        {track === "uploaded" ?
-
-        userNfts.length > 0 ? (
-        <div className={styles["dashboard-music-grid"]}>
-        {userNfts.map((track) => (
-          <MusicCard
-            key={track.id.id}
-            objectId={track.id.id}
-            title={track.title}
-            artist={track.artist}
-            duration={track.duration}
-            votes={track.vote_count}
-            quality={"Premium"}
-            imageSrc={track.music_art}
+          <nav>
+            <button
+              className={trackType === "uploaded" ? styles.active : ""}
+              onClick={() => setTrackType("uploaded")}
+            >
+              Uploaded Music
+            </button>
+            <button
+              className={trackType === "owned" ? styles.active : ""}
+              onClick={() => setTrackType("owned")}
+            >
+              Owned Music
+            </button>
+          </nav>
+          <Button
+            btnClass="primary"
+            text="Create New Track"
+            icon={<FiPlus />}
+            onClick={() => navigate("/upload")}
           />
-        ))}
         </div>
-        ):(
-            <p>You have not uploaded any music</p>
-        )
-        :
-        ownedNfts.length > 0 ? (
-        <div className={styles["dashboard-music-grid"]}>
-          {ownedNfts.map((track) => (
-            <MusicCard
-              key={track.id.id}
-              objectId={track.id.id}
-              title={track.title}
-              artist={track.artist}
-              duration={track.duration}
-              votes={track.vote_count}
-              quality={"Premium"}
-              imageSrc={track.music_art}
-            />
-          ))}
-        </div>
-      ) : (
-        <p>You do not own any track</p>
-      )
 
-        }
-
+        {trackType === "uploaded" ? (
+          userNfts.length > 0 ? (
+            <div className={styles["music-row"]}>
+              {userNfts.map((track) => (
+                <MusicCard key={track.id.id} track={track} quality="Premium" />
+              ))}
+            </div>
+          ) : (
+            <EmptyState message="No uploaded tracks" />
+          )
+        ) : ownedNfts.length > 0 ? (
+          <div className={styles["music-row"]}>
+            {ownedNfts.map((track) => (
+              <MusicCard key={track.id.id} track={track} quality="Premium" />
+            ))}
+          </div>
+        ) : (
+          <EmptyState message="No owned tracks" />
+        )}
       </div>
 
-      {/* <Dashboard Grid */}
-      <div className={styles["dashboard-grid"]}>
-        {/* Streams Overview */}
+      <div className={styles.row}>
         <div className={styles["dashboard-card"]}>
           <div className={styles["card-header"]}>
             <h3 className={styles["card-title"]}>Streams Overview</h3>
-            <a href="#" className={styles["card-action"]}>
-              Last 30 days
-            </a>
+            <div className={styles["card-action"]}>Last 30 days</div>
           </div>
           <div className={styles["chart-container"]}>
             <div className={styles["bar-chart"]}>
-              <div
-                className={styles["bar"]}
-                style={{ height: "40%" }}
-                data-value="Mon"
-              ></div>
-              <div
-                className={styles["bar"]}
-                style={{ height: "60%" }}
-                data-value="Tue"
-              ></div>
-              <div
-                className={styles["bar"]}
-                style={{ height: "45%" }}
-                data-value="Wed"
-              ></div>
-              <div
-                className={styles["bar"]}
-                style={{ height: "75%" }}
-                data-value="Thu"
-              ></div>
-              <div
-                className={styles["bar"]}
-                style={{ height: "90%" }}
-                data-value="Fri"
-              ></div>
-              <div
-                className={styles["bar"]}
-                style={{ height: "65%" }}
-                data-value="Sat"
-              ></div>
-              <div
-                className={styles["bar"]}
-                style={{ height: "55%" }}
-                data-value="Sun"
-              ></div>
+              {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+                (day, i) => (
+                  <div
+                    key={day}
+                    className={styles["bar"]}
+                    style={{ height: `${30 + i * 10}%` }}
+                    data-value={day}
+                  ></div>
+                )
+              )}
             </div>
           </div>
           <div className={styles["card-stats"]}>
@@ -151,18 +125,15 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* <Recent Earnings */}
         <div className={styles["dashboard-card"]}>
           <div className={styles["card-header"]}>
             <h3 className={styles["card-title"]}>Recent Earnings</h3>
-            <a href="#" className={styles["card-action"]}>
-              View All
-            </a>
+            <div className={styles["card-action"]}>View All</div>
           </div>
           <div className={styles["transaction-list"]}>
             <div className={styles["transaction-item"]}>
               <div className={styles["transaction-info"]}>
-                <div className={styles["transaction-icon"]}>$</div>
+                <FiDollarSign className={styles["transaction-icon"]} />
                 <div className={styles["transaction-details"]}>
                   <h4>High-Quality Purchase</h4>
                   <p>by User029 • 2 hours ago</p>
@@ -176,7 +147,7 @@ const Profile = () => {
             </div>
             <div className={styles["transaction-item"]}>
               <div className={styles["transaction-info"]}>
-                <div className={styles["transaction-icon"]}>$</div>
+                <FiTrendingUp className={styles["transaction-icon"]} />
                 <div className={styles["transaction-details"]}>
                   <h4>Stream Royalties</h4>
                   <p>Weekly Payout • Yesterday</p>
@@ -188,89 +159,57 @@ const Profile = () => {
                 +0.18 SUI
               </div>
             </div>
-            <div className={styles["transaction-item"]}>
-              <div className={styles["transaction-info"]}>
-                <div className={styles["transaction-icon"]}>$</div>
-                <div className={styles["transaction-details"]}>
-                  <h4>High-Quality Purchase</h4>
-                  <p>by User125 • 3 days ago</p>
-                </div>
-              </div>
-              <div
-                className={`${styles["transaction-amount"]} ${styles["amount-positive"]}`}
-              >
-                +0.25 SUI
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Upload New Track */}
-        <div className={styles["dashboard-card"]}>
-          <div className={styles["upload-container"]}>
-            <div className={styles["upload-icon"]}>↑</div>
-            <h3 className={styles["card-title"]}>Upload New Track</h3>
-            <p className={styles["upload-text"]}>
-              Share your music with the world and earn royalties from every
-              stream and purchase.
-            </p>
-            <Button
-              btnClass="primary"
-              text={"upload Music"}
-              onClick={() => navigate("/upload")}
-            />
           </div>
         </div>
       </div>
 
-      {/* Recent Tracks */}
-      <h2 className={styles["section-title"]}>Your Recent Tracks</h2>
-      <div className={styles["dashboard-card"]}>
-        <ul className={styles["track-list"]}>
-          {userNfts.map((track) => (
-            <li key={track?.id?.id} className={styles["track-item"]}>
-              <span className={styles["track-number"]}>1</span>
-              <img
-                src={track.music_art}
-                alt="Track Artwork"
-                className={styles["track-artwork"]}
-              />
-              <div className={styles["track-info"]}>
-                <h4 className={styles["track-title"]}>{track?.title}</h4>
-                <div className={styles["track-meta"]}>
-                  <span>3:45</span>
-                  <span>2 weeks ago</span>
-                  <span>{track.genre}</span>
-                </div>
-              </div>
-              <div className={styles["track-stats"]}>
-                <span>5.2K plays</span>
-                <span>320 purchases</span>
-              </div>
-              <div className={styles["track-actions"]}>
-                <Button btnClass="primary" text={"Manage"} />
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Royalty Distribution */}
-      <h2 className={styles["section-title"]}>Royalty Distribution</h2>
-      <div className={styles["dashboard-grid"]}>
-        {userNfts.map((track) => (
-          <div key={track?.id?.id} className={styles["dashboard-card"]}>
-            <div className={styles["card-header"]}>
-              <h3 className={styles["card-title"]}>{track?.title}</h3>
-              <a href="#" className={styles["card-action"]}>
-                Edit
-              </a>
-            </div>
-            <div className={styles["royalty-list"]}>
+      <section className={styles.row}>
+        <div className={`${styles["dashboard-card"]} ${styles["track"]}`}>
+          <div className={styles["card-header"]}>
+            <h3 className={styles["card-title"]}>Top Tracks</h3>
+            <div className={styles["card-action"]}>View All</div>
+          </div>
+          {userNfts.length > 0 ? (
+            <ul className={styles["list"]}>
+              {userNfts.slice(0, 3).map((track, index) => (
+                <li key={track?.id?.id} className={styles["track-item"]}>
+                  <span className={styles["track-number"]}>{index + 1}</span>
+                  <img
+                    src={track.music_art}
+                    alt="Track Artwork"
+                    className={styles["track-artwork"]}
+                  />
+                  <div className={styles["track-info"]}>
+                    <h4 className={styles["track-title"]}>{track?.title}</h4>
+                    <div className={styles["track-meta"]}>
+                      <span>3:45</span>
+                      <span>{track.genre}</span>
+                    </div>
+                  </div>
+                  <div className={styles["track-stats"]}>
+                    <span>5.2K plays</span>
+                  </div>
+                  <div className={styles["track-actions"]}>
+                    <Button btnClass="primary" text="Manage" />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <EmptyState message="No recent tracks" />
+          )}
+        </div>
+        <div className={`${styles["dashboard-card"]} ${styles["track"]}`}>
+          <div className={styles["card-header"]}>
+            <h3 className={styles["card-title"]}>Royalty Splits</h3>
+            <div className={styles["card-action"]}>Edit</div>
+          </div>
+          {userNfts.slice(0, 3).map((track) => (
+            <ul className={styles["list"]}>
               {track.collaborators.map((c, index) => (
-                <div key={index} className={styles["royalty-item"]}>
+                <li key={index} className={styles["royalty-item"]}>
                   <div className={styles["royalty-icon"]}>
-                    <Jazzicon diameter={25} seed={c} />
+                    <FiUser />
                   </div>
                   <div className={styles["royalty-details"]}>
                     <div className={styles["royalty-role"]}>
@@ -284,12 +223,13 @@ const Profile = () => {
                   <div className={styles["royalty-amount"]}>
                     {track.collaborator_splits[index] / 100}%
                   </div>
-                </div>
+                </li>
               ))}
-            </div>
-          </div>
-        ))}
-      </div>
+              <br />
+            </ul>
+          ))}
+        </div>
+      </section>
     </main>
   );
 };

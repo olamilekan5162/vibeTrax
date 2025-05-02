@@ -2,46 +2,17 @@
   padding: 120px 5% 50px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.sectionTitle {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-}
-
-.musicGrid {
+.row {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 2rem;
-  margin-bottom: 3rem;
 }
-
-.artistsRow {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) var(--color-border);
-  margin-bottom: 3rem;
-}
-
-.artistsRow::-webkit-scrollbar {
-  height: 6px;
-}
-
-.artistsRow::-webkit-scrollbar-track {
-  background: var(--color-border);
-  border-radius: 3px;
-}
-
-.artistsRow::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-  border-radius: 3px;
-}
-
 /* Comments section styling */
 .commentsSection {
   margin-bottom: 3rem;
