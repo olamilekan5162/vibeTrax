@@ -16,7 +16,7 @@ const Banner = () => {
         </p>
         <div className={styles["hero-cta"]}>
           <Button text={"Discover Music"} btnClass={"primary"} onClick={() => navigate("/discover")}/>
-          <Button text={"For Artists"} btnClass={"secondary"} onClick={() => navigate("/dashboard")} />
+          <Button text={"For Artists"} btnClass={"secondary"} onClick={() => navigate("/profile")} />
         </div>
       </div>
     </section>

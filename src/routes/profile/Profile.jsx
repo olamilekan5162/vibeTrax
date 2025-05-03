@@ -206,7 +206,9 @@ const Profile = () => {
           </div>
           {userNfts.slice(0, 3).map((track) => (
             <ul className={styles["list"]}>
+              <h3>{track.title}</h3>
               {track.collaborators.map((c, index) => (
+                <>
                 <li key={index} className={styles["royalty-item"]}>
                   <div className={styles["royalty-icon"]}>
                     <FiUser />
@@ -224,6 +226,7 @@ const Profile = () => {
                     {track.collaborator_splits[index] / 100}%
                   </div>
                 </li>
+                </>
               ))}
               <br />
             </ul>
