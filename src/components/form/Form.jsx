@@ -5,7 +5,7 @@ import {
 } from "@mysten/dapp-kit";
 import Button from "../button/Button";
 import styles from "./Form.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Transaction } from "@mysten/sui/transactions";
 import { useNetworkVariables } from "../../config/networkConfig";
 import { useNavigate } from "react-router-dom";
@@ -31,13 +31,19 @@ const Form = ({
   const navigate = useNavigate();
 
   // Contributors state management
-  const [contributors, setContributors] = useState([
-    {
-      role: "Artist",
-      address: currentAccount?.address || "",
-      percentage: 100,
-    },
-  ]);
+  const [contributors, setContributors] = useState([]);
+
+  useEffect(() => {
+    // Initialize the first contributor as the artist
+    if (currentAccount) {
+    setContributors([
+      {
+        role: "Artist",
+        address: currentAccount?.address,
+        percentage: 100,
+      },
+    ]);}
+  },[currentAccount])
 
   // Track remaining percentage
   const [_remainingPercentage, setRemainingPercentage] = useState(0);
@@ -141,7 +147,7 @@ const Form = ({
       toast.error("Revenue distribution must total exactly 100%");
       return;
     }
-
+    
     const toastId = toast.loading("Loading...");
 
     const cIds = await uploadMusicImageFile(e);
@@ -157,6 +163,7 @@ const Form = ({
     const addresses = contributors.map((c) => c.address);
     const roles = contributors.map((c) => c.role);
     const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
+    
 
     const tx = new Transaction();
 
@@ -176,7 +183,7 @@ const Form = ({
           `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`
         ),
         tx.pure.u64(Number(price)),
-        tx.pure.u64(Number(contributors[0].percentage)),
+        tx.pure.u64(Number(contributors[0].percentage * 100)),
         tx.pure.vector("address", addresses),
         tx.pure.vector("string", roles), // Add roles to the transaction
         tx.pure.vector("u64", percentages),
