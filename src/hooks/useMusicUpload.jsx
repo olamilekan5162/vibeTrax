@@ -2,8 +2,10 @@ import { useSuiClient, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { useNetworkVariables } from "../config/networkConfig";
 import toast from "react-hot-toast";
 import { Transaction } from "@mysten/sui/transactions";
+import { useNavigate } from "react-router-dom";
 
 export const useMusicUpload = () => {
+  const navigate = useNavigate()
   const { tunflowPackageId, tunflowNFTRegistryId } = useNetworkVariables(
     "tunflowPackageId",
     "tunflowNFTRegistryId"
@@ -36,7 +38,7 @@ export const useMusicUpload = () => {
           tx.pure.string(highQualityUrl),
           tx.pure.string(lowQualityUrl),
           tx.pure.u64(Number(price)),
-          tx.pure.u64(Number(collaborators[0].percentage)),
+          tx.pure.u64(Number(collaborators[0].percentage * 100)),
           tx.pure.vector(
             "address",
             collaborators.map((c) => c.address)
@@ -55,10 +57,12 @@ export const useMusicUpload = () => {
           onSuccess: async ({ digest }) => {
             await suiClient.waitForTransaction({ digest });
             toast.success("Music uploaded successfully!", { id: toastId });
+            navigate("/discover")
             return true;
           },
           onError: (error) => {
             toast.error(`Upload failed: ${error.message}`, { id: toastId });
+            toast.dismiss(toastId)
             return false;
           },
         }
@@ -71,3 +75,4 @@ export const useMusicUpload = () => {
 
   return { uploadMusic };
 };
+

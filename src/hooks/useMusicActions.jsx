@@ -90,5 +90,42 @@ export const useMusicActions = () => {
     }
   };
 
-  return { voteForTrack, purchaseTrack };
+  const toggleTrackForSale = async (nftId) => {
+    try {
+      const tx = new Transaction();
+      tx.moveCall({
+        arguments: [
+          tx.object(nftId),
+        ],
+        target: `${tunflowPackageId}::music_nft::toggle_for_sale`,
+      });
+
+      const toastId = toast.loading("Processing...");
+
+      signAndExecute(
+        { transaction: tx },
+        {
+          onSuccess: async ({ digest }) => {
+            const { effects } = await suiClient.waitForTransaction({
+              digest,
+              options: { showEffects: true },
+            });
+            if (effects?.status?.status === "success") {
+              toast.success("Music set for sale successfully", { id: toastId });
+            } else {
+              toast.error("Set music for sale failed", { id: toastId });
+            }
+            window.location.reload();
+          },
+          onError: (error) => {
+            toast.error(`Set music for sale failed: ${error.message}`, { id: toastId });
+          },
+        }
+      );
+    } catch (error) {
+      toast.error("An unexpected error occurred", error.message);
+    }
+  };
+
+  return { toggleTrackForSale, voteForTrack, purchaseTrack };
 };

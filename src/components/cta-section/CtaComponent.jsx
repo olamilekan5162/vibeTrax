@@ -10,7 +10,9 @@ const CtaComponent = ({
   variant = "section", // "section" or "box"
   customBackground,
   customClassName,
-  disabled
+  disabled,
+  toggleTrackForSale,
+  trackForSale
 }) => {
 
   // Determine which class to use based on variant
@@ -40,6 +42,12 @@ const CtaComponent = ({
     >
       <h2 className={titleClass}>{title}</h2>
       <p className={descriptionClass}>{subtitle}</p>
+      {trackForSale &&
+      <div className={styles.toggleSale}>
+        <p>Music not currently for sale: </p>
+        <button onClick={toggleTrackForSale}> set for sale</button>
+      </div>
+      }
       <button className={styles.button} onClick={handleClick} disabled={disabled}>
         {buttonText}
       </button>

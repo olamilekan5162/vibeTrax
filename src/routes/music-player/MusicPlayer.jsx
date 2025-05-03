@@ -18,7 +18,7 @@ const MusicPlayer = () => {
   const { id } = useParams();
   const subscriberData = useOutletContext();
   const currentAccount = useCurrentAccount();
-  const { voteForTrack, purchaseTrack } = useMusicActions();
+  const { voteForTrack, purchaseTrack, toggleTrackForSale } = useMusicActions();
   const {
     musicNfts,
     isPending: artistMusicPending,
@@ -53,6 +53,8 @@ const MusicPlayer = () => {
     songData?.fields.collaborators.includes(currentAccount?.address) ||
     (subscriberData && subscriberData.length > 0);
 
+  const setTrackForSale = currentAccount?.address === songData?.fields.current_owner && songData?.fields.for_sale === false
+
   if (isPending) return <LoadingState />;
   if (isError || !songData) return <ErrorState />;
 
@@ -75,6 +77,8 @@ const MusicPlayer = () => {
           }
           handleClick={() => setIsOpen(true)}
           disabled={forSale}
+          trackForSale={setTrackForSale}
+          toggleTrackForSale={() => toggleTrackForSale(id)}
         />
         <PremiumModal
           isOpen={isOpen}

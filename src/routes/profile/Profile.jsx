@@ -190,7 +190,7 @@ const Profile = () => {
                     <span>5.2K plays</span>
                   </div>
                   <div className={styles["track-actions"]}>
-                    <Button btnClass="primary" text="Manage" />
+                    <Button btnClass="primary" text="Manage" onClick={() => navigate(`/upload/${track?.id?.id}`)}/>
                   </div>
                 </li>
               ))}

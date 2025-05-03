@@ -1,16 +1,13 @@
 import {
-  useSignAndExecuteTransaction,
-  useSuiClient,
   useCurrentAccount,
 } from "@mysten/dapp-kit";
 import Button from "../button/Button";
 import styles from "./Form.module.css";
 import { useEffect, useState } from "react";
 import { Transaction } from "@mysten/sui/transactions";
-import { useNetworkVariables } from "../../config/networkConfig";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { PinataSDK } from "pinata";
+import { useMusicUpload } from "../../hooks/useMusicUpload";
 
 const Form = ({
   showPreview,
@@ -28,7 +25,7 @@ const Form = ({
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
-  const navigate = useNavigate();
+  const { uploadMusic } = useMusicUpload()
 
   // Contributors state management
   const [contributors, setContributors] = useState([]);
@@ -94,14 +91,6 @@ const Form = ({
     setRemainingPercentage(calculateRemainingPercentage());
   };
 
-  const { tunflowNFTRegistryId, tunflowPackageId } = useNetworkVariables(
-    "tunflowNFTRegistryId",
-    "tunflowPackageId"
-  );
-
-  const suiClient = useSuiClient();
-  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
-
   const pinata = new PinataSDK({
     pinataJwt: import.meta.env.VITE_PINATA_JWT,
     pinataGateway: import.meta.env.VITE_GATEWAY_URL,
@@ -159,67 +148,23 @@ const Form = ({
 
     const { lowQualityCid, highQualityCid, imageCid } = cIds;
 
-    // Extract addresses, roles, and percentages for the contract
-    const addresses = contributors.map((c) => c.address);
+  
     const roles = contributors.map((c) => c.role);
     const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
-    
 
-    const tx = new Transaction();
-
-    tx.moveCall({
-      arguments: [
-        tx.object(tunflowNFTRegistryId),
-        tx.pure.string(title),
-        tx.pure.string(description),
-        tx.pure.string(genre),
-        tx.pure.string(
-          `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${imageCid}`
-        ),
-        tx.pure.string(
-          `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${highQualityCid}`
-        ),
-        tx.pure.string(
-          `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`
-        ),
-        tx.pure.u64(Number(price)),
-        tx.pure.u64(Number(contributors[0].percentage * 100)),
-        tx.pure.vector("address", addresses),
-        tx.pure.vector("string", roles), // Add roles to the transaction
-        tx.pure.vector("u64", percentages),
-      ],
-      target: `${tunflowPackageId}::music_nft::mint_music_nft`,
-    });
-
-    toast.success("Transaction created successfully, waiting for signature", {
-      duration: 5000,
-    });
-
-    signAndExecute(
-      {
-        transaction: tx,
-      },
-      {
-        onSuccess: async ({ digest }) => {
-          const { effects } = await suiClient.waitForTransaction({
-            digest: digest,
-            options: {
-              showEffects: true,
-            },
-          });
-
-          console.log(effects?.created?.[0]?.reference?.objectId);
-          console.log("Uploaded!!!");
-          toast.success("Music uploaded successfully", {
-            duration: 5000,
-          });
-          toast.dismiss(toastId);
-          navigate("/discover");
-        },
-      }
-    );
-  };
-
+    uploadMusic(
+      title,
+      description,
+      genre,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${imageCid}`,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${highQualityCid}`,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`,
+      price,
+      contributors,
+      roles,
+      percentages
+    )
+  }
   return (
     <form onSubmit={handleUpload}>
       {/* Basic Info */}
