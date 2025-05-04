@@ -10,16 +10,14 @@ import { LoadingState } from "../../components/state/LoadingState";
 import { ErrorState } from "../../components/state/ErrorState";
 import { EmptyState } from "../../components/state/EmptyState";
 import Jazzicon from "react-jazzicon";
-import { useCurrentAccount } from "@mysten/dapp-kit";
 import { useMusicActions } from "../../hooks/useMusicActions";
 
 const Profile = () => {
   const { address } = useParams();
   const navigate = useNavigate();
   const { musicNfts, isPending, isError } = useMusicNfts();
-  const { deleteTrack } = useMusicActions()
+  const { deleteTrack, toggleTrackForSale } = useMusicActions()
   const [trackType, setTrackType] = useState("uploaded");
-  const currentAccount = useCurrentAccount()
 
   const userNfts = musicNfts.filter((music) => music.artist === address || music.current_owner === address);
   const ownedNfts = musicNfts.filter(
@@ -195,12 +193,15 @@ const Profile = () => {
                     <span>5.2K plays</span>
                   </div>
                   <div className={styles["track-actions"]}>
+                    {address === track.current_owner &&
                     <label className={styles["toggle-switch"]}>
-                      <input type="checkbox" checked={track?.for_sale} />
+                      <input type="checkbox" checked={track?.for_sale} onChange={() =>toggleTrackForSale(track?.id?.id)}/>
                       <span className={styles["slider"]}></span>
                     </label>
-                    <FiEdit className={styles["action-icon"]} onClick={() => navigate(`/upload/${track?.id?.id}`)}/>
-                    {address === track.current_owner && currentAccount.address === track.artist &&
+                    }{address === track.artist &&
+                      <FiEdit className={styles["action-icon"]} onClick={() => navigate(`/upload/${track?.id?.id}`)}/>
+                    }
+                    {address === track.current_owner && address === track.artist &&
                       <MdDelete className={styles["action-icon"]} onClick={() =>deleteTrack(track?.id?.id)}/>
                     }
                   </div>
