@@ -199,12 +199,16 @@ const Profile = () => {
             <EmptyState message="No recent tracks" />
           )}
         </div>
+
         <div className={`${styles["dashboard-card"]} ${styles["track"]}`}>
           <div className={styles["card-header"]}>
             <h3 className={styles["card-title"]}>Royalty Splits</h3>
             <div className={styles["card-action"]}>Edit</div>
           </div>
-          {userNfts.slice(0, 3).map((track) => (
+
+          {/* royal split card */}
+          {userNfts > 0 ? (
+          userNfts.slice(0, 3).map((track) => (
             <ul key={track?.id?.id} className={styles["list"]}>
               <h3>{track.title}</h3>
               {track.collaborators.map((c, index) => (
@@ -230,7 +234,10 @@ const Profile = () => {
               ))}
               <br />
             </ul>
-          ))}
+          )) ) : (
+            <EmptyState message="No music royalty"/>
+          )
+        }
         </div>
       </section>
     </main>
