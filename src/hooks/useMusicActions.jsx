@@ -127,5 +127,43 @@ export const useMusicActions = () => {
     }
   };
 
-  return { toggleTrackForSale, voteForTrack, purchaseTrack };
+  const deleteTrack = async (nftId) => {
+    try {
+      const tx = new Transaction();
+      tx.moveCall({
+        arguments: [
+          tx.object(tunflowNFTRegistryId),
+          tx.object(nftId),
+        ],
+        target: `${tunflowPackageId}::music_nft::delete_music_nft`,
+      });
+
+      const toastId = toast.loading("Processing...");
+
+      signAndExecute(
+        { transaction: tx },
+        {
+          onSuccess: async ({ digest }) => {
+            const { effects } = await suiClient.waitForTransaction({
+              digest,
+              options: { showEffects: true },
+            });
+            if (effects?.status?.status === "success") {
+              toast.success("Music deleted successfully", { id: toastId });
+            } else {
+              toast.error("Music deletion failed", { id: toastId });
+            }
+            window.location.reload();
+          },
+          onError: (error) => {
+            toast.error(`Music deleted successfully: ${error.message}`, { id: toastId });
+          },
+        }
+      );
+    } catch (error) {
+      toast.error("An unexpected error occurred", error.message);
+    }
+  };
+
+  return { toggleTrackForSale, voteForTrack, purchaseTrack, deleteTrack };
 };

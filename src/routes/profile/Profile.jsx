@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { FiDollarSign, FiTrendingUp, FiUser, FiPlus } from "react-icons/fi";
+import { FiDollarSign, FiTrendingUp, FiUser, FiPlus, FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 import Button from "../../components/button/Button";
 import MusicCard from "../../components/cards/music-card/MusicCard";
 import styles from "./Profile.module.css";
@@ -10,15 +11,17 @@ import { ErrorState } from "../../components/state/ErrorState";
 import { EmptyState } from "../../components/state/EmptyState";
 import Jazzicon from "react-jazzicon";
 import { useCurrentAccount } from "@mysten/dapp-kit";
+import { useMusicActions } from "../../hooks/useMusicActions";
 
 const Profile = () => {
   const { address } = useParams();
   const navigate = useNavigate();
   const { musicNfts, isPending, isError } = useMusicNfts();
+  const { deleteTrack } = useMusicActions()
   const [trackType, setTrackType] = useState("uploaded");
   const currentAccount = useCurrentAccount()
 
-  const userNfts = musicNfts.filter((music) => music.artist === address);
+  const userNfts = musicNfts.filter((music) => music.artist === address || music.current_owner === address);
   const ownedNfts = musicNfts.filter(
     (music) => music.current_owner === address
   );
@@ -164,7 +167,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      {currentAccount.address === address &&
+      
       <section className={styles.row}>
         <div className={`${styles["dashboard-card"]} ${styles["track"]}`}>
           <div className={styles["card-header"]}>
@@ -192,7 +195,14 @@ const Profile = () => {
                     <span>5.2K plays</span>
                   </div>
                   <div className={styles["track-actions"]}>
-                    <Button btnClass="primary" text="Manage" onClick={() => navigate(`/upload/${track?.id?.id}`)}/>
+                    <label className={styles["toggle-switch"]}>
+                      <input type="checkbox" checked={track?.for_sale} />
+                      <span className={styles["slider"]}></span>
+                    </label>
+                    <FiEdit className={styles["action-icon"]} onClick={() => navigate(`/upload/${track?.id?.id}`)}/>
+                    {address === track.current_owner && currentAccount.address === track.artist &&
+                      <MdDelete className={styles["action-icon"]} onClick={() =>deleteTrack(track?.id?.id)}/>
+                    }
                   </div>
                 </li>
               ))}
@@ -242,7 +252,7 @@ const Profile = () => {
         }
         </div>
       </section>
-    }
+    
     </main>
   );
 };

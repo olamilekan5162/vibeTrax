@@ -14,6 +14,7 @@ export const useMusicUpload = () => {
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
 
   const uploadMusic = async (
+    toastId,
     title,
     description,
     genre,
@@ -49,7 +50,7 @@ export const useMusicUpload = () => {
         target: `${tunflowPackageId}::music_nft::mint_music_nft`,
       });
 
-      const toastId = toast.loading("Uploading music...");
+      // const toastId = toast.loading("Uploading music...");
 
       signAndExecute(
         { transaction: tx },
@@ -75,6 +76,7 @@ export const useMusicUpload = () => {
 
 
   const updateMusic = async (
+    toastId,
     id,
     title,
     description,
@@ -112,7 +114,7 @@ export const useMusicUpload = () => {
         target: `${tunflowPackageId}::music_nft::update_music_details`,
       });
 
-      const toastId = toast.loading("Updating music...");
+      // const toastId = toast.loading("Updating music...");
 
       signAndExecute(
         { transaction: tx },

@@ -200,10 +200,12 @@ const Form = ({
       return;
     }
 
+    const toastId = toast.loading("Uploading...");
+
     const cIds = await uploadMusicImageFile(e);
 
     if (!cIds) {
-      toast.dismiss();
+      toast.dismiss(toastId);
       return;
     }
 
@@ -213,6 +215,7 @@ const Form = ({
     const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
 
     uploadMusic(
+      toastId,
       title,
       description,
       genre,
@@ -237,10 +240,12 @@ const Form = ({
       return;
     }
 
+    const toastId = toast.loading("Updating...");
+
     const cIds = await uploadMusicImageFile(e);
 
     if (!cIds) {
-      toast.dismiss();
+      toast.dismiss(toastId);
       return;
     }
 
@@ -251,6 +256,7 @@ const Form = ({
     const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
 
     updateMusic(
+      toastId,
       id,
       title,
       description,
