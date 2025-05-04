@@ -73,6 +73,69 @@ export const useMusicUpload = () => {
     }
   };
 
-  return { uploadMusic };
+
+  const updateMusic = async (
+    id,
+    title,
+    description,
+    genre,
+    imageUrl,
+    highQualityUrl,
+    lowQualityUrl,
+    price,
+    forSale,
+    collaborators,
+    collaboratorRoles,
+    collaboratorSplits
+  ) => {
+    try {
+      const tx = new Transaction();
+
+      tx.moveCall({
+        arguments: [
+          tx.object(tunflowNFTRegistryId),
+          tx.pure.string(title),
+          tx.pure.string(description),
+          tx.pure.string(genre),
+          tx.pure.string(imageUrl),
+          tx.pure.string(highQualityUrl),
+          tx.pure.string(lowQualityUrl),
+          tx.pure.u64(Number(price)),
+          tx.pure.bool(forSale),
+          tx.pure.vector(
+            "address",
+            collaborators.map((c) => c.address)
+          ),
+          tx.pure.vector("string", collaboratorRoles),
+          tx.pure.vector("u64", collaboratorSplits),
+        ],
+        target: `${tunflowPackageId}::music_nft::update_music_details`,
+      });
+
+      const toastId = toast.loading("Updating music...");
+
+      signAndExecute(
+        { transaction: tx },
+        {
+          onSuccess: async ({ digest }) => {
+            await suiClient.waitForTransaction({ digest });
+            toast.success("Music details updated successfully!", { id: toastId });
+            navigate("/discover")
+            return true;
+          },
+          onError: (error) => {
+            toast.error(`Update failed: ${error.message}`, { id: toastId });
+            toast.dismiss(toastId)
+            return false;
+          },
+        }
+      );
+    } catch (error) {
+      toast.error("An unexpected error occurred", error.message);
+      return false;
+    }
+  };
+
+  return { uploadMusic, updateMusic };
 };
 

@@ -27,7 +27,8 @@ const Form = ({
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
-  const { uploadMusic } = useMusicUpload()
+  const [forSale, setForSale] = useState(null)
+  const { uploadMusic, updateMusic } = useMusicUpload()
   const { id } = useParams()
   const [contributors, setContributors] = useState([]);
 
@@ -65,6 +66,7 @@ const Form = ({
       setDescription(songData?.fields?.description)   
       setGenre(songData?.fields?.genre)
       setPreviewGenre(songData?.fields?.genre)
+      setForSale(songData?.fields?.for_sale)
       setPrice(songData?.fields?.price)
       getBlobFile(songData?.fields?.music_art).then(blob => {
         setImageFile(blob)
@@ -229,9 +231,44 @@ const Form = ({
 
   // function to update music
 
-  const handleUpdate = (e) => {
-    e.preventDefault()
-    console.log("hello"); 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    // Validate that percentages add up to 100%
+    if (calculateRemainingPercentage() !== 0) {
+      toast.error("Revenue distribution must total exactly 100%");
+      return;
+    }
+    
+    const toastId = toast.loading("Loading...");
+
+    const cIds = await uploadMusicImageFile(e);
+
+    if (!cIds) {
+      toast.dismiss(toastId);
+      return;
+    }
+
+    const { lowQualityCid, highQualityCid, imageCid } = cIds;
+
+  
+    const roles = contributors.map((c) => c.role);
+    const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
+
+    updateMusic(
+      id,
+      title,
+      description,
+      genre,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${imageCid}`,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${highQualityCid}`,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`,
+      price,
+      forSale,
+      contributors,
+      roles,
+      percentages
+    ) 
   }
 
   return (
