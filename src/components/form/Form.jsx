@@ -199,18 +199,15 @@ const Form = ({
       toast.error("Revenue distribution must total exactly 100%");
       return;
     }
-    
-    const toastId = toast.loading("Loading...");
 
     const cIds = await uploadMusicImageFile(e);
 
     if (!cIds) {
-      toast.dismiss(toastId);
+      toast.dismiss();
       return;
     }
 
     const { lowQualityCid, highQualityCid, imageCid } = cIds;
-
   
     const roles = contributors.map((c) => c.role);
     const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
@@ -239,13 +236,11 @@ const Form = ({
       toast.error("Revenue distribution must total exactly 100%");
       return;
     }
-    
-    const toastId = toast.loading("Loading...");
 
     const cIds = await uploadMusicImageFile(e);
 
     if (!cIds) {
-      toast.dismiss(toastId);
+      toast.dismiss();
       return;
     }
 

@@ -93,7 +93,7 @@ export const useMusicUpload = () => {
 
       tx.moveCall({
         arguments: [
-          tx.object(tunflowNFTRegistryId),
+          tx.object(id),
           tx.pure.string(title),
           tx.pure.string(description),
           tx.pure.string(genre),

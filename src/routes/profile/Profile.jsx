@@ -9,12 +9,14 @@ import { LoadingState } from "../../components/state/LoadingState";
 import { ErrorState } from "../../components/state/ErrorState";
 import { EmptyState } from "../../components/state/EmptyState";
 import Jazzicon from "react-jazzicon";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 
 const Profile = () => {
   const { address } = useParams();
   const navigate = useNavigate();
   const { musicNfts, isPending, isError } = useMusicNfts();
   const [trackType, setTrackType] = useState("uploaded");
+  const currentAccount = useCurrentAccount()
 
   const userNfts = musicNfts.filter((music) => music.artist === address);
   const ownedNfts = musicNfts.filter(
@@ -162,7 +164,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
+      {currentAccount.address === address &&
       <section className={styles.row}>
         <div className={`${styles["dashboard-card"]} ${styles["track"]}`}>
           <div className={styles["card-header"]}>
@@ -240,6 +242,7 @@ const Profile = () => {
         }
         </div>
       </section>
+    }
     </main>
   );
 };
