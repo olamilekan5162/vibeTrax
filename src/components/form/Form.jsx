@@ -1,5 +1,6 @@
 import {
   useCurrentAccount,
+  useSuiClientQuery,
 } from "@mysten/dapp-kit";
 import Button from "../button/Button";
 import styles from "./Form.module.css";
@@ -8,6 +9,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import toast from "react-hot-toast";
 import { PinataSDK } from "pinata";
 import { useMusicUpload } from "../../hooks/useMusicUpload";
+import { useParams } from "react-router-dom";
 
 const Form = ({
   showPreview,
@@ -26,9 +28,68 @@ const Form = ({
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
   const { uploadMusic } = useMusicUpload()
-
-  // Contributors state management
+  const { id } = useParams()
   const [contributors, setContributors] = useState([]);
+
+
+  const pinata = new PinataSDK({
+    pinataJwt: import.meta.env.VITE_PINATA_JWT,
+    pinataGateway: import.meta.env.VITE_GATEWAY_URL,
+  });
+
+
+  // function to fetch song details using id
+  const {
+      data: songData,
+      isPending,
+      isError,
+    } = useSuiClientQuery(
+      "getObject",
+      { id, options: { showContent: true } },
+      { select: (data) => data.data?.content }
+    );
+
+
+    // function go get image and music blob file
+    const getBlobFile = async (blobUrl) => {
+      const response = await fetch(blobUrl)
+      const blob = await response.blob()
+      return blob
+    }
+
+
+    // effect to update form
+  useEffect(() => {
+    if (id && !isPending) {
+      setTitle(songData?.fields?.title)
+      setPreviewTitle(songData?.fields?.title)
+      setDescription(songData?.fields?.description)   
+      setGenre(songData?.fields?.genre)
+      setPreviewGenre(songData?.fields?.genre)
+      setPrice(songData?.fields?.price)
+      getBlobFile(songData?.fields?.music_art).then(blob => {
+        setImageFile(blob)
+        setPreviewImage(blob)
+      })
+      getBlobFile(songData?.fields?.high_quality_ipfs).then(blob => {
+        setHighQualityFile(blob)
+        setHighQuality(blob)
+      })
+      getBlobFile(songData?.fields?.low_quality_ipfs).then(blob => {
+        setLowQualityFile(blob)
+        setLowQuality(blob)
+      })
+      setContributors(
+        songData?.fields?.collaborators.map((collaborator, index) => ({
+          role: songData?.fields?.collaborator_roles[index],
+          address: collaborator,
+          percentage: songData?.fields?.collaborator_splits[index]/100
+
+        }))
+      )
+    }
+  },[id, songData, isPending])
+
 
   useEffect(() => {
     // Initialize the first contributor as the artist
@@ -53,7 +114,7 @@ const Form = ({
     return 100 - total;
   };
 
-  // Add new contributor
+  // function to Add new contributor
   const addContributor = () => {
     if (calculateRemainingPercentage() <= 0) {
       toast.error("No percentage remaining to allocate");
@@ -66,7 +127,7 @@ const Form = ({
     ]);
   };
 
-  // Remove contributor
+  //Function to Remove contributor
   const removeContributor = (index) => {
     if (index === 0) {
       toast.error("Cannot remove the main artist");
@@ -78,7 +139,7 @@ const Form = ({
     setContributors(updatedContributors);
   };
 
-  // Update contributor
+  // Funtion to Update contributor
   const updateContributor = (index, field, value) => {
     const updatedContributors = [...contributors];
     updatedContributors[index] = {
@@ -91,10 +152,8 @@ const Form = ({
     setRemainingPercentage(calculateRemainingPercentage());
   };
 
-  const pinata = new PinataSDK({
-    pinataJwt: import.meta.env.VITE_PINATA_JWT,
-    pinataGateway: import.meta.env.VITE_GATEWAY_URL,
-  });
+
+  // function to upload music to pinata
 
   const uploadMusicImageFile = async (e) => {
     e.preventDefault();
@@ -127,6 +186,9 @@ const Form = ({
       });
     }
   };
+
+
+  // function to upload music to smart contract
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -165,8 +227,16 @@ const Form = ({
       percentages
     )
   }
+
+  // function to update music
+
+  const handleUpdate = (e) => {
+    e.preventDefault()
+    console.log("hello"); 
+  }
+
   return (
-    <form onSubmit={handleUpload}>
+    <form onSubmit={id ? handleUpdate : handleUpload}>
       {/* Basic Info */}
       <div className={styles["form-group"]}>
         <label className={styles["form-label"]} htmlFor="title">
@@ -489,7 +559,7 @@ const Form = ({
 
       <div className={styles["upload-actions"]}>
         <Button btnClass={"secondary"} text={"Preview"} onClick={showPreview} />
-        <Button btnClass={"primary"} text={"Upload Track"} />
+        <Button btnClass={"primary"} text={id ? "Update Track" : "Upload Track"} />
       </div>
     </form>
   );
