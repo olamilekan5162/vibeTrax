@@ -205,7 +205,7 @@ const Profile = () => {
             <div className={styles["card-action"]}>Edit</div>
           </div>
           {userNfts.slice(0, 3).map((track) => (
-            <ul className={styles["list"]}>
+            <ul key={track?.id?.id} className={styles["list"]}>
               <h3>{track.title}</h3>
               {track.collaborators.map((c, index) => (
                 <>

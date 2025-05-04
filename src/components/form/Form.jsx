@@ -42,7 +42,6 @@ const Form = ({
   const {
       data: songData,
       isPending,
-      isError,
     } = useSuiClientQuery(
       "getObject",
       { id, options: { showContent: true } },
