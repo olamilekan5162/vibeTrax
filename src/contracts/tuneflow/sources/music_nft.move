@@ -88,6 +88,12 @@ public struct NFTVoted has copy, drop {
     new_price: u64
 }
 
+public struct MusicNFTDeleted has copy, drop {
+    nft_id: ID,
+    artist: address,
+    title: String
+}
+
 // Module initializer
 fun init(ctx: &mut TxContext) {
     transfer::share_object(
@@ -436,6 +442,210 @@ public entry fun update_music_files(
     };
 }
 
+
+// Function to update all music details including collaborators, splits, and roles
+public entry fun update_music_details(
+    nft: &mut MusicNFT,
+    new_title: vector<u8>,
+    new_description: vector<u8>,
+    new_genre: vector<u8>,
+    new_music_art: vector<u8>,
+    new_high_quality_ipfs: vector<u8>,
+    new_low_quality_ipfs: vector<u8>,
+    new_price: u64,
+    new_for_sale: bool,
+    new_collaborators: vector<address>,
+    new_collaborator_roles: vector<vector<u8>>,
+    new_collaborator_splits: vector<u64>,
+    ctx: &mut TxContext
+) {
+    let sender = tx_context::sender(ctx);
+    // Only the artist can update metadata and collaborator details
+    assert!(sender == nft.artist, ENOT_ARTIST);
+    
+    // Validate collaborator splits and roles if provided
+    if (vector::length(&new_collaborators) > 0) {
+        assert!(
+            vector::length(&new_collaborators) == vector::length(&new_collaborator_roles) &&
+            vector::length(&new_collaborators) == vector::length(&new_collaborator_splits),
+            EINVALID_METADATA
+        );
+        
+        // Ensure splits add up to 10000 (100%)
+        let mut total_split = 0u64;
+        let mut i = 0;
+        while (i < vector::length(&new_collaborator_splits)) {
+            total_split = total_split + *vector::borrow(&new_collaborator_splits, i);
+            i = i + 1;
+        };
+        assert!(total_split == 10000, EINVALID_ROYALTY);
+    };
+
+    // Convert roles from vector<u8> to String if provided
+    if (vector::length(&new_collaborator_roles) > 0) {
+        let mut roles_string = vector::empty<String>();
+        let mut i = 0;
+        while (i < vector::length(&new_collaborator_roles)) {
+            let role = vector::borrow(&new_collaborator_roles, i);
+            vector::push_back(&mut roles_string, string::utf8(*role));
+            i = i + 1;
+        };
+        nft.collaborator_roles = roles_string;
+    };
+    
+    // Update collaborators and splits if provided
+    if (vector::length(&new_collaborators) > 0) {
+        nft.collaborators = new_collaborators;
+        nft.collaborator_splits = new_collaborator_splits;
+    };
+
+    // Update metadata
+    if (vector::length(&new_title) > 0) {
+        nft.title = string::utf8(new_title);
+    };
+    
+    if (vector::length(&new_description) > 0) {
+        nft.description = string::utf8(new_description);
+    };
+    
+    if (vector::length(&new_genre) > 0) {
+        nft.genre = string::utf8(new_genre);
+    };
+    
+    // Update music files
+    if (vector::length(&new_music_art) > 0) {
+        nft.music_art = string::utf8(new_music_art);
+    };
+    
+    if (vector::length(&new_high_quality_ipfs) > 0) {
+        nft.high_quality_ipfs = string::utf8(new_high_quality_ipfs);
+    };
+    
+    if (vector::length(&new_low_quality_ipfs) > 0) {
+        nft.low_quality_ipfs = string::utf8(new_low_quality_ipfs);
+    };
+    
+    // Update price and sale status (only if the sender is the current owner)
+    if (sender == nft.current_owner) {
+        if (new_price > 0) {
+            nft.price = new_price;
+        };
+        
+        nft.for_sale = new_for_sale;
+    };
+}
+
+// Function to delete a music NFT
+public entry fun delete_music_nft(
+    registry: &mut NFTRegistry,
+    nft: MusicNFT,
+    ctx: &mut TxContext
+) {
+    let sender = tx_context::sender(ctx);
+    // Only the artist can delete the NFT
+    assert!(sender == nft.artist, ENOT_ARTIST);
+    
+    // Only allow deletion if the NFT is owned by the artist
+    assert!(nft.current_owner == nft.artist, ENOT_OWNER);
+    
+    let nft_id = object::uid_to_inner(&nft.id);
+    let nft_artist = nft.artist;
+    let nft_title = nft.title;
+    let nft_genre = nft.genre;
+    
+    // Remove from registry
+    let mut i = 0;
+    let mut found_index = option::none();
+    while (i < vector::length(&registry.all_nfts)) {
+        if (*vector::borrow(&registry.all_nfts, i) == nft_id) {
+            found_index = option::some(i);
+            break
+        };
+        i = i + 1;
+    };
+    
+    if (option::is_some(&found_index)) {
+        vector::remove(&mut registry.all_nfts, option::extract(&mut found_index));
+    };
+    
+    // Remove from artist's NFTs
+    if (table::contains(&registry.nfts_by_artist, nft_artist)) {
+        let artist_nfts = table::borrow_mut(&mut registry.nfts_by_artist, nft_artist);
+        let mut i = 0;
+        let mut found_index = option::none();
+        while (i < vector::length(artist_nfts)) {
+            if (*vector::borrow(artist_nfts, i) == nft_id) {
+                found_index = option::some(i);
+                break
+            };
+            i = i + 1;
+        };
+        
+        if (option::is_some(&found_index)) {
+            vector::remove(artist_nfts, option::extract(&mut found_index));
+        };
+    };
+    
+    // Remove from genre's NFTs
+    if (table::contains(&registry.nfts_by_genre, nft_genre)) {
+        let genre_nfts = table::borrow_mut(&mut registry.nfts_by_genre, nft_genre);
+        let mut i = 0;
+        let mut found_index = option::none();
+        while (i < vector::length(genre_nfts)) {
+            if (*vector::borrow(genre_nfts, i) == nft_id) {
+                found_index = option::some(i);
+                break
+            };
+            i = i + 1;
+        };
+        
+        if (option::is_some(&found_index)) {
+            vector::remove(genre_nfts, option::extract(&mut found_index));
+        };
+    };
+    
+    // Emit deletion event
+    emit(MusicNFTDeleted {
+        nft_id: nft_id,
+        artist: nft_artist,
+        title: nft_title
+    });
+    
+    // Delete the NFT by unpacking it
+    let MusicNFT {
+        id,
+        artist: _,
+        current_owner: _,
+        title: _,
+        description: _,
+        genre: _,
+        music_art: _,
+        high_quality_ipfs: _,
+        low_quality_ipfs: _,
+        price: _,
+        royalty_percentage: _,
+        streaming_count: _,
+        collaborators: _,
+        collaborator_roles: _,
+        collaborator_splits: _,
+        for_sale: _,
+        escrow,
+        creation_time: _,
+        vote_count: _
+    } = nft;
+    
+    // Handle any remaining balance in escrow
+    if (balance::value(&escrow) > 0) {
+        let remaining_payment = coin::from_balance(escrow, ctx);
+        transfer::public_transfer(remaining_payment, sender);
+    } else {
+        balance::destroy_zero(escrow);
+    };
+    
+    // Delete the object ID
+    object::delete(id);
+}
+
 // Additional listing functions
 
 // Get all NFTs for sale
@@ -557,10 +767,6 @@ public fun get_newest_nfts(
         result
     }
 }
-
-// Add these functions to the tuneflow::music_nft module
-
-// Dashboard data aggregation functions for the NFT marketplace
 
 // Get NFT Details (single NFT stats for dashboard)
 public fun get_nft_details(
