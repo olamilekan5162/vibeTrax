@@ -1,16 +1,15 @@
 import {
-  useSignAndExecuteTransaction,
-  useSuiClient,
   useCurrentAccount,
+  useSuiClientQuery,
 } from "@mysten/dapp-kit";
 import Button from "../button/Button";
 import styles from "./Form.module.css";
 import { useEffect, useState } from "react";
 import { Transaction } from "@mysten/sui/transactions";
-import { useNetworkVariables } from "../../config/networkConfig";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { PinataSDK } from "pinata";
+import { useMusicUpload } from "../../hooks/useMusicUpload";
+import { useParams } from "react-router-dom";
 
 const Form = ({
   showPreview,
@@ -28,10 +27,70 @@ const Form = ({
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
-  const navigate = useNavigate();
-
-  // Contributors state management
+  const [forSale, setForSale] = useState(null)
+  const { uploadMusic, updateMusic } = useMusicUpload()
+  const { id } = useParams()
   const [contributors, setContributors] = useState([]);
+
+
+  const pinata = new PinataSDK({
+    pinataJwt: import.meta.env.VITE_PINATA_JWT,
+    pinataGateway: import.meta.env.VITE_GATEWAY_URL,
+  });
+
+
+  // function to fetch song details using id
+  const {
+      data: songData,
+      isPending,
+    } = useSuiClientQuery(
+      "getObject",
+      { id, options: { showContent: true } },
+      { select: (data) => data.data?.content }
+    );
+
+
+    // function go get image and music blob file
+    const getBlobFile = async (blobUrl) => {
+      const response = await fetch(blobUrl)
+      const blob = await response.blob()
+      return blob
+    }
+
+
+    // effect to update form
+  useEffect(() => {
+    if (id && !isPending) {
+      setTitle(songData?.fields?.title)
+      setPreviewTitle(songData?.fields?.title)
+      setDescription(songData?.fields?.description)   
+      setGenre(songData?.fields?.genre)
+      setPreviewGenre(songData?.fields?.genre)
+      setForSale(songData?.fields?.for_sale)
+      setPrice(songData?.fields?.price)
+      getBlobFile(songData?.fields?.music_art).then(blob => {
+        setImageFile(blob)
+        setPreviewImage(blob)
+      })
+      getBlobFile(songData?.fields?.high_quality_ipfs).then(blob => {
+        setHighQualityFile(blob)
+        setHighQuality(blob)
+      })
+      getBlobFile(songData?.fields?.low_quality_ipfs).then(blob => {
+        setLowQualityFile(blob)
+        setLowQuality(blob)
+      })
+      setContributors(
+        songData?.fields?.collaborators.map((collaborator, index) => ({
+          role: songData?.fields?.collaborator_roles[index],
+          address: collaborator,
+          percentage: songData?.fields?.collaborator_splits[index]/100
+
+        }))
+      )
+    }
+  },[id, songData, isPending])
+
 
   useEffect(() => {
     // Initialize the first contributor as the artist
@@ -56,7 +115,7 @@ const Form = ({
     return 100 - total;
   };
 
-  // Add new contributor
+  // function to Add new contributor
   const addContributor = () => {
     if (calculateRemainingPercentage() <= 0) {
       toast.error("No percentage remaining to allocate");
@@ -69,7 +128,7 @@ const Form = ({
     ]);
   };
 
-  // Remove contributor
+  //Function to Remove contributor
   const removeContributor = (index) => {
     if (index === 0) {
       toast.error("Cannot remove the main artist");
@@ -81,7 +140,7 @@ const Form = ({
     setContributors(updatedContributors);
   };
 
-  // Update contributor
+  // Funtion to Update contributor
   const updateContributor = (index, field, value) => {
     const updatedContributors = [...contributors];
     updatedContributors[index] = {
@@ -94,18 +153,8 @@ const Form = ({
     setRemainingPercentage(calculateRemainingPercentage());
   };
 
-  const { tunflowNFTRegistryId, tunflowPackageId } = useNetworkVariables(
-    "tunflowNFTRegistryId",
-    "tunflowPackageId"
-  );
 
-  const suiClient = useSuiClient();
-  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
-
-  const pinata = new PinataSDK({
-    pinataJwt: import.meta.env.VITE_PINATA_JWT,
-    pinataGateway: import.meta.env.VITE_GATEWAY_URL,
-  });
+  // function to upload music to pinata
 
   const uploadMusicImageFile = async (e) => {
     e.preventDefault();
@@ -139,6 +188,9 @@ const Form = ({
     }
   };
 
+
+  // function to upload music to smart contract
+
   const handleUpload = async (e) => {
     e.preventDefault();
 
@@ -147,8 +199,48 @@ const Form = ({
       toast.error("Revenue distribution must total exactly 100%");
       return;
     }
-    
-    const toastId = toast.loading("Loading...");
+
+    const toastId = toast.loading("Uploading...");
+
+    const cIds = await uploadMusicImageFile(e);
+
+    if (!cIds) {
+      toast.dismiss(toastId);
+      return;
+    }
+
+    const { lowQualityCid, highQualityCid, imageCid } = cIds;
+  
+    const roles = contributors.map((c) => c.role);
+    const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
+
+    uploadMusic(
+      toastId,
+      title,
+      description,
+      genre,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${imageCid}`,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${highQualityCid}`,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`,
+      price,
+      contributors,
+      roles,
+      percentages
+    )
+  }
+
+  // function to update music
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    // Validate that percentages add up to 100%
+    if (calculateRemainingPercentage() !== 0) {
+      toast.error("Revenue distribution must total exactly 100%");
+      return;
+    }
+
+    const toastId = toast.loading("Updating...");
 
     const cIds = await uploadMusicImageFile(e);
 
@@ -159,69 +251,29 @@ const Form = ({
 
     const { lowQualityCid, highQualityCid, imageCid } = cIds;
 
-    // Extract addresses, roles, and percentages for the contract
-    const addresses = contributors.map((c) => c.address);
+  
     const roles = contributors.map((c) => c.role);
     const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
-    
 
-    const tx = new Transaction();
-
-    tx.moveCall({
-      arguments: [
-        tx.object(tunflowNFTRegistryId),
-        tx.pure.string(title),
-        tx.pure.string(description),
-        tx.pure.string(genre),
-        tx.pure.string(
-          `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${imageCid}`
-        ),
-        tx.pure.string(
-          `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${highQualityCid}`
-        ),
-        tx.pure.string(
-          `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`
-        ),
-        tx.pure.u64(Number(price)),
-        tx.pure.u64(Number(contributors[0].percentage * 100)),
-        tx.pure.vector("address", addresses),
-        tx.pure.vector("string", roles), // Add roles to the transaction
-        tx.pure.vector("u64", percentages),
-      ],
-      target: `${tunflowPackageId}::music_nft::mint_music_nft`,
-    });
-
-    toast.success("Transaction created successfully, waiting for signature", {
-      duration: 5000,
-    });
-
-    signAndExecute(
-      {
-        transaction: tx,
-      },
-      {
-        onSuccess: async ({ digest }) => {
-          const { effects } = await suiClient.waitForTransaction({
-            digest: digest,
-            options: {
-              showEffects: true,
-            },
-          });
-
-          console.log(effects?.created?.[0]?.reference?.objectId);
-          console.log("Uploaded!!!");
-          toast.success("Music uploaded successfully", {
-            duration: 5000,
-          });
-          toast.dismiss(toastId);
-          navigate("/discover");
-        },
-      }
-    );
-  };
+    updateMusic(
+      toastId,
+      id,
+      title,
+      description,
+      genre,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${imageCid}`,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${highQualityCid}`,
+      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`,
+      price,
+      forSale,
+      contributors,
+      roles,
+      percentages
+    ) 
+  }
 
   return (
-    <form onSubmit={handleUpload}>
+    <form onSubmit={id ? handleUpdate : handleUpload}>
       {/* Basic Info */}
       <div className={styles["form-group"]}>
         <label className={styles["form-label"]} htmlFor="title">
@@ -544,7 +596,7 @@ const Form = ({
 
       <div className={styles["upload-actions"]}>
         <Button btnClass={"secondary"} text={"Preview"} onClick={showPreview} />
-        <Button btnClass={"primary"} text={"Upload Track"} />
+        <Button btnClass={"primary"} text={id ? "Update Track" : "Upload Track"} />
       </div>
     </form>
   );

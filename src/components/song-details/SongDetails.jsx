@@ -8,6 +8,8 @@ import { useState } from "react";
 const SongDetails = ({ songData, isPremium, handleVote }) => {
   const [duration, setDuration] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  
+
 
   const handleDurationLoaded = (durationInSeconds) => {
     setDuration(durationInSeconds);
@@ -71,9 +73,9 @@ const SongDetails = ({ songData, isPremium, handleVote }) => {
             <FiEye className={styles.metaIcon} />
             <span>{5} plays</span>
           </div>
-          <div className={`${styles.metaItem} ${styles.vote}`}>
+          <div title={"Upvote Music"} className={`${styles.metaItem} ${styles.vote}`} onClick={handleVote}>
             <FiHeart className={styles.metaIcon} />
-            <span onClick={handleVote}>{songData.fields.vote_count} Votes</span>
+            <span>{songData.fields.vote_count} Votes</span>
           </div>
         </div>
 

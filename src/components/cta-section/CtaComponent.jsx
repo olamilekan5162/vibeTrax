@@ -10,7 +10,7 @@ const CtaComponent = ({
   variant = "section", // "section" or "box"
   customBackground,
   customClassName,
-  disabled
+  disabled,
 }) => {
 
   // Determine which class to use based on variant

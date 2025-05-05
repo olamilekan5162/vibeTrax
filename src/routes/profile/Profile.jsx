@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { FiDollarSign, FiTrendingUp, FiUser, FiPlus } from "react-icons/fi";
+import { FiDollarSign, FiTrendingUp, FiUser, FiPlus, FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 import Button from "../../components/button/Button";
 import MusicCard from "../../components/cards/music-card/MusicCard";
 import styles from "./Profile.module.css";
@@ -9,14 +10,16 @@ import { LoadingState } from "../../components/state/LoadingState";
 import { ErrorState } from "../../components/state/ErrorState";
 import { EmptyState } from "../../components/state/EmptyState";
 import Jazzicon from "react-jazzicon";
+import { useMusicActions } from "../../hooks/useMusicActions";
 
 const Profile = () => {
   const { address } = useParams();
   const navigate = useNavigate();
   const { musicNfts, isPending, isError } = useMusicNfts();
+  const { deleteTrack, toggleTrackForSale } = useMusicActions()
   const [trackType, setTrackType] = useState("uploaded");
 
-  const userNfts = musicNfts.filter((music) => music.artist === address);
+  const userNfts = musicNfts.filter((music) => music.artist === address || music.current_owner === address);
   const ownedNfts = musicNfts.filter(
     (music) => music.current_owner === address
   );
@@ -162,7 +165,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
+      
       <section className={styles.row}>
         <div className={`${styles["dashboard-card"]} ${styles["track"]}`}>
           <div className={styles["card-header"]}>
@@ -190,7 +193,17 @@ const Profile = () => {
                     <span>5.2K plays</span>
                   </div>
                   <div className={styles["track-actions"]}>
-                    <Button btnClass="primary" text="Manage" />
+                    {address === track.current_owner &&
+                    <label className={styles["toggle-switch"]} title={"Toggle Music for sale"}>
+                      <input type="checkbox" checked={track?.for_sale} onChange={() =>toggleTrackForSale(track?.id?.id)}/>
+                      <span className={styles["slider"]}></span>
+                    </label>
+                    }{address === track.artist &&
+                      <FiEdit title={"Update Music Data"} className={styles["action-icon"]} onClick={() => navigate(`/upload/${track?.id?.id}`)}/>
+                    }
+                    {address === track.current_owner && address === track.artist &&
+                      <MdDelete title={"Delete Music"} className={styles["action-icon"]} onClick={() =>deleteTrack(track?.id?.id)}/>
+                    }
                   </div>
                 </li>
               ))}
@@ -199,13 +212,17 @@ const Profile = () => {
             <EmptyState message="No recent tracks" />
           )}
         </div>
+
         <div className={`${styles["dashboard-card"]} ${styles["track"]}`}>
           <div className={styles["card-header"]}>
             <h3 className={styles["card-title"]}>Royalty Splits</h3>
             <div className={styles["card-action"]}>Edit</div>
           </div>
-          {userNfts.slice(0, 3).map((track) => (
-            <ul className={styles["list"]}>
+
+          {/* royal split card */}
+          {userNfts > 0 ? (
+          userNfts.slice(0, 3).map((track) => (
+            <ul key={track?.id?.id} className={styles["list"]}>
               <h3>{track.title}</h3>
               {track.collaborators.map((c, index) => (
                 <>
@@ -230,9 +247,13 @@ const Profile = () => {
               ))}
               <br />
             </ul>
-          ))}
+          )) ) : (
+            <EmptyState message="No music royalty"/>
+          )
+        }
         </div>
       </section>
+    
     </main>
   );
 };

@@ -1,10 +1,4 @@
-import { useNetworkVariables } from "../../config/networkConfig";
-import { Transaction } from "@mysten/sui/transactions";
-import {
-  useSignAndExecuteTransaction,
-  useSuiClient,
-  useCurrentAccount,
-} from "@mysten/dapp-kit";
+import { useMusicActions } from "../../hooks/useMusicActions";
 import React, { useState } from "react";
 import styles from "./SubscribeModal.module.css";
 import Button from "../../components/button/Button";
@@ -19,68 +13,10 @@ import {
   FiInfo,
 } from "react-icons/fi";
 
-const SubscribeModal = ({ isOpen, onClose, subscriberData }) => {
+const SubscribeModal = ({ isOpen, onClose}) => {
   const [subscriptionStatus, setSubscriptionStatus] = useState("idle");
-  const currentAccount = useCurrentAccount();
-  const subscriptionPrice = 1; // 1 SUI
-
-  const { tunflowPackageId, tunflowTreasuryId, tunflowSubscriptionId } =
-    useNetworkVariables(
-      "tunflowPackageId",
-      "tunflowTreasuryId",
-      "tunflowSubscriptionId"
-    );
-
-  const suiClient = useSuiClient();
-  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    setSubscriptionStatus("subscribing");
-    const amountMist = BigInt(Math.floor(subscriptionPrice * 1_000_000_000));
-
-    const tx = new Transaction();
-    const [coin] = tx.splitCoins(tx.gas, [tx.pure("u64", amountMist)]);
-
-    tx.moveCall({
-      arguments: [
-        tx.object(tunflowSubscriptionId),
-        tx.object(tunflowTreasuryId),
-        tx.pure.address(currentAccount?.address),
-        coin,
-      ],
-      target: `${tunflowPackageId}::governance::subscribe`,
-    });
-
-    signAndExecute(
-      {
-        transaction: tx,
-      },
-      {
-        onSuccess: async ({ digest }) => {
-          const { effects } = await suiClient.waitForTransaction({
-            digest: digest,
-            options: {
-              showEffects: true,
-            },
-          });
-          if (effects?.status?.status === "success") {
-            setSubscriptionStatus("subscribed");
-            console.log("Subscription successful!");
-            window.location.reload();
-          } else {
-            console.error("Subscription failed:", effects);
-            setSubscriptionStatus("failed");
-          }
-        },
-        onError: (error) => {
-          console.error("Subscription failed:", error);
-          setSubscriptionStatus("failed");
-        },
-      }
-    );
-  };
-
+  const { subscribe } = useMusicActions()
+  
   if (!isOpen) return null;
 
   return (
@@ -98,7 +34,7 @@ const SubscribeModal = ({ isOpen, onClose, subscriberData }) => {
 
           <div className={styles.priceContainer}>
             <span className={styles.priceLabel}>Subscription Price:</span>
-            <span className={styles.priceValue}>{subscriptionPrice} SUI</span>
+            <span className={styles.priceValue}>1 SUI</span>
           </div>
         </div>
 
@@ -155,13 +91,13 @@ const SubscribeModal = ({ isOpen, onClose, subscriberData }) => {
                   ? "Processing..."
                   : subscriptionStatus === "subscribed"
                   ? "Subscribed"
-                  : `Subscribe for ${subscriptionPrice} SUI`
+                  : `Subscribe for 1 SUI`
               }
               icon={
                 subscriptionStatus === "subscribed" ? <FiCheck /> : undefined
               }
               disabled={subscriptionStatus === "subscribing"}
-              onClick={handleSubscribe}
+              onClick={() => subscribe(setSubscriptionStatus)}
               className={styles.primaryButton}
             />
             <Button

@@ -28,6 +28,10 @@ export const router = createBrowserRouter([
         Component: UploadMusic,
       },
       {
+        path: "upload/:id",
+        Component: UploadMusic,
+      },
+      {
         path: "profile/:address",
         Component: Profile,
       },

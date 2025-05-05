@@ -40,8 +40,8 @@ export const useMusicNfts = () => {
   );
 
   useEffect(() => {
-    if (!isPending && nftObjects) {
-      setMusicNfts(nftObjects);
+    if (!isPending && nftObjects) {    
+      setMusicNfts(nftObjects);      
     }
   }, [nftObjects, isPending]);
 
