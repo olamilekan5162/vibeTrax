@@ -1,17 +1,20 @@
-import { useSuiClient, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { useSuiClient, useSignAndExecuteTransaction, useCurrentAccount } from "@mysten/dapp-kit";
 import { useNetworkVariables } from "../config/networkConfig";
 import toast from "react-hot-toast";
 import { Transaction } from "@mysten/sui/transactions";
 
 export const useMusicActions = () => {
-  const { tunflowPackageId, tunflowNFTRegistryId, tunflowTokenId } =
+  const { tunflowPackageId, tunflowNFTRegistryId, tunflowTokenId, tunflowTreasuryId, tunflowSubscriptionId } =
     useNetworkVariables(
       "tunflowPackageId",
       "tunflowNFTRegistryId",
-      "tunflowTokenId"
+      "tunflowTokenId",
+      "tunflowTreasuryId",
+      "tunflowSubscriptionId"
     );
   const suiClient = useSuiClient();
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
+  const currentAccount = useCurrentAccount()
 
   const voteForTrack = async (nftId, votersData) => {
     if (votersData.length > 0){
@@ -169,5 +172,62 @@ export const useMusicActions = () => {
     }
   };
 
-  return { toggleTrackForSale, voteForTrack, purchaseTrack, deleteTrack };
+
+  const subscribe = (setSubscriptionStatus) => {
+    ;
+    setSubscriptionStatus("subscribing");
+    const amountMist = BigInt(Math.floor(1 * 1_000_000_000));
+    
+    const tx = new Transaction();
+    const [coin] = tx.splitCoins(tx.gas, [tx.pure("u64", amountMist)]);
+    
+    tx.moveCall({
+      arguments: [
+        tx.object(tunflowSubscriptionId),
+        tx.object(tunflowTreasuryId),
+        tx.pure.address(currentAccount?.address),
+        coin,
+      ],
+      target: `${tunflowPackageId}::governance::subscribe`,
+    });
+    
+    const toastId = toast.loading("Subscribing..")
+
+    signAndExecute(
+      {
+        transaction: tx,
+      },
+      {
+        onSuccess: async ({ digest }) => {
+          const { effects } = await suiClient.waitForTransaction({
+            digest: digest,
+            options: {
+              showEffects: true,
+            },
+          });
+          if (effects?.status?.status === "success") {
+            setSubscriptionStatus("subscribed");
+            toast.success("subscription successful!", { id: toastId })
+            console.log("Subscription successful!");
+            window.location.reload();
+          } else {
+            console.error("Subscription failed:", effects);
+            toast.error("Subscription failed", { id: toastId })
+            setSubscriptionStatus("failed");
+          }
+        },
+        onError: (error) => {
+          console.error("Subscription failed:", error);
+          toast.error(`Subscription failed: ${error.message}`, { id: toastId });
+          setSubscriptionStatus("failed");
+        },
+      }
+    );
+  };
+
+  
+
+
+
+  return { toggleTrackForSale, voteForTrack, purchaseTrack, deleteTrack, subscribe };
 };
