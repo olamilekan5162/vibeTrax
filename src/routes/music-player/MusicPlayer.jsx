@@ -13,12 +13,30 @@ import Contributors from "../../components/contributors/Contributors";
 import { useMusicNfts } from "../../hooks/useMusicNfts";
 import { EmptyState } from "../../components/state/EmptyState";
 import MusicCard from "../../components/cards/music-card/MusicCard";
+import { useNetworkVariable } from "../../config/networkConfig";
 
 const MusicPlayer = () => {
   const { id } = useParams();
   const subscriberData = useOutletContext();
   const currentAccount = useCurrentAccount();
   const { voteForTrack, purchaseTrack} = useMusicActions();
+  const tunflowPackageId = useNetworkVariable("tunflowPackageId")
+
+  const { data: votersData } = useSuiClientQuery(
+    "queryEvents", {
+      query: {
+        MoveEventType: `${tunflowPackageId}::music_nft::NFTVoted`,
+      }
+    },
+    {
+      select: (data) =>
+        data.data
+          .flatMap((x) => x.parsedJson)
+          .filter((y) => y.voter === currentAccount.address),
+    }
+  )
+
+
   const {
     musicNfts,
     isPending: artistMusicPending,
@@ -61,7 +79,7 @@ const MusicPlayer = () => {
       <SongDetails
         isPremium={isPremium}
         songData={songData}
-        handleVote={() => voteForTrack(id)}
+        handleVote={() => voteForTrack(id, votersData)}
       />
 
       <div>

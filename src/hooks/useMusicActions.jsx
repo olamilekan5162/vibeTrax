@@ -13,7 +13,11 @@ export const useMusicActions = () => {
   const suiClient = useSuiClient();
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
 
-  const voteForTrack = async (nftId) => {
+  const voteForTrack = async (nftId, votersData) => {
+    if (votersData.length > 0){
+      toast.error("You already Voted")
+      return
+    }
     try {
       const amountMist = BigInt(Math.floor(0.005 * 1_000_000_000));
       const tx = new Transaction();
