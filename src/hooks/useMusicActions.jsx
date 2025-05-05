@@ -174,7 +174,6 @@ export const useMusicActions = () => {
 
 
   const subscribe = (setSubscriptionStatus) => {
-    ;
     setSubscriptionStatus("subscribing");
     const amountMist = BigInt(Math.floor(1 * 1_000_000_000));
     
@@ -224,10 +223,6 @@ export const useMusicActions = () => {
       }
     );
   };
-
-  
-
-
 
   return { toggleTrackForSale, voteForTrack, purchaseTrack, deleteTrack, subscribe };
 };
