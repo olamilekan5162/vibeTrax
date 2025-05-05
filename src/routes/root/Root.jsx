@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import Header from "../../components/header/Header";
 import styles from "./Root.module.css";
 import Footer from "../../components/footer/Footer";
-import MusicPlayer from "../music-player/MusicPlayer";
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import { useNetworkVariable } from "../../config/networkConfig";
 import { Toaster } from "react-hot-toast";

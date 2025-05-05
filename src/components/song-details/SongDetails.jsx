@@ -4,10 +4,21 @@ import AudioVisualizer from "../audio-visualizer/AudioVisualizer";
 import { Link } from "react-router-dom";
 import { FiMusic, FiEye, FiHeart, FiCheckCircle } from "react-icons/fi";
 import { useState } from "react";
+import { useSuiClientQuery } from "@mysten/dapp-kit";
+import { useNetworkVariable } from "../../config/networkConfig";
 
 const SongDetails = ({ songData, isPremium, handleVote }) => {
   const [duration, setDuration] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const tunflowPackageId = useNetworkVariable("tunflowPackageId")
+
+  const { data: votersData } = useSuiClientQuery(
+    "queryEvents", {
+      query: {
+        MoveEventType: `${tunflowPackageId}::governance::SubscriptionPurchased`,
+      }
+    }
+  )
 
   const handleDurationLoaded = (durationInSeconds) => {
     setDuration(durationInSeconds);
@@ -71,9 +82,9 @@ const SongDetails = ({ songData, isPremium, handleVote }) => {
             <FiEye className={styles.metaIcon} />
             <span>{5} plays</span>
           </div>
-          <div className={`${styles.metaItem} ${styles.vote}`}>
+          <div title={"Upvote Music"} className={`${styles.metaItem} ${styles.vote}`} onClick={handleVote}>
             <FiHeart className={styles.metaIcon} />
-            <span onClick={handleVote}>{songData.fields.vote_count} Votes</span>
+            <span>{songData.fields.vote_count} Votes</span>
           </div>
         </div>
 

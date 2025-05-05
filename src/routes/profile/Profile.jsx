@@ -194,15 +194,15 @@ const Profile = () => {
                   </div>
                   <div className={styles["track-actions"]}>
                     {address === track.current_owner &&
-                    <label className={styles["toggle-switch"]}>
+                    <label className={styles["toggle-switch"]} title={"Toggle Music for sale"}>
                       <input type="checkbox" checked={track?.for_sale} onChange={() =>toggleTrackForSale(track?.id?.id)}/>
                       <span className={styles["slider"]}></span>
                     </label>
                     }{address === track.artist &&
-                      <FiEdit className={styles["action-icon"]} onClick={() => navigate(`/upload/${track?.id?.id}`)}/>
+                      <FiEdit title={"Update Music Data"} className={styles["action-icon"]} onClick={() => navigate(`/upload/${track?.id?.id}`)}/>
                     }
                     {address === track.current_owner && address === track.artist &&
-                      <MdDelete className={styles["action-icon"]} onClick={() =>deleteTrack(track?.id?.id)}/>
+                      <MdDelete title={"Delete Music"} className={styles["action-icon"]} onClick={() =>deleteTrack(track?.id?.id)}/>
                     }
                   </div>
                 </li>
