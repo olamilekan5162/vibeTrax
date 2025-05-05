@@ -37,12 +37,16 @@ export const useMusicActions = () => {
         { transaction: tx, options: { showEffects: true } },
         {
           onSuccess: async ({ digest }) => {
-            const { effects } = await suiClient.waitForTransaction({ digest });
+            const { effects } = await suiClient.waitForTransaction({
+              digest, options: { showEffects: true },
+            });
             if (effects?.status?.status === "success") {
               toast.success("Vote recorded successfully!", { id: toastId });
+              
             } else {
               toast.error("Vote transaction failed", { id: toastId });
             }
+            window.location.reload();
           },
           onError: (error) => {
             toast.error(`Vote failed: ${error.message}`, { id: toastId });

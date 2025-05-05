@@ -348,7 +348,7 @@ public entry fun vote_for_nft(
     assert!(vote_amount > 0, EINSUFFICIENT_AMOUNT);
 
     // Price increases by 50% of vote amount
-    let price_increase = vote_amount;
+    let price_increase = vote_amount / 2;
     nft.price = nft.price + price_increase;
     nft.vote_count = nft.vote_count + 1;
 
