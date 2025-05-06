@@ -14,6 +14,7 @@ import { useMusicNfts } from "../../hooks/useMusicNfts";
 import { EmptyState } from "../../components/state/EmptyState";
 import MusicCard from "../../components/cards/music-card/MusicCard";
 import { useNetworkVariable } from "../../config/networkConfig";
+import SubscribeModal from "../../modals/subscribe-modal/SubscribeModal";
 
 const MusicPlayer = () => {
   const { id } = useParams();
@@ -58,21 +59,18 @@ const MusicPlayer = () => {
   );
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isSubcribeModalOpen, setIsSubcribeModalOpen] = useState(false)
   const [comment, setComment] = useState("");
 
   const artistMusics = musicNfts.filter(
     (music) => music.artist === songData?.fields?.artist && music?.id?.id !== id
   );
 
-  const forSale =
-    currentAccount?.address === songData?.fields.artist ||
-    currentAccount?.address === songData?.fields.current_owner ||
-    songData?.fields.for_sale === false ||
-    songData?.fields.collaborators.includes(currentAccount?.address);
+  const forSale = songData?.fields?.for_sale === true
 
   const isPremium =
-    currentAccount?.address === songData?.fields.current_owner ||
-    songData?.fields.collaborators.includes(currentAccount?.address) ||
+    currentAccount?.address === songData?.fields?.current_owner ||
+    songData?.fields?.collaborators.includes(currentAccount?.address) ||
     (subscriberData && subscriberData.length > 0);
 
   if (isPending) return <LoadingState />;
@@ -88,15 +86,14 @@ const MusicPlayer = () => {
 
       <div>
         <CtaComponent
-          title="Upgrade to Premium Quality"
-          subtitle="Experience this track in high-fidelity 320kbps audio quality."
-          buttonText={
-            forSale
-              ? "Already Sold"
-              : `Purchase for ${songData?.fields.price} SUI`
-          }
+          isHome={false}
+          title={isPremium ? "You're Premium!" : "Upgrade to Premium Quality"}
+          subtitle={isPremium ? "Enjoy your high-fidelity 320kbps audio experience." : "Experience this track in high-fidelity 320kbps audio quality."}
+          buttonText={`Purchase for ${songData?.fields.price} SUI`}
           handleClick={() => setIsOpen(true)}
-          disabled={forSale}
+          handleSubscribeClick={() => setIsSubcribeModalOpen(true)}
+          forSale={forSale}
+          isPremium={isPremium}
         />
 
         <PremiumModal
@@ -105,6 +102,8 @@ const MusicPlayer = () => {
           songData={songData}
           onPurchase={() => purchaseTrack(id, songData?.fields.price)}
         />
+
+        <SubscribeModal isOpen={isSubcribeModalOpen} onClose={() => setIsSubcribeModalOpen(false)}/>
       </div>
 
       <Contributors

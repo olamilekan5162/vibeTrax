@@ -17,39 +17,44 @@ export const useMusicActions = () => {
   const currentAccount = useCurrentAccount()
 
   const voteForTrack = async (nftId, votersData) => {
-    if (votersData.length > 0){
-      toast.error("You already Voted")
+
+    if (votersData > 0){
+      toast.error("You already voted for this music")
       return
     }
+
     try {
       const amountMist = BigInt(Math.floor(0.005 * 1_000_000_000));
       const tx = new Transaction();
       const [coin] = tx.splitCoins(tx.gas, [tx.pure("u64", amountMist)]);
 
       tx.moveCall({
-        arguments: [tx.object(nftId), coin],
+        arguments: [
+          tx.object(nftId),
+          coin,
+        ],
         target: `${tunflowPackageId}::music_nft::vote_for_nft`,
       });
 
-      const toastId = toast.loading("Processing vote...");
+      const toastId = toast.loading("Processing Vote...");
 
       signAndExecute(
-        { transaction: tx, options: { showEffects: true } },
+        { transaction: tx },
         {
           onSuccess: async ({ digest }) => {
             const { effects } = await suiClient.waitForTransaction({
-              digest, options: { showEffects: true },
+              digest,
+              options: { showEffects: true },
             });
             if (effects?.status?.status === "success") {
-              toast.success("Vote recorded successfully!", { id: toastId });
-              
+              toast.success("vote recorded successful!", { id: toastId });
             } else {
-              toast.error("Vote transaction failed", { id: toastId });
+              toast.error("voting failed, try again", { id: toastId });
             }
             window.location.reload();
           },
           onError: (error) => {
-            toast.error(`Vote failed: ${error.message}`, { id: toastId });
+            toast.error(`vote failed: ${error.message}`, { id: toastId });
           },
         }
       );

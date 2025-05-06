@@ -194,7 +194,7 @@ const Profile = () => {
                   </div>
                   <div className={styles["track-actions"]}>
                     {address === track.current_owner &&
-                    <label className={styles["toggle-switch"]} title={"Toggle Music for sale"}>
+                    <label className={styles["toggle-switch"]} title={track.for_sale === true ? "Fans can support this track — toggle to turn off" : "Fans can't support this track yet — toggle to allow it"}>
                       <input type="checkbox" checked={track?.for_sale} onChange={() =>toggleTrackForSale(track?.id?.id)}/>
                       <span className={styles["slider"]}></span>
                     </label>
