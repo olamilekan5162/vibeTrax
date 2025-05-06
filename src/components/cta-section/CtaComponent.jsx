@@ -1,8 +1,10 @@
 // CtaComponent.jsx;
+import Button from '../button/Button';
 import styles from './CtaComponent.module.css';
 
 
 const CtaComponent = ({
+  isHome = true,
   title,
   subtitle,
   buttonText,
@@ -10,7 +12,9 @@ const CtaComponent = ({
   variant = "section", // "section" or "box"
   customBackground,
   customClassName,
-  disabled,
+  forSale,
+  isPremium,
+  handleSubscribeClick
 }) => {
 
   // Determine which class to use based on variant
@@ -40,9 +44,23 @@ const CtaComponent = ({
     >
       <h2 className={titleClass}>{title}</h2>
       <p className={descriptionClass}>{subtitle}</p>
-      <button className={styles.button} onClick={handleClick} disabled={disabled}>
+      {isHome ? (
+        <button className={styles.button} onClick={handleClick}>
         {buttonText}
-      </button>
+        </button>
+      ): (
+        isPremium ? (
+          ""
+        ) : (
+          forSale ? ( 
+            <button className={styles.button} onClick={handleClick}>
+            {buttonText}
+            </button>
+          ):(
+            <button className={styles.button} onClick={handleSubscribeClick}>
+            {"Subscribe For Premium Quality"}
+            </button>
+      )))}
     </div>
   );
 };

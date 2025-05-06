@@ -20,9 +20,8 @@ const Profile = () => {
   const [trackType, setTrackType] = useState("uploaded");
 
   const userNfts = musicNfts.filter((music) => music.artist === address || music.current_owner === address);
-  const ownedNfts = musicNfts.filter(
-    (music) => music.current_owner === address
-  );
+  const uploadedNfts = musicNfts.filter((music) => music.artist === address);
+  const ownedNfts = musicNfts.filter((music) => music.current_owner === address);
 
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState />;
@@ -80,9 +79,9 @@ const Profile = () => {
         </div>
 
         {trackType === "uploaded" ? (
-          userNfts.length > 0 ? (
+          uploadedNfts.length > 0 ? (
             <div className={styles["music-row"]}>
-              {userNfts.map((track) => (
+              {uploadedNfts.map((track) => (
                 <MusicCard key={track.id.id} track={track} quality="Premium" />
               ))}
             </div>
@@ -194,7 +193,7 @@ const Profile = () => {
                   </div>
                   <div className={styles["track-actions"]}>
                     {address === track.current_owner &&
-                    <label className={styles["toggle-switch"]} title={"Toggle Music for sale"}>
+                    <label className={styles["toggle-switch"]} title={track.for_sale === true ? "Fans can support this track — toggle to turn off" : "Fans can't support this track yet — toggle to allow it"}>
                       <input type="checkbox" checked={track?.for_sale} onChange={() =>toggleTrackForSale(track?.id?.id)}/>
                       <span className={styles["slider"]}></span>
                     </label>
@@ -220,8 +219,8 @@ const Profile = () => {
           </div>
 
           {/* royal split card */}
-          {userNfts > 0 ? (
-          userNfts.slice(0, 3).map((track) => (
+          {uploadedNfts.length > 0 ? (
+          uploadedNfts.slice(0, 3).map((track) => (
             <ul key={track?.id?.id} className={styles["list"]}>
               <h3>{track.title}</h3>
               {track.collaborators.map((c, index) => (
