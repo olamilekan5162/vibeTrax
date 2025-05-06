@@ -44,21 +44,23 @@ const CtaComponent = ({
     >
       <h2 className={titleClass}>{title}</h2>
       <p className={descriptionClass}>{subtitle}</p>
-      {isHome ?
+      {isHome ? (
         <button className={styles.button} onClick={handleClick}>
         {buttonText}
         </button>
-      :
-        isPremium ? "" :
-          forSale ?
+      ): (
+        isPremium ? (
+          ""
+        ) : (
+          forSale ? ( 
             <button className={styles.button} onClick={handleClick}>
             {buttonText}
             </button>
-          :
+          ):(
             <button className={styles.button} onClick={handleSubscribeClick}>
             {"Subscribe For Premium Quality"}
             </button>
-      }
+      )))}
     </div>
   );
 };
