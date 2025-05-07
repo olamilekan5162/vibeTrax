@@ -1,7 +1,4 @@
-import {
-  useCurrentAccount,
-  useSuiClientQuery,
-} from "@mysten/dapp-kit";
+import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import Button from "../button/Button";
 import styles from "./Form.module.css";
 import { useEffect, useState } from "react";
@@ -27,82 +24,74 @@ const Form = ({
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
-  const [forSale, setForSale] = useState(null)
-  const { uploadMusic, updateMusic } = useMusicUpload()
-  const { id } = useParams()
+  const [forSale, setForSale] = useState(null);
+  const { uploadMusic, updateMusic } = useMusicUpload();
+  const { id } = useParams();
   const [contributors, setContributors] = useState([]);
-
 
   const pinata = new PinataSDK({
     pinataJwt: import.meta.env.VITE_PINATA_JWT,
     pinataGateway: import.meta.env.VITE_GATEWAY_URL,
   });
 
-
   // function to fetch song details using id
-  const {
-      data: songData,
-      isPending,
-    } = useSuiClientQuery(
-      "getObject",
-      { id, options: { showContent: true } },
-      { select: (data) => data.data?.content }
-    );
+  const { data: songData, isPending } = useSuiClientQuery(
+    "getObject",
+    { id, options: { showContent: true } },
+    { select: (data) => data.data?.content }
+  );
 
+  // function go get image and music blob file
+  const getBlobFile = async (blobUrl) => {
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    return blob;
+  };
 
-    // function go get image and music blob file
-    const getBlobFile = async (blobUrl) => {
-      const response = await fetch(blobUrl)
-      const blob = await response.blob()
-      return blob
-    }
-
-
-    // effect to update form
+  // effect to update form
   useEffect(() => {
     if (id && !isPending) {
-      setTitle(songData?.fields?.title)
-      setPreviewTitle(songData?.fields?.title)
-      setDescription(songData?.fields?.description)   
-      setGenre(songData?.fields?.genre)
-      setPreviewGenre(songData?.fields?.genre)
-      setForSale(songData?.fields?.for_sale)
-      setPrice(songData?.fields?.price)
-      getBlobFile(songData?.fields?.music_art).then(blob => {
-        setImageFile(blob)
-        setPreviewImage(blob)
-      })
-      getBlobFile(songData?.fields?.high_quality_ipfs).then(blob => {
-        setHighQualityFile(blob)
-        setHighQuality(blob)
-      })
-      getBlobFile(songData?.fields?.low_quality_ipfs).then(blob => {
-        setLowQualityFile(blob)
-        setLowQuality(blob)
-      })
+      setTitle(songData?.fields?.title);
+      setPreviewTitle(songData?.fields?.title);
+      setDescription(songData?.fields?.description);
+      setGenre(songData?.fields?.genre);
+      setPreviewGenre(songData?.fields?.genre);
+      setForSale(songData?.fields?.for_sale);
+      setPrice(songData?.fields?.price);
+      getBlobFile(songData?.fields?.music_art).then((blob) => {
+        setImageFile(blob);
+        setPreviewImage(blob);
+      });
+      getBlobFile(songData?.fields?.high_quality_ipfs).then((blob) => {
+        setHighQualityFile(blob);
+        setHighQuality(blob);
+      });
+      getBlobFile(songData?.fields?.low_quality_ipfs).then((blob) => {
+        setLowQualityFile(blob);
+        setLowQuality(blob);
+      });
       setContributors(
         songData?.fields?.collaborators.map((collaborator, index) => ({
           role: songData?.fields?.collaborator_roles[index],
           address: collaborator,
-          percentage: songData?.fields?.collaborator_splits[index]/100
-
+          percentage: songData?.fields?.collaborator_splits[index] / 100,
         }))
-      )
+      );
     }
-  },[id, songData, isPending])
-
+  }, [id, songData, isPending]);
 
   useEffect(() => {
     // Initialize the first contributor as the artist
     if (currentAccount) {
-    setContributors([
-      {
-        role: "Artist",
-        address: currentAccount?.address,
-        percentage: 100,
-      },
-    ]);}
-  },[currentAccount])
+      setContributors([
+        {
+          role: "Artist",
+          address: currentAccount?.address,
+          percentage: 100,
+        },
+      ]);
+    }
+  }, [currentAccount]);
 
   // Track remaining percentage
   const [_remainingPercentage, setRemainingPercentage] = useState(0);
@@ -153,41 +142,99 @@ const Form = ({
     setRemainingPercentage(calculateRemainingPercentage());
   };
 
-
-  // function to upload music to pinata
+  const publisherUrl = "https://publisher.walrus-testnet.walrus.space";
 
   const uploadMusicImageFile = async (e) => {
     e.preventDefault();
+
     try {
-      const ImageUpload = await pinata.upload.public.file(imageFile);
-      const imageCid = ImageUpload.cid;
+      const [res1, res2, res3] = await Promise.all([
+        fetch(`${publisherUrl}/v1/blobs?epochs=5`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": lowQualityFile.type || "application/octet-stream",
+          },
+          body: lowQualityFile,
+        }),
+        fetch(`${publisherUrl}/v1/blobs?epochs=5`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": highQualityFile.type || "application/octet-stream",
+          },
+          body: highQualityFile,
+        }),
+        fetch(`${publisherUrl}/v1/blobs?epochs=5`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": imageFile.type || "application/octet-stream",
+          },
+          body: imageFile,
+        }),
+      ]);
 
-      const highQualityUpload = await pinata.upload.public.file(
-        highQualityFile
-      );
-      const highQualityCid = highQualityUpload.cid;
+      const [result1, result2, result3] = await Promise.all([
+        res1.json(),
+        res2.json(),
+        res3.json(),
+      ]);
 
-      const lowQualityUpload = await pinata.upload.public.file(lowQualityFile);
-      const lowQualityCid = lowQualityUpload.cid;
-
-      console.log("files uploaded successfully");
+      const [blobId1, blobId2, blobId3] = [
+        result1?.newlyCreated?.blobObject?.blobId ||
+          result1?.alreadyCertified?.blobId,
+        result2?.newlyCreated?.blobObject?.blobId ||
+          result2?.alreadyCertified?.blobId,
+        result3?.newlyCreated?.blobObject?.blobId ||
+          result3?.alreadyCertified?.blobId,
+      ];
       toast.success("files uploaded successfully, creating transaction", {
         duration: 5000,
       });
-
       return {
-        imageCid: imageCid,
-        highQualityCid: highQualityCid,
-        lowQualityCid: lowQualityCid,
+        lowQualityBlobId: blobId1,
+        highQualityBlobId: blobId2,
+        imageBlobId: blobId3,
       };
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error("Upload failed", err);
       toast.error("failed to upload files", {
         duration: 5000,
       });
     }
   };
 
+  // function to upload music to pinata
+
+  // const uploadMusicImageFile = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const ImageUpload = await pinata.upload.public.file(imageFile);
+  //     const imageCid = ImageUpload.cid;
+
+  //     const highQualityUpload = await pinata.upload.public.file(
+  //       highQualityFile
+  //     );
+  //     const highQualityCid = highQualityUpload.cid;
+
+  //     const lowQualityUpload = await pinata.upload.public.file(lowQualityFile);
+  //     const lowQualityCid = lowQualityUpload.cid;
+
+  //     console.log("files uploaded successfully");
+  //     toast.success("files uploaded successfully, creating transaction", {
+  //       duration: 5000,
+  //     });
+
+  //     return {
+  //       imageCid: imageCid,
+  //       highQualityCid: highQualityCid,
+  //       lowQualityCid: lowQualityCid,
+  //     };
+  //   } catch (e) {
+  //     console.error(e);
+  //     toast.error("failed to upload files", {
+  //       duration: 5000,
+  //     });
+  //   }
+  // };
 
   // function to upload music to smart contract
 
@@ -202,15 +249,22 @@ const Form = ({
 
     const toastId = toast.loading("Uploading...");
 
-    const cIds = await uploadMusicImageFile(e);
+    // const cIds = await uploadMusicImageFile(e);
+    const blobId = await uploadMusicImageFile(e);
 
-    if (!cIds) {
+    if (!blobId) {
       toast.dismiss(toastId);
       return;
     }
 
-    const { lowQualityCid, highQualityCid, imageCid } = cIds;
-  
+    const { lowQualityBlobId, highQualityBlobId, imageBlobId } = blobId;
+    // if (!cIds) {
+    //   toast.dismiss(toastId);
+    //   return;
+    // }
+
+    // const { lowQualityCid, highQualityCid, imageCid } = cIds;
+
     const roles = contributors.map((c) => c.role);
     const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
 
@@ -219,15 +273,15 @@ const Form = ({
       title,
       description,
       genre,
-      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${imageCid}`,
-      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${highQualityCid}`,
-      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`,
+      `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${imageBlobId}`,
+      `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${highQualityBlobId}`,
+      `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${lowQualityBlobId}`,
       price,
       contributors,
       roles,
       percentages
-    )
-  }
+    );
+  };
 
   // function to update music
 
@@ -242,16 +296,21 @@ const Form = ({
 
     const toastId = toast.loading("Updating...");
 
-    const cIds = await uploadMusicImageFile(e);
-
-    if (!cIds) {
+    // const cIds = await uploadMusicImageFile(e);
+    const blobId = await uploadMusicImageFile(e);
+    if (!blobId) {
       toast.dismiss(toastId);
       return;
     }
 
-    const { lowQualityCid, highQualityCid, imageCid } = cIds;
+    // if (!cIds) {
+    //   toast.dismiss(toastId);
+    //   return;
+    // }
 
-  
+    // const { lowQualityCid, highQualityCid, imageCid } = cIds;
+    const { lowQualityBlobId, highQualityBlobId, imageBlobId } = blobId;
+
     const roles = contributors.map((c) => c.role);
     const percentages = contributors.map((c) => parseInt(c.percentage) * 100);
 
@@ -261,16 +320,16 @@ const Form = ({
       title,
       description,
       genre,
-      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${imageCid}`,
-      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${highQualityCid}`,
-      `https://${import.meta.env.VITE_GATEWAY_URL}/ipfs/${lowQualityCid}`,
+      `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${imageBlobId}`,
+      `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${highQualityBlobId}`,
+      `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${lowQualityBlobId}`,
       price,
       forSale,
       contributors,
       roles,
       percentages
-    ) 
-  }
+    );
+  };
 
   return (
     <form onSubmit={id ? handleUpdate : handleUpload}>
@@ -596,7 +655,10 @@ const Form = ({
 
       <div className={styles["upload-actions"]}>
         <Button btnClass={"secondary"} text={"Preview"} onClick={showPreview} />
-        <Button btnClass={"primary"} text={id ? "Update Track" : "Upload Track"} />
+        <Button
+          btnClass={"primary"}
+          text={id ? "Update Track" : "Upload Track"}
+        />
       </div>
     </form>
   );
