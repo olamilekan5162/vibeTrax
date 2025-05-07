@@ -18,7 +18,7 @@ export const useMusicActions = () => {
 
   const voteForTrack = async (nftId, votersData) => {
 
-    if (votersData > 0){
+    if (votersData.length > 0){
       toast.error("You already voted for this music")
       return
     }
