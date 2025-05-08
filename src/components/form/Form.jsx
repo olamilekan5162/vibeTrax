@@ -29,10 +29,10 @@ const Form = ({
   const { id } = useParams();
   const [contributors, setContributors] = useState([]);
 
-  const pinata = new PinataSDK({
-    pinataJwt: import.meta.env.VITE_PINATA_JWT,
-    pinataGateway: import.meta.env.VITE_GATEWAY_URL,
-  });
+  // const pinata = new PinataSDK({
+  //   pinataJwt: import.meta.env.VITE_PINATA_JWT,
+  //   pinataGateway: import.meta.env.VITE_GATEWAY_URL,
+  // });
 
   // function to fetch song details using id
   const { data: songData, isPending } = useSuiClientQuery(
