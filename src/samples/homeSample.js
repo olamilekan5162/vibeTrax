@@ -77,13 +77,13 @@ export const stepsData = [
 
 export const testimonialsData = [
   {
-    text: "TuneFlow has completely changed how I release music. I can finally ensure everyone who contributed gets paid fairly and instantly.",
+    text: "VibeTrax has completely changed how I release music. I can finally ensure everyone who contributed gets paid fairly and instantly.",
     authorName: "Michael Rivers",
     authorTitle: "Independent Artist",
     authorImage: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
-    text: "As a producer, I often had to chase payments. With TuneFlow, I get my fair share instantly whenever a track sells or streams.",
+    text: "As a producer, I often had to chase payments. With VibeTrax, I get my fair share instantly whenever a track sells or streams.",
     authorName: "Jenna Kim",
     authorTitle: "Music Producer",
     authorImage: "https://randomuser.me/api/portraits/women/44.jpg",

@@ -36,7 +36,7 @@ const Profile = () => {
         </div>
         <div className={styles["artist-info"]}>
           <h1>{`${address.slice(0, 5)}...${address.slice(-5)}`}</h1>
-          <p>Tuneflow user</p>
+          <p>VibeTrax user</p>
           <div className={styles["artist-stats"]}>
             <div className={styles["stat"]}>
               <span className={styles["stat-value"]}>{userNfts.length}</span>

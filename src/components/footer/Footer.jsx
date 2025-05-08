@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./Footer.module.css";
 
 const Footer = ({
-  companyName = "TuneFlow",
+  companyName = "VibeTrax",
   links = [
     { name: "Home", url: "/" },
     { name: "About", url: "/about" },
