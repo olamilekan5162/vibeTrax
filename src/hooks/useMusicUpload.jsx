@@ -70,6 +70,7 @@ export const useMusicUpload = () => {
       );
     } catch (error) {
       toast.error("An unexpected error occurred", error.message);
+      toast.dismiss(toastId)
       return false;
     }
   };
@@ -134,6 +135,7 @@ export const useMusicUpload = () => {
       );
     } catch (error) {
       toast.error("An unexpected error occurred", error.message);
+      toast.dismiss(toastId)
       return false;
     }
   };

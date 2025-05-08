@@ -1,24 +1,24 @@
 import { getFullnodeUrl } from "@mysten/sui/client";
 import {
-  DEVNET_TUNE_FLOW_PACKAGE_ID,
-  DEVNET_TUNE_FLOW_NFT_REGISTRY_ID,
-  DEVNET_TUNE_FLOW_SUBSCRIPTION_ID,
-  DEVNET_TUNE_FLOW_TOKEN_ID,
-  DEVNET_TUNE_FLOW_TREASURY_ID
+  TESTNET_TUNE_FLOW_PACKAGE_ID,
+  TESTNET_TUNE_FLOW_NFT_REGISTRY_ID,
+  TESTNET_TUNE_FLOW_SUBSCRIPTION_ID,
+  TESTNET_TUNE_FLOW_TOKEN_ID,
+  TESTNET_TUNE_FLOW_TREASURY_ID
 
 } from "./constants.js";
 import { createNetworkConfig } from "@mysten/dapp-kit";
 
 const { networkConfig, useNetworkVariable, useNetworkVariables } =
   createNetworkConfig({
-    devnet: {
-      url: getFullnodeUrl("devnet"),
+    testnet: {
+      url: getFullnodeUrl("testnet"),
       variables: {
-        tunflowPackageId: DEVNET_TUNE_FLOW_PACKAGE_ID,
-        tunflowTokenId: DEVNET_TUNE_FLOW_TOKEN_ID,
-        tunflowNFTRegistryId: DEVNET_TUNE_FLOW_NFT_REGISTRY_ID,
-        tunflowSubscriptionId: DEVNET_TUNE_FLOW_SUBSCRIPTION_ID,
-        tunflowTreasuryId: DEVNET_TUNE_FLOW_TREASURY_ID,
+        tunflowPackageId: TESTNET_TUNE_FLOW_PACKAGE_ID,
+        tunflowTokenId: TESTNET_TUNE_FLOW_TOKEN_ID,
+        tunflowNFTRegistryId: TESTNET_TUNE_FLOW_NFT_REGISTRY_ID,
+        tunflowSubscriptionId: TESTNET_TUNE_FLOW_SUBSCRIPTION_ID,
+        tunflowTreasuryId: TESTNET_TUNE_FLOW_TREASURY_ID,
       },
     },
     // testnet: {
