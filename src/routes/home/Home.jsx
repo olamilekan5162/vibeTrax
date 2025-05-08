@@ -16,7 +16,7 @@ const Home = () => {
     <main className={styles.home}>
       <Banner />
       <SectionContainer
-        title={"Why TuneFlow?"}
+        title={"Why VibeTrax?"}
         type="features"
         items={featuresData}
         backgroundColor="var(--color-bg-secondary)"
@@ -34,7 +34,7 @@ const Home = () => {
       />
       <CtaComponent
         title="Ready to Transform Your Music Experience?"
-        subtitle="Join TuneFlow today and be part of the revolution that's creating a fairer, more transparent music ecosystem for artists and fans alike."
+        subtitle="Join VibeTrax today and be part of the revolution that's creating a fairer, more transparent music ecosystem for artists and fans alike."
         buttonText="Get Started Today"
         handleClick={() => navigate("discover")}
       />

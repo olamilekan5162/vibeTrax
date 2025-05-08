@@ -2,14 +2,14 @@ import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 import Button from "../button/Button";
 import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
-
+import vibetraxLogo from "../../assets/vibetraxlogo2.png";
 
 const Header = () => {
   const currentAccount = useCurrentAccount()
   return (
     <header className={styles.header}>
       <Link to="/" className={styles.logo}>
-        Tune<span>Flow</span>{" "}
+        <img src={vibetraxLogo} alt="VibeTrax logo" />{" "}
       </Link>
       <nav>
         <ul className={styles["nav-links"]}>

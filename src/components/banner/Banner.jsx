@@ -10,7 +10,7 @@ const Banner = () => {
           Empower Artists, Reward Fans, Transform Music
         </h1>
         <p className={styles["hero-subtitle"]}>
-          TuneFlow connects artists directly with fans through blockchain,
+          VibeTrax connects artists directly with fans through blockchain,
           enabling fair royalty distribution and exclusive high-quality music
           experiences.
         </p>
