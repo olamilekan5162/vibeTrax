@@ -6,18 +6,17 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { router } from "./router.jsx";
 import { networkConfig } from "./config/networkConfig.js";
 import "@mysten/dapp-kit/dist/index.css";
+import RegisterEnokiWallets from "./config/RegisterEnokiWallets.js";
 
 const queryClient = new QueryClient();
-// const  {} = useCurrentWallet()
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <SuiClientProvider networks={networkConfig} defaultNetwork="devnet">
+      <RegisterEnokiWallets />
         <WalletProvider autoConnect>
-          {/* <AudioProvider> */}
           <RouterProvider router={router} />
-          {/* </AudioProvider> */}
         </WalletProvider>
       </SuiClientProvider>
     </QueryClientProvider>
