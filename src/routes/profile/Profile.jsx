@@ -11,6 +11,7 @@ import { ErrorState } from "../../components/state/ErrorState";
 import { EmptyState } from "../../components/state/EmptyState";
 import Jazzicon from "react-jazzicon";
 import { useMusicActions } from "../../hooks/useMusicActions";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 
 const Profile = () => {
   const { address } = useParams();
@@ -18,11 +19,13 @@ const Profile = () => {
   const { musicNfts, isPending, isError } = useMusicNfts();
   const { deleteTrack, toggleTrackForSale } = useMusicActions()
   const [trackType, setTrackType] = useState("uploaded");
+  const currentAccount = useCurrentAccount()
 
   const userNfts = musicNfts.filter((music) => music.artist === address || music.current_owner === address);
   const uploadedNfts = musicNfts.filter((music) => music.artist === address);
   const ownedNfts = musicNfts.filter((music) => music.current_owner === address);
 
+  if (!currentAccount) navigate("/")
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState />;
 
