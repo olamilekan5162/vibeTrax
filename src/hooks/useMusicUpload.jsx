@@ -50,27 +50,28 @@ export const useMusicUpload = () => {
         target: `${tunflowPackageId}::music_nft::mint_music_nft`,
       });
 
-      // const toastId = toast.loading("Uploading music...");
 
       signAndExecute(
         { transaction: tx },
         {
           onSuccess: async ({ digest }) => {
             await suiClient.waitForTransaction({ digest });
-            toast.success("Music uploaded successfully!", { id: toastId });
+            toast.dismiss(toastId)
+            toast.success("Music uploaded successfully!");
             navigate("/discover")
             return true;
           },
           onError: (error) => {
-            toast.error(`Upload failed: ${error.message}`, { id: toastId });
             toast.dismiss(toastId)
+            toast.error(`Upload failed: ${error.message}`);
             return false;
           },
         }
       );
     } catch (error) {
-      toast.error("An unexpected error occurred", error.message);
       toast.dismiss(toastId)
+      toast.error("An unexpected error occurred", error.message);
+      console.log("catch error", error);
       return false;
     }
   };
@@ -122,20 +123,21 @@ export const useMusicUpload = () => {
         {
           onSuccess: async ({ digest }) => {
             await suiClient.waitForTransaction({ digest });
+            toast.dismiss(toastId)
             toast.success("Music details updated successfully!", { id: toastId });
             navigate("/discover")
             return true;
           },
           onError: (error) => {
-            toast.error(`Update failed: ${error.message}`, { id: toastId });
             toast.dismiss(toastId)
+            toast.error(`Update failed: ${error.message}`, { id: toastId });
             return false;
           },
         }
       );
     } catch (error) {
-      toast.error("An unexpected error occurred", error.message);
       toast.dismiss(toastId)
+      toast.error("An unexpected error occurred", error.message);
       return false;
     }
   };
