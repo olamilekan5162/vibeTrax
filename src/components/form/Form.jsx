@@ -2,7 +2,6 @@ import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import Button from "../button/Button";
 import styles from "./Form.module.css";
 import { useEffect, useState } from "react";
-import { Transaction } from "@mysten/sui/transactions";
 import toast from "react-hot-toast";
 import { PinataSDK } from "pinata";
 import { useMusicUpload } from "../../hooks/useMusicUpload";
@@ -28,11 +27,6 @@ const Form = ({
   const { uploadMusic, updateMusic } = useMusicUpload();
   const { id } = useParams();
   const [contributors, setContributors] = useState([]);
-
-  // const pinata = new PinataSDK({
-  //   pinataJwt: import.meta.env.VITE_PINATA_JWT,
-  //   pinataGateway: import.meta.env.VITE_GATEWAY_URL,
-  // });
 
   // function to fetch song details using id
   const { data: songData, isPending } = useSuiClientQuery(
@@ -69,7 +63,7 @@ const Form = ({
       getBlobFile(songData?.fields?.low_quality_ipfs).then((blob) => {
         setLowQualityFile(blob);
         setLowQuality(blob);
-      });
+      });     
       setContributors(
         songData?.fields?.collaborators.map((collaborator, index) => ({
           role: songData?.fields?.collaborator_roles[index],
@@ -78,20 +72,19 @@ const Form = ({
         }))
       );
     }
-  }, [id, songData, isPending]);
-
-  useEffect(() => {
-    // Initialize the first contributor as the artist
-    if (currentAccount) {
-      setContributors([
-        {
-          role: "Artist",
-          address: currentAccount?.address,
-          percentage: 100,
-        },
-      ]);
+    else{
+      if (currentAccount) {
+        setContributors([
+          {
+            role: "Artist",
+            address: currentAccount?.address,
+            percentage: 100,
+          },
+        ]);
+      }
     }
-  }, [currentAccount]);
+  }, [id, songData, isPending, currentAccount]);
+
 
   // Track remaining percentage
   const [_remainingPercentage, setRemainingPercentage] = useState(0);
