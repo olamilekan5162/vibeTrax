@@ -648,7 +648,7 @@ const Form = ({
           placeholder="Enter price in SUI"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          step="0.01"
+          step="0.0001"
           min="0"
         />
       </div>
