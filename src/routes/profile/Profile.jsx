@@ -17,15 +17,21 @@ import { ErrorState } from "../../components/state/ErrorState";
 import { EmptyState } from "../../components/state/EmptyState";
 import Jazzicon from "react-jazzicon";
 import { useMusicActions } from "../../hooks/useMusicActions";
-import { useCurrentAccount } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 
 const Profile = () => {
-  const { address } = useParams();
-  const navigate = useNavigate();
-  const { musicNfts, isPending, isError } = useMusicNfts();
-  const { deleteTrack, toggleTrackForSale } = useMusicActions();
   const [trackType, setTrackType] = useState("uploaded");
+  const { address } = useParams();
   const currentAccount = useCurrentAccount();
+  const { musicNfts, isPending, isError } = useMusicNfts();
+  const navigate = useNavigate();
+  const { deleteTrack, toggleTrackForSale } = useMusicActions();
+
+  const { data: userWalletBalance, isPending: balancePending } = useSuiClientQuery(
+    "getBalance", {
+      owner: address
+    }
+  );
 
   const userNfts = musicNfts.filter(
     (music) => music.artist === address || music.current_owner === address
@@ -35,7 +41,7 @@ const Profile = () => {
     (music) => music.current_owner === address
   );
 
-  if (!currentAccount) navigate("/");
+  if (!currentAccount?.address) navigate("/");
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState />;
 
@@ -59,10 +65,11 @@ const Profile = () => {
               <span className={styles["stat-value"]}>245K</span>
               <span className={styles["stat-label"]}>Total Plays</span>
             </div>
-            <div className={styles["stat"]}>
-              <span className={styles["stat-value"]}>3.8 SUI</span>
-              <span className={styles["stat-label"]}>Earnings</span>
+            {!balancePending && address === currentAccount?.address &&
+            <div className={styles["stat"]}><span className={styles["stat-value"]}>{(userWalletBalance?.totalBalance/1000_000_000).toFixed(2) || 'NA'} SUI</span>
+              <span className={styles["stat-label"]}>Wallet Balance</span>
             </div>
+            }
           </div>
         </div>
       </div>

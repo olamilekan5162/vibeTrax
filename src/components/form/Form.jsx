@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { PinataSDK } from "pinata";
 import { useMusicUpload } from "../../hooks/useMusicUpload";
 import { useParams } from "react-router-dom";
+// import { Tusky } from "@tusky-io/ts-sdk";
 
 const Form = ({
   showPreview,
@@ -19,14 +20,15 @@ const Form = ({
   const [description, setDescription] = useState("");
   const [genre, setGenre] = useState("");
   const [price, setPrice] = useState(0);
-  const currentAccount = useCurrentAccount();
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
   const [forSale, setForSale] = useState(null);
+  const [contributors, setContributors] = useState([]);
+  const currentAccount = useCurrentAccount();
   const { uploadMusic, updateMusic } = useMusicUpload();
   const { id } = useParams();
-  const [contributors, setContributors] = useState([]);
+  // const tusky = new Tusky({ apiKey: import.meta.env.TUSKY_API_KEY });
 
   // function to fetch song details using id
   const { data: songData, isPending } = useSuiClientQuery(
