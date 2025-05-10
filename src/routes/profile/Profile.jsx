@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   FiDollarSign,
@@ -41,7 +41,12 @@ const Profile = () => {
     (music) => music.current_owner === address
   );
 
-  if (!currentAccount?.address) navigate("/");
+
+  useEffect(() => {
+    if (!isPending && !currentAccount?.address) {
+      navigate('/')
+    }
+  },[isPending, currentAccount, navigate])
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState />;
 
