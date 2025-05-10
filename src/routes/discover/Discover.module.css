@@ -2,28 +2,33 @@
   padding: 120px 5% 50px;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2.5rem;
   max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .headerSection {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
+  width: 100%;
 }
 
 .pageTitle {
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--color-text-primary);
+  white-space: nowrap;
 }
 
 .searchBar {
   position: relative;
   width: 100%;
   max-width: 600px;
+  flex-grow: 1;
 }
 
 .searchBar input {
@@ -56,6 +61,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .sectionTitle {
@@ -136,12 +143,14 @@
   font-size: 2.5rem;
   margin: 0 0 0.5rem 0;
   line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .carouselContent p {
   font-size: 1.2rem;
   opacity: 0.9;
   margin: 0 0 1.5rem 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .playButton {
@@ -219,6 +228,8 @@
   border: none;
   font-weight: 500;
   font-size: 0.9rem;
+  flex: 1;
+  text-align: center;
 }
 
 .tabButton:hover,
@@ -227,11 +238,25 @@
   color: white;
 }
 
+.genreFiltersContainer {
+  width: 100%;
+  position: relative;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.genreFiltersContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 .genreFilters {
   display: flex;
   gap: 0.8rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
+  padding: 0.5rem 0;
+  width: max-content;
 }
 
 .genrePill {
@@ -243,6 +268,7 @@
   transition: all 0.3s;
   font-size: 0.9rem;
   border: none;
+  white-space: nowrap;
 }
 
 .genrePill:hover,
@@ -265,32 +291,36 @@
   font-size: 1.2rem;
 }
 
-@media (max-width: 768px) {
+/* Tablet Styles */
+@media (max-width: 1024px) {
   .mainContent {
-    padding: 80px 5% 40px;
+    padding: 90px 4% 40px;
     gap: 2rem;
   }
 
-  .pageTitle {
-    font-size: 2rem;
-  }
-
   .carousel {
-    height: 300px;
+    height: 350px;
   }
 
   .carouselContent h3 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
-  .artistsGrid,
   .musicGrid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
 
-@media (max-width: 480px) {
+/* Medium Screens */
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 80px 4% 30px;
+    gap: 1.8rem;
+  }
+
   .headerSection {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 1rem;
   }
 
@@ -298,16 +328,94 @@
     font-size: 1.8rem;
   }
 
+  .searchBar {
+    max-width: 100%;
+  }
+
   .carousel {
-    height: 250px;
+    height: 300px;
   }
 
   .carouselOverlay {
-    padding: 1.5rem;
+    padding: 2rem;
+  }
+
+  .carouselContent h3 {
+    font-size: 1.8rem;
+  }
+
+  .carouselContent p {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .playButton {
+    padding: 0.7rem 1.5rem;
+  }
+
+  .musicGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.2rem;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 70px 4% 20px;
+    gap: 1.5rem;
+  }
+
+  .headerSection {
+    gap: 0.8rem;
+  }
+
+  .pageTitle {
+    font-size: 1.6rem;
+  }
+
+  .searchBar input {
+    padding: 0.7rem 1rem 0.7rem 2.5rem;
+    font-size: 0.9rem;
+  }
+
+  .searchIcon {
+    left: 0.8rem;
+    width: 16px;
+    height: 16px;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .carousel {
+    height: 220px;
+  }
+
+  .carouselOverlay {
+    padding: 1.2rem;
   }
 
   .carouselContent h3 {
     font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .carouselContent p {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .featuredBadge {
+    padding: 0.2rem 0.8rem;
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .playButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
   }
 
   .tabsControls {
@@ -318,5 +426,25 @@
   .tabButton {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
+  }
+
+  .musicGrid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* Very Small Screens */
+@media (max-width: 350px) {
+  .carousel {
+    height: 180px;
+  }
+
+  .carouselContent h3 {
+    font-size: 1.3rem;
+  }
+
+  .musicGrid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
 }

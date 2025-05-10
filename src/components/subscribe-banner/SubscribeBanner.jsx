@@ -7,27 +7,22 @@ const SubscribeBanner = ({ subscriberData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
-
   const handleCloseButtonClick = () => {
     setIsVisible(false);
     // localStorage.setItem("subscribeBannerClosed", "true");
-    
-  }
+  };
 
   const handleOpen = () => {
     setIsOpen(true);
-
     document.body.style.overflow = "hidden";
   };
 
-
-
   const handleClose = () => {
     setIsOpen(false);
-
     document.body.style.overflow = "auto";
   };
 
+  // If user is subscribed, don't show banner
   if (subscriberData > 0) {
     return null;
   }
@@ -36,23 +31,27 @@ const SubscribeBanner = ({ subscriberData }) => {
   if (!isVisible) {
     return null;
   }
+
   return (
     <>
       <div className={styles.infoBanner}>
-        <p>Subscribe to enjoy premium quality music and exclusive content.</p>
-        
+        <div className={styles.content}>
+          <p>Subscribe to enjoy premium quality music and exclusive content.</p>
           <Button
             text="Subscribe"
             onClick={handleOpen}
-            // className={styles.subscribeButton}
+            className={styles.subscribeButton}
           />
-          
-        
-      <button onClick={handleCloseButtonClick} className={styles.closeButton}>×</button>
-        
-        
+        </div>
+        <button onClick={handleCloseButtonClick} className={styles.closeButton}>
+          ×
+        </button>
       </div>
-      <SubscribeModal isOpen={isOpen} onClose={handleClose} subscriberData={subscriberData}/>
+      <SubscribeModal
+        isOpen={isOpen}
+        onClose={handleClose}
+        subscriberData={subscriberData}
+      />
     </>
   );
 };

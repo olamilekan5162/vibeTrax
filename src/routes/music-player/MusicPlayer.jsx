@@ -20,14 +20,15 @@ const MusicPlayer = () => {
   const { id } = useParams();
   const subscriberData = useOutletContext();
   const currentAccount = useCurrentAccount();
-  const { voteForTrack, purchaseTrack} = useMusicActions();
-  const tunflowPackageId = useNetworkVariable("tunflowPackageId")
+  const { voteForTrack, purchaseTrack } = useMusicActions();
+  const tunflowPackageId = useNetworkVariable("tunflowPackageId");
 
   const { data: votersData } = useSuiClientQuery(
-    "queryEvents", {
+    "queryEvents",
+    {
       query: {
         MoveEventType: `${tunflowPackageId}::music_nft::NFTVoted`,
-      }
+      },
     },
     {
       select: (data) =>
@@ -35,12 +36,11 @@ const MusicPlayer = () => {
           .flatMap((x) => x.parsedJson)
           .filter((y) => y.voter === currentAccount.address && y.nft_id == id),
     }
-  )
+  );
 
-  useEffect (() => {
+  useEffect(() => {
     console.log(votersData);
-    
-  })
+  });
 
   const {
     musicNfts,
@@ -59,14 +59,14 @@ const MusicPlayer = () => {
   );
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isSubcribeModalOpen, setIsSubcribeModalOpen] = useState(false)
+  const [isSubcribeModalOpen, setIsSubcribeModalOpen] = useState(false);
   const [comment, setComment] = useState("");
 
   const artistMusics = musicNfts.filter(
     (music) => music.artist === songData?.fields?.artist && music?.id?.id !== id
   );
 
-  const forSale = songData?.fields?.for_sale === true
+  const forSale = songData?.fields?.for_sale === true;
 
   const isPremium =
     currentAccount?.address === songData?.fields?.current_owner ||
@@ -88,7 +88,11 @@ const MusicPlayer = () => {
         <CtaComponent
           isHome={false}
           title={isPremium ? "You're Premium!" : "Upgrade to Premium Quality"}
-          subtitle={isPremium ? "Enjoy your high-fidelity 320kbps audio experience." : "Experience this track in high-fidelity 320kbps audio quality."}
+          subtitle={
+            isPremium
+              ? "Enjoy your high-fidelity 320kbps audio experience."
+              : "Experience this track in high-fidelity 320kbps audio quality."
+          }
           buttonText={`Purchase for ${songData?.fields.price} SUI`}
           handleClick={() => setIsOpen(true)}
           handleSubscribeClick={() => setIsSubcribeModalOpen(true)}
@@ -103,7 +107,10 @@ const MusicPlayer = () => {
           onPurchase={() => purchaseTrack(id, songData?.fields.price)}
         />
 
-        <SubscribeModal isOpen={isSubcribeModalOpen} onClose={() => setIsSubcribeModalOpen(false)}/>
+        <SubscribeModal
+          isOpen={isSubcribeModalOpen}
+          onClose={() => setIsSubcribeModalOpen(false)}
+        />
       </div>
 
       <Contributors
@@ -115,6 +122,7 @@ const MusicPlayer = () => {
       <div>
         <h2 className={styles.sectionTitle}>
           More from Artist {songData?.fields?.artist.slice(0, 5)}...
+          {songData?.fields?.artist.slice(-5)}
         </h2>
         {artistMusicPending && <LoadingState />}
         {artistMusicError && <ErrorState />}

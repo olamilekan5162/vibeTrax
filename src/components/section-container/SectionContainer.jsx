@@ -13,6 +13,13 @@ const SectionContainer = ({
     setActiveIndex(index);
   };
 
+  const handleCardClick = (index) => {
+    // For touch devices, toggle active state on click
+    if (window.innerWidth <= 768) {
+      setActiveIndex(activeIndex === index ? null : index);
+    }
+  };
+
   const renderItems = () => {
     switch (type) {
       case "features":
@@ -21,16 +28,14 @@ const SectionContainer = ({
             {items.map((item, index) => (
               <div
                 key={index}
-                className={styles.card}
+                className={`${styles.card} ${
+                  activeIndex === index ? styles.active : ""
+                }`}
                 onMouseEnter={() => handleCardHover(index)}
                 onMouseLeave={() => handleCardHover(null)}
-                style={{
-                  transform:
-                    activeIndex === index ? "translateY(-5px)" : "none",
-                }}
+                onClick={() => handleCardClick(index)}
               >
                 <div className={styles.featureIcon}>
-                  {/* {item.icon && <item.icon color="#444" />} */}
                   {typeof item.icon === "string"
                     ? item.icon
                     : item.icon && <item.icon size={55} color="#6366f1" />}
@@ -46,16 +51,22 @@ const SectionContainer = ({
         return (
           <div className={styles.steps}>
             {items.map((item, index) => (
-              <div
-                key={index}
-                className={styles.step}
-                style={{ position: "relative" }}
-              >
+              <div key={index} className={styles.step}>
                 <div className={styles.stepNumber}>{item.number}</div>
                 <h3 className={styles.stepTitle}>{item.title}</h3>
                 <p className={styles.stepDesc}>{item.description}</p>
                 {index !== items.length - 1 && (
-                  <div className={styles.stepArrow}>→</div>
+                  <div className={styles.stepArrow}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M5 12H19M19 12L12 5M19 12L12 19"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
                 )}
               </div>
             ))}
@@ -68,13 +79,12 @@ const SectionContainer = ({
             {items.map((item, index) => (
               <div
                 key={index}
-                className={styles.card}
+                className={`${styles.card} ${styles.testimonialCard} ${
+                  activeIndex === index ? styles.active : ""
+                }`}
                 onMouseEnter={() => handleCardHover(index)}
                 onMouseLeave={() => handleCardHover(null)}
-                style={{
-                  transform:
-                    activeIndex === index ? "translateY(-5px)" : "none",
-                }}
+                onClick={() => handleCardClick(index)}
               >
                 <p className={styles.testimonialText}>{item.text}</p>
                 <div className={styles.testimonialAuthor}>
@@ -82,6 +92,7 @@ const SectionContainer = ({
                     src={item.authorImage}
                     alt={item.authorName}
                     className={styles.authorImage}
+                    loading="lazy"
                   />
                   <div>
                     <p className={styles.authorName}>{item.authorName}</p>
@@ -99,13 +110,12 @@ const SectionContainer = ({
             {items.map((item, index) => (
               <div
                 key={index}
-                className={styles.card}
+                className={`${styles.card} ${
+                  activeIndex === index ? styles.active : ""
+                }`}
                 onMouseEnter={() => handleCardHover(index)}
                 onMouseLeave={() => handleCardHover(null)}
-                style={{
-                  transform:
-                    activeIndex === index ? "translateY(-5px)" : "none",
-                }}
+                onClick={() => handleCardClick(index)}
               >
                 {item.content}
               </div>
@@ -120,8 +130,10 @@ const SectionContainer = ({
       className={styles.sectionContainer}
       style={{ backgroundColor: backgroundColor || "var(--color-bg-primary)" }}
     >
-      <h2 className={styles.sectionTitle}>{title}</h2>
-      {renderItems()}
+      <div className={styles.sectionInner}>
+        <h2 className={styles.sectionTitle}>{title}</h2>
+        {renderItems()}
+      </div>
     </section>
   );
 };

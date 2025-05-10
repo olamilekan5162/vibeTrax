@@ -1,22 +1,36 @@
 import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
-import Button from "../button/Button";
 import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
 import vibetraxLogo from "../../assets/vibetraxlogo2.png";
+import { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Header = () => {
-  const currentAccount = useCurrentAccount()
+  const currentAccount = useCurrentAccount();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header className={styles.header}>
       <Link to="/" className={styles.logo}>
-        <img src={vibetraxLogo} alt="VibeTrax logo" />{" "}
+        <img src={vibetraxLogo} alt="VibeTrax logo" />
       </Link>
-      <nav>
-        <ul className={styles["nav-links"]}>
+      
+      {/* Mobile menu button */}
+      <button className={styles.menuButton} onClick={toggleMenu}>
+        {isMenuOpen ? <FaTimes /> : <FaBars />}
+      </button>
+      
+      <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
+        <ul className={styles.navLinks}>
           <li>
             <NavLink
               to={"/"}
               className={({ isActive }) => (isActive ? styles.active : "")}
+              onClick={() => setIsMenuOpen(false)}
             >
               Home
             </NavLink>
@@ -25,30 +39,25 @@ const Header = () => {
             <NavLink
               to={"discover"}
               className={({ isActive }) => (isActive ? styles.active : "")}
+              onClick={() => setIsMenuOpen(false)}
             >
               Discover
             </NavLink>
           </li>
-          {currentAccount?.address &&
-          <li>
-            <NavLink
-              to={`profile/${currentAccount?.address}`}
-              className={({ isActive }) => (isActive ? styles.active : "")}
-            >
-              Profile
-            </NavLink>
-          </li>
-          }
-          {/* <li>
-                <NavLink
-                to={"library"}
+          {currentAccount?.address && (
+            <li>
+              <NavLink
+                to={`profile/${currentAccount?.address}`}
                 className={({ isActive }) => (isActive ? styles.active : "")}
-                >
-                Library
-                </NavLink>
-            </li> */}
-             <ConnectButton />
-          {/* <Button text={"Connect Wallet"} btnClass={"primary"}/> */}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Profile
+              </NavLink>
+            </li>
+          )}
+          <li className={styles.connectButton}>
+            <ConnectButton />
+          </li>
         </ul>
       </nav>
     </header>

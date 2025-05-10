@@ -1,7 +1,6 @@
 // CtaComponent.jsx;
-import Button from '../button/Button';
-import styles from './CtaComponent.module.css';
-
+import Button from "../button/Button";
+import styles from "./CtaComponent.module.css";
 
 const CtaComponent = ({
   isHome = true,
@@ -14,27 +13,21 @@ const CtaComponent = ({
   customClassName,
   forSale,
   isPremium,
-  handleSubscribeClick
+  handleSubscribeClick,
 }) => {
-
   // Determine which class to use based on variant
-  const containerClass = variant === "box" 
-    ? styles.ctaBox 
-    : styles.ctaSection;
+  const containerClass = variant === "box" ? styles.ctaBox : styles.ctaSection;
 
   // Handle title class based on variant
-  const titleClass = variant === "box" 
-    ? styles.boxTitle 
-    : styles.sectionTitle;
+  const titleClass = variant === "box" ? styles.boxTitle : styles.sectionTitle;
 
   // Handle description/subtitle class based on variant
-  const descriptionClass = variant === "box" 
-    ? styles.boxDesc 
-    : styles.sectionSubtitle;
+  const descriptionClass =
+    variant === "box" ? styles.boxDesc : styles.sectionSubtitle;
 
   // Apply custom background if provided
-  const backgroundStyle = customBackground 
-    ? { background: customBackground } 
+  const backgroundStyle = customBackground
+    ? { background: customBackground }
     : {};
 
   return (
@@ -46,21 +39,19 @@ const CtaComponent = ({
       <p className={descriptionClass}>{subtitle}</p>
       {isHome ? (
         <button className={styles.button} onClick={handleClick}>
-        {buttonText}
+          {buttonText}
         </button>
-      ): (
-        isPremium ? (
-          ""
-        ) : (
-          forSale ? ( 
-            <button className={styles.button} onClick={handleClick}>
-            {buttonText}
-            </button>
-          ):(
-            <button className={styles.button} onClick={handleSubscribeClick}>
-            {"Subscribe For Premium Quality"}
-            </button>
-      )))}
+      ) : isPremium ? (
+        ""
+      ) : forSale ? (
+        <button className={styles.button} onClick={handleClick}>
+          {buttonText}
+        </button>
+      ) : (
+        <button className={styles.button} onClick={handleSubscribeClick}>
+          {"Subscribe For Premium Quality"}
+        </button>
+      )}
     </div>
   );
 };

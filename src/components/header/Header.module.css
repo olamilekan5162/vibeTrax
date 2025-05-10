@@ -12,29 +12,57 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-
 .logo img {
   width: 100px;
   height: 50px;
+  transition: all 0.3s ease;
 }
 
-.logo span {
-  color: var(--color-text-primary);
+.nav {
+  transition: all 0.3s ease;
 }
 
-.nav-links {
+.navLinks {
   display: flex;
   align-items: center;
   gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.nav-links a.active {
+.navLinks a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.navLinks a:hover {
   color: var(--color-primary);
+}
+
+.navLinks a.active {
+  color: var(--color-primary);
+}
+
+.connectButton {
+  display: flex;
+  align-items: center;
+}
+
+.menuButton {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 101;
 }
 
 /* Responsive styles */
 @media screen and (max-width: 1024px) {
-  .nav-links {
+  .navLinks {
     gap: 1.5rem;
   }
 }
@@ -43,13 +71,13 @@
   .header {
     padding: 1.2rem 4%;
   }
-  
+
   .logo img {
     width: 90px;
     height: 45px;
   }
-  
-  .nav-links {
+
+  .navLinks {
     gap: 1.2rem;
   }
 }
@@ -58,23 +86,47 @@
   .header {
     padding: 1rem 3%;
   }
-  
+
   .logo img {
     width: 80px;
     height: 40px;
   }
-  
-  .nav-links {
+
+  .navLinks {
     gap: 1rem;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .nav-links {
-    gap: 0.7rem;
-    font-size: 0.85rem;
+  .menuButton {
+    display: block;
   }
-  
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background-color: var(--color-bg-navbar);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: right 0.3s ease;
+    padding-top: 5rem;
+  }
+
+  .navOpen {
+    right: 0;
+  }
+
+  .navLinks {
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 1.2rem;
+  }
+
   .logo img {
     width: 70px;
     height: 35px;
@@ -85,21 +137,23 @@
   .header {
     padding: 0.8rem 2%;
   }
-  
+
+  .nav {
+    width: 80%;
+  }
+
   .logo img {
     width: 60px;
     height: 30px;
   }
-  
-  .nav-links {
-    gap: 0.5rem;
-    font-size: 0.75rem;
-  }
 }
 
 @media screen and (max-width: 400px) {
-  .nav-links {
-    gap: 0.4rem;
-    font-size: 0.7rem;
+  .nav {
+    width: 90%;
+  }
+
+  .navLinks {
+    font-size: 1rem;
   }
 }

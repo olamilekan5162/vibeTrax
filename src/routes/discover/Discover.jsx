@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { FiSearch, FiPlay } from "react-icons/fi";
 import { useCurrentAccount } from "@mysten/dapp-kit";
@@ -15,9 +15,12 @@ const Discover = () => {
   const [activeGenre, setActiveGenre] = useState("All Genres");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTouching, setIsTouching] = useState(false);
   const subscriberData = useOutletContext();
   const navigate = useNavigate();
   const currentAccount = useCurrentAccount();
+  const carouselIntervalRef = useRef(null);
+  const genreScrollRef = useRef(null);
 
   const { musicNfts, isPending, isError } = useMusicNfts();
 
@@ -47,14 +50,38 @@ const Discover = () => {
 
   const otherMusic = musicNfts;
 
+  // Scroll active genre into view when changed
   useEffect(() => {
-    if (featuredMusic.length === 0) return;
+    if (genreScrollRef.current) {
+      const activeElement = genreScrollRef.current.querySelector(
+        `.${styles.active}`
+      );
+      if (activeElement) {
+        activeElement.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }
+    }
+  }, [activeGenre]);
 
-    const interval = setInterval(() => {
+  // Carousel rotation and pause on touch
+  useEffect(() => {
+    if (featuredMusic.length === 0 || isTouching) return;
+
+    carouselIntervalRef.current = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % featuredMusic.length);
     }, 5000);
-    return () => clearInterval(interval);
-  }, [featuredMusic.length]);
+
+    return () => clearInterval(carouselIntervalRef.current);
+  }, [featuredMusic.length, isTouching]);
+
+  const handleCarouselTouch = () => {
+    setIsTouching(true);
+    // Resume auto-rotation after 10 seconds of inactivity
+    setTimeout(() => setIsTouching(false), 10000);
+  };
 
   const filteredMusic = otherMusic.filter((track) => {
     const tabMatch =
@@ -74,6 +101,21 @@ const Discover = () => {
     return tabMatch && genreMatch && searchMatch;
   });
 
+  // Debounce search input to improve performance
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+
+    // Clear any existing timeouts
+    if (window.searchTimeout) {
+      clearTimeout(window.searchTimeout);
+    }
+
+    // Set a timeout to update state after user stops typing
+    window.searchTimeout = setTimeout(() => {
+      setSearchQuery(value);
+    }, 300);
+  };
+
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState />;
 
@@ -87,8 +129,9 @@ const Discover = () => {
           <input
             type="text"
             placeholder="Search for artists, songs, or albums..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            defaultValue={searchQuery}
+            onChange={handleSearchChange}
+            aria-label="Search music"
           />
           <FiSearch className={styles.searchIcon} />
         </div>
@@ -105,12 +148,21 @@ const Discover = () => {
                   className={`${styles.carouselIndicator} ${
                     i === currentSlide ? styles.active : ""
                   }`}
-                  onClick={() => setCurrentSlide(i)}
+                  onClick={() => {
+                    setCurrentSlide(i);
+                    setIsTouching(true);
+                    setTimeout(() => setIsTouching(false), 10000);
+                  }}
+                  aria-label={`Go to slide ${i + 1}`}
                 />
               ))}
             </div>
           </div>
-          <div className={styles.carousel}>
+          <div
+            className={styles.carousel}
+            onTouchStart={handleCarouselTouch}
+            onClick={handleCarouselTouch}
+          >
             <div
               className={styles.carouselSlide}
               style={{
@@ -127,6 +179,7 @@ const Discover = () => {
                     onClick={() =>
                       navigate(`/discover/${featuredMusic[currentSlide].id.id}`)
                     }
+                    aria-label={`Play ${featuredMusic[currentSlide].title}`}
                   >
                     <FiPlay />
                     Play Now
@@ -149,6 +202,8 @@ const Discover = () => {
                   activeTab === tab ? styles.active : ""
                 }`}
                 onClick={() => setActiveTab(tab)}
+                aria-label={`Show ${tab}`}
+                aria-pressed={activeTab === tab}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
               </button>
@@ -156,18 +211,22 @@ const Discover = () => {
           </div>
         </div>
 
-        <div className={styles.genreFilters}>
-          {genres.map((genre) => (
-            <button
-              key={genre}
-              className={`${styles.genrePill} ${
-                genre === activeGenre ? styles.active : ""
-              }`}
-              onClick={() => setActiveGenre(genre)}
-            >
-              {genre}
-            </button>
-          ))}
+        <div className={styles.genreFiltersContainer} ref={genreScrollRef}>
+          <div className={styles.genreFilters}>
+            {genres.map((genre) => (
+              <button
+                key={genre}
+                className={`${styles.genrePill} ${
+                  genre === activeGenre ? styles.active : ""
+                }`}
+                onClick={() => setActiveGenre(genre)}
+                aria-label={`Filter by ${genre}`}
+                aria-pressed={genre === activeGenre}
+              >
+                {genre}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className={styles.musicGrid}>

@@ -1,105 +1,86 @@
 .infoBanner {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    background-color: var(--color-bg-card);
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-  
-  .infoBanner p {
-    margin: 0;
-    font-size: 1rem;
-    color: #f1f5f9;
-  }
-  
-  .subscribeButton {
-    background: none;
-    border: none;
-    color: #6366f1;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-  }
-  
-  .subscribeButton:hover {
-    color: white;
-    background-color: #4f46e5;
-    transform: translateY(-1px);
-  }
-  
-  
-  .closeButton{
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-
-  }
-
-
-/* Medium screens (768px - 991px) */
-@media (max-width: 991px) {
-  .infoBanner {
-    padding: 0.9rem 1.3rem;
-    gap: 1.2rem;
-  }
-  
-  .infoBanner p {
-    font-size: 0.95rem;
-  }
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-bg-card);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-/* Small tablets (576px - 767px) */
-@media (max-width: 767px) {
-  .infoBanner {
-    padding: 0.8rem 1rem;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .infoBanner p {
-    font-size: 0.9rem;
-    flex: 1;
-  }
-  
-  .closeButton {
-    position: relative;
-    margin-left: auto;
-  }
+.content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
 }
 
-/* Mobile devices (575px and below) */
-@media (max-width: 575px) {
-  .infoBanner {
+.infoBanner p {
+  margin: 0;
+  font-size: 1rem;
+  color: #f1f5f9;
+}
+
+.subscribeButton {
+  background: none;
+  border: none;
+  color: #6366f1;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.subscribeButton:hover {
+  color: white;
+  background-color: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.closeButton {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .content {
     flex-direction: column;
-    gap: 0.8rem;
-    padding: 1rem;
-    position: relative;
+    align-items: flex-start;
+    gap: 0.75rem;
   }
-  
-  .infoBanner p {
-    text-align: center;
-    font-size: 0.85rem;
-  }
-  
-  .closeButton {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+
+  .infoBanner {
+    padding: 0.75rem;
   }
 }
 
-/* Extra small devices (400px and below) */
-@media (max-width: 400px) {
+@media (max-width: 480px) {
   .infoBanner p {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
+  }
+
+  .subscribeButton {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.8rem;
   }
 }

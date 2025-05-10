@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { FiDollarSign, FiTrendingUp, FiUser, FiPlus, FiEdit } from "react-icons/fi";
+import {
+  FiDollarSign,
+  FiTrendingUp,
+  FiUser,
+  FiPlus,
+  FiEdit,
+} from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import Button from "../../components/button/Button";
 import MusicCard from "../../components/cards/music-card/MusicCard";
@@ -17,15 +23,19 @@ const Profile = () => {
   const { address } = useParams();
   const navigate = useNavigate();
   const { musicNfts, isPending, isError } = useMusicNfts();
-  const { deleteTrack, toggleTrackForSale } = useMusicActions()
+  const { deleteTrack, toggleTrackForSale } = useMusicActions();
   const [trackType, setTrackType] = useState("uploaded");
-  const currentAccount = useCurrentAccount()
+  const currentAccount = useCurrentAccount();
 
-  const userNfts = musicNfts.filter((music) => music.artist === address || music.current_owner === address);
+  const userNfts = musicNfts.filter(
+    (music) => music.artist === address || music.current_owner === address
+  );
   const uploadedNfts = musicNfts.filter((music) => music.artist === address);
-  const ownedNfts = musicNfts.filter((music) => music.current_owner === address);
+  const ownedNfts = musicNfts.filter(
+    (music) => music.current_owner === address
+  );
 
-  if (!currentAccount) navigate("/")
+  if (!currentAccount) navigate("/");
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState />;
 
@@ -73,12 +83,21 @@ const Profile = () => {
               Owned Music
             </button>
           </nav>
-          <Button
-            btnClass="primary"
-            text="Create New Track"
-            icon={<FiPlus />}
-            onClick={() => navigate("/upload")}
-          />
+          <div className={styles["desktop"]}>
+            <Button
+              btnClass="primary"
+              text="Create New Track"
+              icon={<FiPlus />}
+              onClick={() => navigate("/upload")}
+            />
+          </div>
+          <div className={styles["mobile"]}>
+            <Button
+              btnClass="primary"
+              icon={<FiPlus />}
+              onClick={() => navigate("/upload")}
+            />
+          </div>
         </div>
 
         {trackType === "uploaded" ? (
@@ -167,7 +186,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      
+
       <section className={styles.row}>
         <div className={`${styles["dashboard-card"]} ${styles["track"]}`}>
           <div className={styles["card-header"]}>
@@ -195,17 +214,38 @@ const Profile = () => {
                     <span>5.2K plays</span>
                   </div>
                   <div className={styles["track-actions"]}>
+                    {address === track.current_owner && (
+                      <label
+                        className={styles["toggle-switch"]}
+                        title={
+                          track.for_sale === true
+                            ? "Fans can support this track — toggle to turn off"
+                            : "Fans can't support this track yet — toggle to allow it"
+                        }
+                      >
+                        <input
+                          type="checkbox"
+                          checked={track?.for_sale}
+                          onChange={() => toggleTrackForSale(track?.id?.id)}
+                        />
+                        <span className={styles["slider"]}></span>
+                      </label>
+                    )}
+                    {address === track.artist && (
+                      <FiEdit
+                        title={"Update Music Data"}
+                        className={styles["action-icon"]}
+                        onClick={() => navigate(`/upload/${track?.id?.id}`)}
+                      />
+                    )}
                     {address === track.current_owner &&
-                    <label className={styles["toggle-switch"]} title={track.for_sale === true ? "Fans can support this track — toggle to turn off" : "Fans can't support this track yet — toggle to allow it"}>
-                      <input type="checkbox" checked={track?.for_sale} onChange={() =>toggleTrackForSale(track?.id?.id)}/>
-                      <span className={styles["slider"]}></span>
-                    </label>
-                    }{address === track.artist &&
-                      <FiEdit title={"Update Music Data"} className={styles["action-icon"]} onClick={() => navigate(`/upload/${track?.id?.id}`)}/>
-                    }
-                    {address === track.current_owner && address === track.artist &&
-                      <MdDelete title={"Delete Music"} className={styles["action-icon"]} onClick={() =>deleteTrack(track?.id?.id)}/>
-                    }
+                      address === track.artist && (
+                        <MdDelete
+                          title={"Delete Music"}
+                          className={styles["action-icon"]}
+                          onClick={() => deleteTrack(track?.id?.id)}
+                        />
+                      )}
                   </div>
                 </li>
               ))}
@@ -223,39 +263,38 @@ const Profile = () => {
 
           {/* royal split card */}
           {uploadedNfts.length > 0 ? (
-          uploadedNfts.slice(0, 3).map((track) => (
-            <ul key={track?.id?.id} className={styles["list"]}>
-              <h3>{track.title}</h3>
-              {track.collaborators.map((c, index) => (
-                <>
-                <li key={index} className={styles["royalty-item"]}>
-                  <div className={styles["royalty-icon"]}>
-                    <FiUser />
-                  </div>
-                  <div className={styles["royalty-details"]}>
-                    <div className={styles["royalty-role"]}>
-                      {track.collaborator_roles[index] || "NA"}
-                    </div>
-                    <Link
-                      className={styles["royalty-recipient"]}
-                      to={`/profile/${c}`}
-                    >{`${c.slice(0, 5)}...${c.slice(-5)}`}</Link>
-                  </div>
-                  <div className={styles["royalty-amount"]}>
-                    {track.collaborator_splits[index] / 100}%
-                  </div>
-                </li>
-                </>
-              ))}
-              <br />
-            </ul>
-          )) ) : (
-            <EmptyState message="No music royalty"/>
-          )
-        }
+            uploadedNfts.slice(0, 3).map((track) => (
+              <ul key={track?.id?.id} className={styles["list"]}>
+                <h3>{track.title}</h3>
+                {track.collaborators.map((c, index) => (
+                  <>
+                    <li key={index} className={styles["royalty-item"]}>
+                      <div className={styles["royalty-icon"]}>
+                        <FiUser />
+                      </div>
+                      <div className={styles["royalty-details"]}>
+                        <div className={styles["royalty-role"]}>
+                          {track.collaborator_roles[index] || "NA"}
+                        </div>
+                        <Link
+                          className={styles["royalty-recipient"]}
+                          to={`/profile/${c}`}
+                        >{`${c.slice(0, 5)}...${c.slice(-5)}`}</Link>
+                      </div>
+                      <div className={styles["royalty-amount"]}>
+                        {track.collaborator_splits[index] / 100}%
+                      </div>
+                    </li>
+                  </>
+                ))}
+                <br />
+              </ul>
+            ))
+          ) : (
+            <EmptyState message="No music royalty" />
+          )}
         </div>
       </section>
-    
     </main>
   );
 };
