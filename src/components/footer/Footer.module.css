@@ -88,3 +88,86 @@
   color: white;
   transform: translateY(-2px);
 }
+
+/* Media Queries for Responsive Design */
+
+/* Laptops and smaller desktops (1200px and below) */
+@media screen and (max-width: 1200px) {
+  .footerContainer {
+    width: 95%;
+  }
+}
+
+/* Tablets and small laptops (992px and below) */
+@media screen and (max-width: 992px) {
+  .footerLinks {
+    gap: 1.2rem;
+  }
+  
+  .footerNav {
+    margin-right: 1.5rem;
+  }
+  
+  .socialLinks {
+    gap: 0.8rem;
+  }
+}
+
+/* Tablets and large phones (768px and below) */
+@media screen and (max-width: 768px) {
+  .footerContent {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .footerLeft {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .footerLogo {
+    margin-right: 0;
+  }
+  
+  .footerRight {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .footerNav {
+    margin-right: 0;
+  }
+  
+  .socialLink:hover {
+    transform: none;
+  }
+}
+
+/* Small phones (576px and below) */
+@media screen and (max-width: 576px) {
+  .footer {
+    padding: 1.2rem 0;
+  }
+  
+  .footerLinks {
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .footerLinks a {
+    font-size: 0.85rem;
+  }
+  
+  .copyright {
+    font-size: 0.85rem;
+  }
+  
+  .socialLink {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+}

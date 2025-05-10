@@ -42,3 +42,64 @@
     cursor: pointer;
 
   }
+
+
+/* Medium screens (768px - 991px) */
+@media (max-width: 991px) {
+  .infoBanner {
+    padding: 0.9rem 1.3rem;
+    gap: 1.2rem;
+  }
+  
+  .infoBanner p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Small tablets (576px - 767px) */
+@media (max-width: 767px) {
+  .infoBanner {
+    padding: 0.8rem 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .infoBanner p {
+    font-size: 0.9rem;
+    flex: 1;
+  }
+  
+  .closeButton {
+    position: relative;
+    margin-left: auto;
+  }
+}
+
+/* Mobile devices (575px and below) */
+@media (max-width: 575px) {
+  .infoBanner {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+    position: relative;
+  }
+  
+  .infoBanner p {
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+}
+
+/* Extra small devices (400px and below) */
+@media (max-width: 400px) {
+  .infoBanner p {
+    font-size: 0.8rem;
+  }
+}

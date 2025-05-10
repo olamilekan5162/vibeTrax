@@ -244,3 +244,150 @@
   margin: 0;
   font-size: 14px;
 }
+
+/* ==================== RESPONSIVE STYLES ==================== */
+
+/* Large tablets and small desktops */
+@media screen and (max-width: 1024px) {
+  .content {
+    max-width: 500px;
+    padding: 2rem;
+  }
+}
+
+/* Medium tablets */
+@media screen and (max-width: 768px) {
+  .content {
+    max-width: 90%;
+    padding: 1.75rem;
+    gap: 1.5rem;
+  }
+  
+  .modalHeader h2 {
+    font-size: 1.75rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .benefitsList {
+    gap: 1.25rem;
+  }
+}
+
+/* Small tablets and large phones */
+@media screen and (max-width: 640px) {
+  .content {
+    padding: 1.5rem;
+    gap: 1.25rem;
+  }
+  
+  .benefitsList {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .benefitItem {
+    padding: 0.5rem;
+  }
+  
+  .benefitIcon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .modalHeader h2 {
+    font-size: 1.5rem;
+  }
+  
+  .buttonGroup {
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  
+  .primaryButton, .secondaryButton {
+    width: 100%;
+  }
+  
+  .ctaText {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Extra small devices (phones) */
+@media screen and (max-width: 480px) {
+  .overlay {
+    padding: 0.5rem;
+  }
+  
+  .content {
+    padding: 1.25rem;
+    border-width: 3px;
+    gap: 1rem;
+  }
+  
+  .closeButton {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 28px;
+    height: 28px;
+  }
+  
+  .modalHeader h2 {
+    font-size: 1.35rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .priceContainer {
+    padding: 0.5rem 0.75rem;
+    margin-top: 0.75rem;
+  }
+  
+  .benefitText h3 {
+    font-size: 0.9rem;
+  }
+  
+  .benefitText p {
+    font-size: 0.8rem;
+  }
+  
+  .benefitItem {
+    gap: 0.75rem;
+  }
+  
+  .benefitIcon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .primaryButton, .secondaryButton {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .successAlert, .failedAlert {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* For very small devices */
+@media screen and (max-width: 360px) {
+  .content {
+    padding: 1rem;
+  }
+  
+  .modalHeader h2 {
+    font-size: 1.25rem;
+  }
+  
+  .subtitle {
+    font-size: 0.8rem;
+  }
+}
