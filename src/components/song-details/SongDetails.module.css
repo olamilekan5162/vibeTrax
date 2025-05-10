@@ -106,7 +106,7 @@
 
 .meta {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 1.5rem;
   margin-bottom: 1.5rem;
   color: #d1d1d1;
@@ -223,18 +223,5 @@
 
   .tags {
     justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .meta {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-  }
-
-  .artist {
-    flex-direction: column;
-    align-items: center;
   }
 }
