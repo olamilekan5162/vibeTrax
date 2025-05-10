@@ -37,3 +37,27 @@
 .secondary:hover {
   background-color: var(--bg-primary-secondary);
 }
+
+
+/* Tablets and large phones (768px and below) */
+@media screen and (max-width: 768px) {
+  .btn {
+    padding: 0.65rem 1.3rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Small phones (576px and below) */
+@media screen and (max-width: 576px) {
+  .btn {
+    padding: 0.75rem 1.2rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .btn:hover {
+    transform: none;
+  }
+}

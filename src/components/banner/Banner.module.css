@@ -35,3 +35,84 @@
   align-items: center;
   gap: 1rem;
 }
+
+/* Large laptops and desktops (1200px and below) */
+@media screen and (max-width: 1200px) {
+  .hero-content {
+    max-width: 600px;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+  }
+}
+
+/* Tablets and small laptops (992px and below) */
+@media screen and (max-width: 992px) {
+  .hero-content {
+    max-width: 500px;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Tablets and large phones (768px and below) */
+@media screen and (max-width: 768px) {
+  .hero {
+    padding: 0 4%;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .hero-content {
+    max-width: 450px;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-cta {
+    justify-content: center;
+  }
+}
+
+/* Small phones (576px and below) */
+@media screen and (max-width: 576px) {
+  .hero {
+    height: 90vh; /* Slightly smaller on mobile */
+    padding: 0 3%;
+  }
+  
+  .hero-content {
+    max-width: 100%;
+  }
+  
+  .hero-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+  }
+  
+  .hero-cta button {
+    width: 100%;
+  }
+}

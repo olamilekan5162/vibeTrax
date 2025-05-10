@@ -125,3 +125,166 @@
   font-size: 0.85rem;
   color: var(--color-text-muted);
 }
+
+/* Responsive Styles */
+@media screen and (max-width: 1200px) {
+  .sectionContainer {
+    padding: 5rem 5%;
+  }
+  
+  .sectionTitle {
+    font-size: 2.2rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .sectionContainer {
+    padding: 4.5rem 4%;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .card {
+    padding: 1.75rem;
+  }
+  
+  .featureTitle {
+    font-size: 1.3rem;
+  }
+  
+  .stepArrow {
+    font-size: 1.75rem;
+    right: -5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sectionContainer {
+    padding: 4rem 4%;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+    margin-bottom: 2.2rem;
+  }
+  
+  .sectionTitle::after {
+    width: 50px;
+    bottom: -12px;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .featureIcon {
+    font-size: 2.2rem;
+  }
+  
+  .steps {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  
+  .step {
+    max-width: 450px;
+    width: 100%;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  
+  .stepArrow {
+    transform: rotate(90deg);
+    bottom: -40px;
+    right: 50%;
+    top: auto;
+  }
+  
+  .step:last-child {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .sectionContainer {
+    padding: 3.5rem 3%;
+  }
+  
+  .sectionTitle {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+    gap: 1.25rem;
+  }
+  
+  .featureTitle {
+    font-size: 1.2rem;
+  }
+  
+  .featureDesc {
+    font-size: 0.95rem;
+  }
+  
+  .stepNumber {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+  
+  .stepTitle {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .sectionContainer {
+    padding: 3rem 3%;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+    margin-bottom: 1.8rem;
+  }
+  
+  .sectionTitle::after {
+    width: 40px;
+    height: 3px;
+    bottom: -10px;
+  }
+  
+  .card {
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+  
+  .featureIcon {
+    font-size: 2rem;
+  }
+  
+  .testimonialAuthor {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .authorImage {
+    margin-bottom: 0.75rem;
+  }
+}

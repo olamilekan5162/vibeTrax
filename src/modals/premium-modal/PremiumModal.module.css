@@ -297,3 +297,187 @@
   font-size: 14px;
 }
 
+
+/* Large screens (992px to 1199px) */
+@media (max-width: 1199px) {
+  .purchaseModal {
+    width: 400px;
+  }
+  
+  @keyframes slideIn {
+    from {
+      right: -400px;
+    }
+    to {
+      right: 0;
+    }
+  }
+}
+
+/* Medium screens (768px to 991px) */
+@media (max-width: 991px) {
+  .purchaseModal {
+    width: 350px;
+    padding: 1.5rem;
+  }
+  
+  @keyframes slideIn {
+    from {
+      right: -350px;
+    }
+    to {
+      right: 0;
+    }
+  }
+  
+  .modalTitle {
+    font-size: 1.6rem;
+  }
+  
+  .modalSubtitle {
+    font-size: 0.95rem;
+  }
+  
+  .previewImg {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .qualityTable th,
+  .qualityTable td {
+    padding: 0.8rem;
+  }
+}
+
+/* Small screens (576px to 767px) */
+@media (max-width: 767px) {
+  .purchaseModal {
+    width: 100%;
+    max-width: 450px;
+    right: 0;
+  }
+  
+  @keyframes slideIn {
+    from {
+      right: -100%;
+    }
+    to {
+      right: 0;
+    }
+  }
+  
+  .trackPreview {
+    gap: 1rem;
+  }
+  
+  .previewTitle {
+    font-size: 1.1rem;
+  }
+  
+  .qualityTitle {
+    font-size: 1.1rem;
+  }
+  
+  .benefitTitle {
+    font-size: 0.95rem;
+  }
+  
+  .benefitDesc {
+    font-size: 0.85rem;
+  }
+}
+
+/* Extra small screens (575px and below) */
+@media (max-width: 575px) {
+  .purchaseModal {
+    padding: 1.2rem;
+  }
+  
+  .modalHeader {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+  
+  .modalTitle {
+    font-size: 1.4rem;
+  }
+  
+  .modalSubtitle {
+    font-size: 0.9rem;
+  }
+  
+  .trackPreview {
+    padding-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .previewImg {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .qualityTable th,
+  .qualityTable td {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+  
+  .benefitItem {
+    gap: 0.8rem;
+  }
+  
+  .benefitIcon {
+    font-size: 1rem;
+  }
+  
+  .priceContainer {
+    margin-bottom: 1.2rem;
+  }
+  
+  .priceLabel {
+    font-size: 1rem;
+  }
+  
+  .priceValue {
+    font-size: 1.3rem;
+  }
+  
+  .secureNote {
+    font-size: 0.8rem;
+  }
+  
+  .modalClose {
+    top: 1.2rem;
+    right: 1.2rem;
+    font-size: 1.3rem;
+  }
+}
+
+/* Very small screens (400px and below) */
+@media (max-width: 400px) {
+  .purchaseModal {
+    padding: 1rem;
+  }
+  
+  .trackPreview {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.8rem;
+  }
+  
+  .previewImg {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .metaItem {
+    justify-content: center;
+  }
+  
+  .qualityTable th,
+  .qualityTable td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+}
