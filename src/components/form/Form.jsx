@@ -7,6 +7,7 @@ import { PinataSDK } from "pinata";
 import { useMusicUpload } from "../../hooks/useMusicUpload";
 import { useParams } from "react-router-dom";
 // import { Tusky } from "@tusky-io/ts-sdk";
+import { Tusky } from "@tusky-io/ts-sdk/web"
 
 const Form = ({
   showPreview,
@@ -28,7 +29,42 @@ const Form = ({
   const currentAccount = useCurrentAccount();
   const { uploadMusic, updateMusic } = useMusicUpload();
   const { id } = useParams();
-  // const tusky = new Tusky({ apiKey: import.meta.env.TUSKY_API_KEY });
+  const tusky = new Tusky({ apiKey: import.meta.env.VITE_TUSKY_API_KEY });
+
+
+  const upToTusky = async() =>{
+
+    const vaults = await tusky.vault.listAll();
+    console.log(vaults);
+    
+    const publicVault = vaults.find(vault => vault.name === "My public vault");
+    let publicVaultId = publicVault?.id
+    if(!publicVault){
+      const { id } = await tusky.vault.create("My public vault", { encrypted: false });
+      publicVaultId = id
+    }
+    const imageId = await tusky.file.upload(publicVaultId, imageFile);
+    const imageData = await tusky.file.get(imageId);
+    console.log(imageData.blobId);
+
+    const lowQualityId = await tusky.file.upload(publicVaultId, lowQualityFile);
+    const lowQualityData = await tusky.file.get(lowQualityId);
+    console.log(lowQualityData.blobId);
+
+    console.log(vaults);
+    const privateVault = vaults.find(vault => vault.name === "My private vault");
+    let privateVaultId = privateVault?.id
+    if(!privateVault){
+      await tusky.addEncrypter({ password: import.meta.env.VITE_TUSKY_ACCOUNT_PASSWORD })
+      const { id } = await tusky.vault.create("My private vault", { encrypted: true });
+      privateVaultId = id
+    }
+    const highQualityId = await tusky.file.upload(privateVaultId, highQualityFile);
+    const highQualityAudioData = await tusky.file.get(highQualityId);
+    console.log(highQualityAudioData.blobId);
+
+    
+  }
 
   // function to fetch song details using id
   const { data: songData, isPending } = useSuiClientQuery(
@@ -327,6 +363,8 @@ const Form = ({
   };
 
   return (
+    <>
+    <button onClick={upToTusky}>upload</button>
     <form onSubmit={id ? handleUpdate : handleUpload}>
       {/* Basic Info */}
       <div className={styles["form-group"]}>
@@ -656,6 +694,7 @@ const Form = ({
         />
       </div>
     </form>
+    </>
   );
 };
 
