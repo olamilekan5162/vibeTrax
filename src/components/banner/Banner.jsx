@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../button/Button";
 import styles from "./Banner.module.css";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 
 const Banner = () => {
   const navigate = useNavigate();
+  const currentAccount = useCurrentAccount();
 
   return (
     <section className={styles.hero}>
@@ -22,11 +24,13 @@ const Banner = () => {
             btnClass={"primary"}
             onClick={() => navigate("/discover")}
           />
-          <Button
-            text={"For Artists"}
-            btnClass={"secondary"}
-            onClick={() => navigate("/profile")}
-          />
+          {currentAccount?.address && (
+            <Button
+              text={"For Artists"}
+              btnClass={"secondary"}
+              onClick={() => navigate(`/profile/${currentAccount.address}`)}
+            />
+          )}
         </div>
       </div>
     </section>

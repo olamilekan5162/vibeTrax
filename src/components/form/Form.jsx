@@ -385,8 +385,9 @@ const Form = ({
           <textarea
             id="description"
             className={styles["form-textarea"]}
-            placeholder="Tell us about your track..."
+            placeholder="Tell us about your track... (max 500 characters)"
             value={description}
+            maxLength={500}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>

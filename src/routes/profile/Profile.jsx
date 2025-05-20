@@ -27,11 +27,10 @@ const Profile = () => {
   const navigate = useNavigate();
   const { deleteTrack, toggleTrackForSale } = useMusicActions();
 
-  const { data: userWalletBalance, isPending: balancePending } = useSuiClientQuery(
-    "getBalance", {
-      owner: address
-    }
-  );
+  const { data: userWalletBalance, isPending: balancePending } =
+    useSuiClientQuery("getBalance", {
+      owner: address,
+    });
 
   const userNfts = musicNfts.filter(
     (music) => music.artist === address || music.current_owner === address
@@ -41,12 +40,11 @@ const Profile = () => {
     (music) => music.current_owner === address
   );
 
-
   useEffect(() => {
     if (!isPending && !currentAccount?.address) {
-      navigate('/')
+      navigate("/");
     }
-  },[isPending, currentAccount, navigate])
+  }, [isPending, currentAccount, navigate]);
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState />;
 
@@ -70,11 +68,17 @@ const Profile = () => {
               <span className={styles["stat-value"]}>245K</span>
               <span className={styles["stat-label"]}>Total Plays</span>
             </div>
-            {!balancePending && address === currentAccount?.address &&
-            <div className={styles["stat"]}><span className={styles["stat-value"]}>{(userWalletBalance?.totalBalance/1000_000_000).toFixed(2) || 'NA'} SUI</span>
-              <span className={styles["stat-label"]}>Wallet Balance</span>
-            </div>
-            }
+            {!balancePending && address === currentAccount?.address && (
+              <div className={styles["stat"]}>
+                <span className={styles["stat-value"]}>
+                  {(userWalletBalance?.totalBalance / 1000_000_000).toFixed(
+                    2
+                  ) || "NA"}{" "}
+                  SUI
+                </span>
+                <span className={styles["stat-label"]}>Wallet Balance</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -226,32 +230,35 @@ const Profile = () => {
                     <span>5.2K plays</span>
                   </div>
                   <div className={styles["track-actions"]}>
-                    {address === track.current_owner && (
-                      <label
-                        className={styles["toggle-switch"]}
-                        title={
-                          track.for_sale === true
-                            ? "Fans can support this track — toggle to turn off"
-                            : "Fans can't support this track yet — toggle to allow it"
-                        }
-                      >
-                        <input
-                          type="checkbox"
-                          checked={track?.for_sale}
-                          onChange={() => toggleTrackForSale(track?.id?.id)}
-                        />
-                        <span className={styles["slider"]}></span>
-                      </label>
-                    )}
-                    {address === track.artist && (
-                      <FiEdit
-                        title={"Update Music Data"}
-                        className={styles["action-icon"]}
-                        onClick={() => navigate(`/upload/${track?.id?.id}`)}
-                      />
-                    )}
                     {address === track.current_owner &&
-                      address === track.artist && (
+                      address === currentAccount.address && (
+                        <label
+                          className={styles["toggle-switch"]}
+                          title={
+                            track.for_sale === true
+                              ? "Fans can support this track — toggle to turn off"
+                              : "Fans can't support this track yet — toggle to allow it"
+                          }
+                        >
+                          <input
+                            type="checkbox"
+                            checked={track?.for_sale}
+                            onChange={() => toggleTrackForSale(track?.id?.id)}
+                          />
+                          <span className={styles["slider"]}></span>
+                        </label>
+                      )}
+                    {address === track.artist &&
+                      address === currentAccount.address && (
+                        <FiEdit
+                          title={"Update Music Data"}
+                          className={styles["action-icon"]}
+                          onClick={() => navigate(`/upload/${track?.id?.id}`)}
+                        />
+                      )}
+                    {address === track.current_owner &&
+                      address === track.artist &&
+                      address === currentAccount.address && (
                         <MdDelete
                           title={"Delete Music"}
                           className={styles["action-icon"]}
