@@ -5,7 +5,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { useNavigate } from "react-router-dom";
 
 export const useMusicUpload = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { tunflowPackageId, tunflowNFTRegistryId } = useNetworkVariables(
     "tunflowPackageId",
     "tunflowNFTRegistryId"
@@ -50,32 +50,32 @@ export const useMusicUpload = () => {
         target: `${tunflowPackageId}::music_nft::mint_music_nft`,
       });
 
-
       signAndExecute(
         { transaction: tx },
         {
           onSuccess: async ({ digest }) => {
             await suiClient.waitForTransaction({ digest });
-            toast.dismiss(toastId)
+            toast.dismiss(toastId);
             toast.success("Music uploaded successfully!");
-            navigate("/discover")
+            navigate("/discover");
             return true;
           },
           onError: (error) => {
-            toast.dismiss(toastId)
-            toast.error(`Upload failed: ${error.message}`);
+            toast.dismiss(toastId);
+            toast.error(`Upload failed`);
+            console.error(error);
+
             return false;
           },
         }
       );
     } catch (error) {
-      toast.dismiss(toastId)
-      toast.error("An unexpected error occurred", error.message);
+      toast.dismiss(toastId);
+      toast.error("An unexpected error occurred, try again");
       console.log("catch error", error);
       return false;
     }
   };
-
 
   const updateMusic = async (
     toastId,
@@ -123,25 +123,28 @@ export const useMusicUpload = () => {
         {
           onSuccess: async ({ digest }) => {
             await suiClient.waitForTransaction({ digest });
-            toast.dismiss(toastId)
-            toast.success("Music details updated successfully!", { id: toastId });
-            navigate("/discover")
+            toast.dismiss(toastId);
+            toast.success("Music details updated successfully!", {
+              id: toastId,
+            });
+            navigate("/discover");
             return true;
           },
           onError: (error) => {
-            toast.dismiss(toastId)
-            toast.error(`Update failed: ${error.message}`, { id: toastId });
+            toast.dismiss(toastId);
+            toast.error(`Update failed`, { id: toastId });
+            console.error(error.message);
             return false;
           },
         }
       );
     } catch (error) {
-      toast.dismiss(toastId)
-      toast.error("An unexpected error occurred", error.message);
+      toast.dismiss(toastId);
+      toast.error("An unexpected error occurred");
+      console.error(error.message);
       return false;
     }
   };
 
   return { uploadMusic, updateMusic };
 };
-
