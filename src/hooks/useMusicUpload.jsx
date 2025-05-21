@@ -71,7 +71,7 @@ export const useMusicUpload = () => {
       );
     } catch (error) {
       toast.dismiss(toastId);
-      toast.error("An unexpected error occurred");
+      toast.error("An unexpected error occurred, try again");
       console.log("catch error", error);
       return false;
     }
