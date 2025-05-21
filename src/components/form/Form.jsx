@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { PinataSDK } from "pinata";
 import { useMusicUpload } from "../../hooks/useMusicUpload";
 import { useParams } from "react-router-dom";
+// import { Tusky } from "@tusky-io/ts-sdk/web";
 
 const Form = ({
   showPreview,
@@ -19,14 +20,48 @@ const Form = ({
   const [description, setDescription] = useState("");
   const [genre, setGenre] = useState("");
   const [price, setPrice] = useState(0);
-  const currentAccount = useCurrentAccount();
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
   const [forSale, setForSale] = useState(null);
+  const [contributors, setContributors] = useState([]);
+  const currentAccount = useCurrentAccount();
   const { uploadMusic, updateMusic } = useMusicUpload();
   const { id } = useParams();
-  const [contributors, setContributors] = useState([]);
+  // const tusky = new Tusky({ apiKey: import.meta.env.VITE_TUSKY_API_KEY });
+
+  // const upToTusky = async() =>{
+
+  //   const vaults = await tusky.vault.listAll();
+  //   console.log(vaults);
+
+  //   const publicVault = vaults.find(vault => vault.name === "My public vault");
+  //   let publicVaultId = publicVault?.id
+  //   if(!publicVault){
+  //     const { id } = await tusky.vault.create("My public vault", { encrypted: false });
+  //     publicVaultId = id
+  //   }
+  //   const imageId = await tusky.file.upload(publicVaultId, imageFile);
+  //   const imageData = await tusky.file.get(imageId);
+  //   console.log(imageData.blobId);
+
+  //   const lowQualityId = await tusky.file.upload(publicVaultId, lowQualityFile);
+  //   const lowQualityData = await tusky.file.get(lowQualityId);
+  //   console.log(lowQualityData.blobId);
+
+  //   console.log(vaults);
+  //   const privateVault = vaults.find(vault => vault.name === "My private vault");
+  //   let privateVaultId = privateVault?.id
+  //   if(!privateVault){
+  //     await tusky.addEncrypter({ password: import.meta.env.VITE_TUSKY_ACCOUNT_PASSWORD })
+  //     const { id } = await tusky.vault.create("My private vault", { encrypted: true });
+  //     privateVaultId = id
+  //   }
+  //   const highQualityId = await tusky.file.upload(privateVaultId, highQualityFile);
+  //   const highQualityAudioData = await tusky.file.get(highQualityId);
+  //   console.log(highQualityAudioData.blobId);
+
+  // }
 
   // function to fetch song details using id
   const { data: songData, isPending } = useSuiClientQuery(
@@ -63,7 +98,7 @@ const Form = ({
       getBlobFile(songData?.fields?.low_quality_ipfs).then((blob) => {
         setLowQualityFile(blob);
         setLowQuality(blob);
-      });     
+      });
       setContributors(
         songData?.fields?.collaborators.map((collaborator, index) => ({
           role: songData?.fields?.collaborator_roles[index],
@@ -71,8 +106,7 @@ const Form = ({
           percentage: songData?.fields?.collaborator_splits[index] / 100,
         }))
       );
-    }
-    else{
+    } else {
       if (currentAccount) {
         setContributors([
           {
@@ -84,7 +118,6 @@ const Form = ({
       }
     }
   }, [id, songData, isPending, currentAccount]);
-
 
   // Track remaining percentage
   const [_remainingPercentage, setRemainingPercentage] = useState(0);
@@ -325,335 +358,346 @@ const Form = ({
   };
 
   return (
-    <form onSubmit={id ? handleUpdate : handleUpload}>
-      {/* Basic Info */}
-      <div className={styles["form-group"]}>
-        <label className={styles["form-label"]} htmlFor="title">
-          Track Title
-        </label>
-        <input
-          type="text"
-          id="title"
-          className={styles["form-input"]}
-          placeholder="Enter track title"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-            setPreviewTitle(e.target.value);
-          }}
-        />
-      </div>
-
-      <div className={styles["form-group"]}>
-        <label className={styles["form-label"]} htmlFor="description">
-          Description
-        </label>
-        <textarea
-          id="description"
-          className={styles["form-textarea"]}
-          placeholder="Tell us about your track..."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        ></textarea>
-      </div>
-
-      <div className={styles["form-group"]}>
-        <label className={styles["form-label"]} htmlFor="genre">
-          Genre
-        </label>
-        <select
-          id="genre"
-          className={styles["form-select"]}
-          value={genre}
-          onChange={(e) => {
-            setGenre(e.target.value);
-            setPreviewGenre(e.target.value);
-          }}
-        >
-          <option value="" disabled>
-            Select a genre
-          </option>
-          <option value="pop">Pop</option>
-          <option value="hiphop">Hip Hop</option>
-          <option value="rnb">R&B</option>
-          <option value="rock">Rock</option>
-          <option value="electronic">Electronic</option>
-          <option value="jazz">Jazz</option>
-          <option value="classical">Classical</option>
-          <option value="afrobeat">Afrobeat</option>
-          <option value="latin">Latin</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      {/* File Uploads */}
-      <div className={styles["form-group"]}>
-        <label className={styles["form-label"]}>
-          Upload Standard Quality Track
-        </label>
-        <div
-          className={`${styles["file-upload"]} ${
-            lowQualityFile ? styles["file-selected"] : ""
-          }`}
-        >
-          <input
-            type="file"
-            id="standard-quality"
-            accept="audio/*"
-            onChange={(e) => {
-              if (e.target.files[0]) {
-                setLowQualityFile(e.target.files[0]);
-                setLowQuality(e.target.files[0]);
-              }
-            }}
-          />
-          <div className={styles["upload-icon"]}>
-            {lowQualityFile ? "✓" : "🎵"}
-          </div>
-          <div className={styles["upload-text"]}>
-            {lowQualityFile ? (
-              <>
-                <strong className={styles["file-name"]}>
-                  {lowQualityFile.name}
-                </strong>
-                <p>{(lowQualityFile.size / (1024 * 1024)).toFixed(2)} MB</p>
-              </>
-            ) : (
-              <>
-                <strong>Click or drag to upload standard quality track</strong>
-                <p>MP3 format, max size 20MB</p>
-              </>
-            )}
-          </div>
-          {lowQualityFile && (
-            <button
-              type="button"
-              className={styles["remove-file"]}
-              onClick={(e) => {
-                e.preventDefault();
-                setLowQualityFile(null);
-                setLowQuality(null);
-                document.getElementById("standard-quality").value = "";
-              }}
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className={styles["form-group"]}>
-        <label className={styles["form-label"]}>
-          Upload Premium Quality Track
-        </label>
-        <div
-          className={`${styles["file-upload"]} ${
-            highQualityFile ? styles["file-selected"] : ""
-          }`}
-        >
-          <input
-            type="file"
-            id="premium-quality"
-            accept="audio/*"
-            onChange={(e) => {
-              if (e.target.files[0]) {
-                setHighQualityFile(e.target.files[0]);
-                setHighQuality(e.target.files[0]);
-              }
-            }}
-          />
-          <div className={styles["upload-icon"]}>
-            {highQualityFile ? "✓" : "🎧"}
-          </div>
-          <div className={styles["upload-text"]}>
-            {highQualityFile ? (
-              <>
-                <strong className={styles["file-name"]}>
-                  {highQualityFile.name}
-                </strong>
-                <p>{(highQualityFile.size / (1024 * 1024)).toFixed(2)} MB</p>
-              </>
-            ) : (
-              <>
-                <strong>Click or drag to upload high quality track</strong>
-                <p>FLAC or WAV format, max size 50MB</p>
-              </>
-            )}
-          </div>
-          {highQualityFile && (
-            <button
-              type="button"
-              className={styles["remove-file"]}
-              onClick={(e) => {
-                e.preventDefault();
-                setHighQualityFile(null);
-                setHighQuality(null);
-                document.getElementById("premium-quality").value = "";
-              }}
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className={styles["form-group"]}>
-        <label className={styles["form-label"]}>Upload Artwork</label>
-        <div
-          className={`${styles["file-upload"]} ${
-            imageFile ? styles["file-selected"] : ""
-          }`}
-        >
-          <input
-            type="file"
-            id="artwork-file"
-            accept="image/*"
-            onChange={(e) => {
-              if (e.target.files[0]) {
-                setImageFile(e.target.files[0]);
-                setPreviewImage(e.target.files[0]);
-              }
-            }}
-          />
-          <div className={styles["upload-icon"]}>{imageFile ? "✓" : "🖼️"}</div>
-          <div className={styles["upload-text"]}>
-            {imageFile ? (
-              <>
-                <strong className={styles["file-name"]}>
-                  {imageFile.name}
-                </strong>
-                <p>{(imageFile.size / (1024 * 1024)).toFixed(2)} MB</p>
-                {imageFile.type.includes("image") && (
-                  <div className={styles["image-preview"]}>
-                    <img
-                      src={URL.createObjectURL(imageFile)}
-                      alt="Preview"
-                      className={styles["preview-thumbnail"]}
-                    />
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                <strong>Click or drag to upload artwork</strong>
-                <p>JPG or PNG format, minimum 1000x1000px</p>
-              </>
-            )}
-          </div>
-          {imageFile && (
-            <button
-              type="button"
-              className={styles["remove-file"]}
-              onClick={(e) => {
-                e.preventDefault();
-                setImageFile(null);
-                setPreviewImage(null);
-                document.getElementById("artwork-file").value = "";
-              }}
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Revenue Distribution - Updated Section */}
-      <h3 className={styles["section-title"]}>Revenue Distribution</h3>
-
-      {contributors.map((contributor, index) => (
-        <div className={styles["contributor"]} key={index}>
-          <div className={styles["contributor-role-container"]}>
-            {index === 0 ? (
-              <div className={styles["contributor-role"]}>You (Artist)</div>
-            ) : (
-              <input
-                type="text"
-                className={styles["contributor-input-role"]}
-                placeholder="Role (e.g., Producer, Writer)"
-                value={contributor.role}
-                onChange={(e) =>
-                  updateContributor(index, "role", e.target.value)
-                }
-              />
-            )}
-          </div>
-
+    <>
+      <form onSubmit={id ? handleUpdate : handleUpload}>
+        {/* Basic Info */}
+        <div className={styles["form-group"]}>
+          <label className={styles["form-label"]} htmlFor="title">
+            Track Title
+          </label>
           <input
             type="text"
-            value={contributor.address}
-            onChange={(e) =>
-              updateContributor(index, "address", e.target.value)
-            }
-            placeholder="Enter wallet address"
-            className={styles["contributor-input-address"]}
-            disabled={index === 0}
+            id="title"
+            className={styles["form-input"]}
+            placeholder="Enter track title"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              setPreviewTitle(e.target.value);
+            }}
           />
+        </div>
 
-          <div className={styles["contributor-input-container"]}>
+        <div className={styles["form-group"]}>
+          <label className={styles["form-label"]} htmlFor="description">
+            Description
+          </label>
+          <textarea
+            id="description"
+            className={styles["form-textarea"]}
+            placeholder="Tell us about your track... (max 500 characters)"
+            value={description}
+            maxLength={500}
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
+        </div>
+
+        <div className={styles["form-group"]}>
+          <label className={styles["form-label"]} htmlFor="genre">
+            Genre
+          </label>
+          <select
+            id="genre"
+            className={styles["form-select"]}
+            value={genre}
+            onChange={(e) => {
+              setGenre(e.target.value);
+              setPreviewGenre(e.target.value);
+            }}
+          >
+            <option value="" disabled>
+              Select a genre
+            </option>
+            <option value="pop">Pop</option>
+            <option value="hiphop">Hip Hop</option>
+            <option value="rnb">R&B</option>
+            <option value="rock">Rock</option>
+            <option value="electronic">Electronic</option>
+            <option value="jazz">Jazz</option>
+            <option value="classical">Classical</option>
+            <option value="afrobeat">Afrobeat</option>
+            <option value="latin">Latin</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        {/* File Uploads */}
+        <div className={styles["form-group"]}>
+          <label className={styles["form-label"]}>
+            Upload Standard Quality Track
+          </label>
+          <div
+            className={`${styles["file-upload"]} ${
+              lowQualityFile ? styles["file-selected"] : ""
+            }`}
+          >
             <input
-              type="number"
-              className={styles["contributor-input"]}
-              value={contributor.percentage}
-              onChange={(e) =>
-                updateContributor(index, "percentage", e.target.value)
-              }
-              min="0"
-              max="100"
-              placeholder="%"
+              type="file"
+              id="standard-quality"
+              accept="audio/*"
+              onChange={(e) => {
+                if (e.target.files[0]) {
+                  setLowQualityFile(e.target.files[0]);
+                  setLowQuality(e.target.files[0]);
+                }
+              }}
             />
-            <span>%</span>
-
-            {index !== 0 && (
+            <div className={styles["upload-icon"]}>
+              {lowQualityFile ? "✓" : "🎵"}
+            </div>
+            <div className={styles["upload-text"]}>
+              {lowQualityFile ? (
+                <>
+                  <strong className={styles["file-name"]}>
+                    {lowQualityFile.name}
+                  </strong>
+                  <p>{(lowQualityFile.size / (1024 * 1024)).toFixed(2)} MB</p>
+                </>
+              ) : (
+                <>
+                  <strong>
+                    Click or drag to upload standard quality track
+                  </strong>
+                  <p>MP3 format, max size 20MB</p>
+                </>
+              )}
+            </div>
+            {lowQualityFile && (
               <button
                 type="button"
-                className={styles["remove-contributor"]}
-                onClick={() => removeContributor(index)}
+                className={styles["remove-file"]}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setLowQualityFile(null);
+                  setLowQuality(null);
+                  document.getElementById("standard-quality").value = "";
+                }}
               >
                 ✕
               </button>
             )}
           </div>
         </div>
-      ))}
 
-      <div className={styles["add-contributor"]} onClick={addContributor}>
-        <div className={styles["add-icon"]}>+</div>
-        <div>Add another contributor</div>
-      </div>
+        <div className={styles["form-group"]}>
+          <label className={styles["form-label"]}>
+            Upload Premium Quality Track
+          </label>
+          <div
+            className={`${styles["file-upload"]} ${
+              highQualityFile ? styles["file-selected"] : ""
+            }`}
+          >
+            <input
+              type="file"
+              id="premium-quality"
+              accept="audio/*"
+              onChange={(e) => {
+                if (e.target.files[0]) {
+                  setHighQualityFile(e.target.files[0]);
+                  setHighQuality(e.target.files[0]);
+                }
+              }}
+            />
+            <div className={styles["upload-icon"]}>
+              {highQualityFile ? "✓" : "🎧"}
+            </div>
+            <div className={styles["upload-text"]}>
+              {highQualityFile ? (
+                <>
+                  <strong className={styles["file-name"]}>
+                    {highQualityFile.name}
+                  </strong>
+                  <p>{(highQualityFile.size / (1024 * 1024)).toFixed(2)} MB</p>
+                </>
+              ) : (
+                <>
+                  <strong>Click or drag to upload high quality track</strong>
+                  <p>FLAC or WAV format, max size 50MB</p>
+                </>
+              )}
+            </div>
+            {highQualityFile && (
+              <button
+                type="button"
+                className={styles["remove-file"]}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setHighQualityFile(null);
+                  setHighQuality(null);
+                  document.getElementById("premium-quality").value = "";
+                }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
 
-      <div
-        className={styles["remaining"]}
-        style={{
-          color: calculateRemainingPercentage() < 0 ? "red" : "inherit",
-        }}
-      >
-        Remaining allocation: <span>{calculateRemainingPercentage()}%</span>
-      </div>
+        <div className={styles["form-group"]}>
+          <label className={styles["form-label"]}>Upload Artwork</label>
+          <div
+            className={`${styles["file-upload"]} ${
+              imageFile ? styles["file-selected"] : ""
+            }`}
+          >
+            <input
+              type="file"
+              id="artwork-file"
+              accept="image/*"
+              onChange={(e) => {
+                if (e.target.files[0]) {
+                  setImageFile(e.target.files[0]);
+                  setPreviewImage(e.target.files[0]);
+                }
+              }}
+            />
+            <div className={styles["upload-icon"]}>
+              {imageFile ? "✓" : "🖼️"}
+            </div>
+            <div className={styles["upload-text"]}>
+              {imageFile ? (
+                <>
+                  <strong className={styles["file-name"]}>
+                    {imageFile.name}
+                  </strong>
+                  <p>{(imageFile.size / (1024 * 1024)).toFixed(2)} MB</p>
+                  {imageFile.type.includes("image") && (
+                    <div className={styles["image-preview"]}>
+                      <img
+                        src={URL.createObjectURL(imageFile)}
+                        alt="Preview"
+                        className={styles["preview-thumbnail"]}
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <strong>Click or drag to upload artwork</strong>
+                  <p>JPG or PNG format, minimum 1000x1000px</p>
+                </>
+              )}
+            </div>
+            {imageFile && (
+              <button
+                type="button"
+                className={styles["remove-file"]}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setImageFile(null);
+                  setPreviewImage(null);
+                  document.getElementById("artwork-file").value = "";
+                }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
 
-      <div className={styles["form-group"]}>
-        <label className={styles["form-label"]} htmlFor="price">
-          Premium Access Price (SUI)
-        </label>
-        <input
-          type="number"
-          id="price"
-          className={styles["form-input"]}
-          placeholder="Enter price in SUI"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          step="0.0001"
-          min="0"
-        />
-      </div>
+        {/* Revenue Distribution - Updated Section */}
+        <h3 className={styles["section-title"]}>Revenue Distribution</h3>
 
-      <div className={styles["upload-actions"]}>
-        <Button btnClass={"secondary"} text={"Preview"} onClick={showPreview} />
-        <Button
-          btnClass={"primary"}
-          text={id ? "Update Track" : "Upload Track"}
-        />
-      </div>
-    </form>
+        {contributors.map((contributor, index) => (
+          <div className={styles["contributor"]} key={index}>
+            <div className={styles["contributor-role-container"]}>
+              {index === 0 ? (
+                <div className={styles["contributor-role"]}>You (Artist)</div>
+              ) : (
+                <input
+                  type="text"
+                  className={styles["contributor-input-role"]}
+                  placeholder="Role (e.g., Producer, Writer)"
+                  value={contributor.role}
+                  onChange={(e) =>
+                    updateContributor(index, "role", e.target.value)
+                  }
+                />
+              )}
+            </div>
+
+            <input
+              type="text"
+              value={contributor.address}
+              onChange={(e) =>
+                updateContributor(index, "address", e.target.value)
+              }
+              placeholder="Enter wallet address"
+              className={styles["contributor-input-address"]}
+              disabled={index === 0}
+            />
+
+            <div className={styles["contributor-input-container"]}>
+              <input
+                type="number"
+                className={styles["contributor-input"]}
+                value={contributor.percentage}
+                onChange={(e) =>
+                  updateContributor(index, "percentage", e.target.value)
+                }
+                min="0"
+                max="100"
+                placeholder="%"
+              />
+              <span>%</span>
+
+              {index !== 0 && (
+                <button
+                  type="button"
+                  className={styles["remove-contributor"]}
+                  onClick={() => removeContributor(index)}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+
+        <div className={styles["add-contributor"]} onClick={addContributor}>
+          <div className={styles["add-icon"]}>+</div>
+          <div>Add another contributor</div>
+        </div>
+
+        <div
+          className={styles["remaining"]}
+          style={{
+            color: calculateRemainingPercentage() < 0 ? "red" : "inherit",
+          }}
+        >
+          Remaining allocation: <span>{calculateRemainingPercentage()}%</span>
+        </div>
+
+        <div className={styles["form-group"]}>
+          <label className={styles["form-label"]} htmlFor="price">
+            Premium Access Price (SUI)
+          </label>
+          <input
+            type="number"
+            id="price"
+            className={styles["form-input"]}
+            placeholder="Enter price in SUI"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            step="0.0001"
+            min="0"
+          />
+        </div>
+
+        <div className={styles["upload-actions"]}>
+          <Button
+            btnClass={"secondary"}
+            text={"Preview"}
+            onClick={showPreview}
+          />
+          <Button
+            btnClass={"primary"}
+            text={id ? "Update Track" : "Upload Track"}
+          />
+        </div>
+      </form>
+    </>
   );
 };
 

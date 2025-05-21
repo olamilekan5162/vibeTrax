@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { FiSend } from "react-icons/fi";
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
@@ -37,10 +37,6 @@ const MusicPlayer = () => {
           .filter((y) => y.voter === currentAccount.address && y.nft_id == id),
     }
   );
-
-  useEffect(() => {
-    console.log(votersData);
-  });
 
   const {
     musicNfts,
