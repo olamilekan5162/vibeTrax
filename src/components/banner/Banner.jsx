@@ -11,12 +11,10 @@ const Banner = () => {
     <section className={styles.hero}>
       <div className={styles.heroContent}>
         <h1 className={styles.heroTitle}>
-          Empower Artists, Reward Fans, Transform Music
+          Empower Artists, Transform Music, Harness value.
         </h1>
         <p className={styles.heroSubtitle}>
-          VibeTrax connects artists directly with fans through blockchain,
-          enabling fair royalty distribution and exclusive high-quality music
-          experiences.
+          VibeTrax through blockchain, evision a music ecosystem where value flows freely between creators and listeners.
         </p>
         <div className={styles.heroCta}>
           <Button
