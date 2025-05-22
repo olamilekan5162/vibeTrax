@@ -6,6 +6,7 @@ import {
   FiUser,
   FiPlus,
   FiEdit,
+  FiCopy
 } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import Button from "../../components/button/Button";
@@ -18,6 +19,7 @@ import { EmptyState } from "../../components/state/EmptyState";
 import Jazzicon from "react-jazzicon";
 import { useMusicActions } from "../../hooks/useMusicActions";
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   const [trackType, setTrackType] = useState("uploaded");
@@ -26,6 +28,16 @@ const Profile = () => {
   const { musicNfts, isPending, isError } = useMusicNfts();
   const navigate = useNavigate();
   const { deleteTrack, toggleTrackForSale } = useMusicActions();
+  
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(address)
+      toast.success("Address Copied")
+    }catch(e){
+      toast.error("Error copying address")
+      console.error(e)
+    }
+  }
 
   const { data: userWalletBalance, isPending: balancePending } =
     useSuiClientQuery("getBalance", {
@@ -57,7 +69,10 @@ const Profile = () => {
           </div>
         </div>
         <div className={styles["artist-info"]}>
+          <div className={styles["address-copy"]}>
           <h1>{`${address.slice(0, 5)}...${address.slice(-5)}`}</h1>
+          <FiCopy size={20} className={styles["copy"]} onClick={handleCopy}/>
+          </div>
           <p>VibeTrax user</p>
           <div className={styles["artist-stats"]}>
             <div className={styles["stat"]}>
