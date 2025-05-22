@@ -434,7 +434,7 @@ const Form = ({
             <input
               type="file"
               id="standard-quality"
-              accept="audio/*"
+              accept="audio/*, .mp3, .aac, .ogg, .wav, .flac, .m4a"
               onChange={(e) => {
                 if (e.target.files[0]) {
                   setLowQualityFile(e.target.files[0]);
@@ -491,7 +491,7 @@ const Form = ({
             <input
               type="file"
               id="premium-quality"
-              accept="audio/*"
+              accept="audio/*, .mp3, .aac, .ogg, .wav, .flac, .m4a"
               onChange={(e) => {
                 if (e.target.files[0]) {
                   setHighQualityFile(e.target.files[0]);
