@@ -2,6 +2,7 @@ import { useState } from "react";
 import Form from "../../components/form/Form";
 import Preview from "../../components/preview/Preview";
 import styles from "./UploadMusic.module.css";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 
 const UploadMusic = () => {
   const [previewClicked, setPreviewClicked] = useState(false);
@@ -10,6 +11,7 @@ const UploadMusic = () => {
   const [PreviewGenre, setPreviewGenre] = useState(null);
   const [highQuality, setHighQuality] = useState(null);
   const [lowQuality, setLowQuality] = useState(null);
+  const currentAccount = useCurrentAccount();
 
   const showPreview = (e) => {
     e.preventDefault();
@@ -22,6 +24,15 @@ const UploadMusic = () => {
         Share your music with the world and set up fair revenue distribution for
         all your contributors.
       </p>
+      <div className={styles["hint"]}>
+        You need at least 0.1 sui for transaction fees
+        <a
+          href={`https://faucet.sui.io/?network=testnet&address=${currentAccount.address}`}
+          target="blank"
+        >
+          Get Gas Fee
+        </a>
+      </div>
       <div className={styles["upload-container"]}>
         <Form
           showPreview={showPreview}
