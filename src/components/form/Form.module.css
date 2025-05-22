@@ -315,7 +315,7 @@
   .form-group {
     margin-bottom: 1.2rem;
   }
-  
+
   .upload-actions {
     justify-content: space-between;
   }
@@ -329,38 +329,38 @@
     padding: 0.8rem;
     font-size: 0.9rem;
   }
-  
+
   .upload-icon {
     width: 40px;
     height: 40px;
     font-size: 20px;
     margin-right: 10px;
   }
-  
+
   .section-title {
     font-size: 1.4rem;
     margin-bottom: 1.2rem;
   }
-  
+
   .contributor {
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 16px;
   }
-  
+
   .contributor-role-container {
     width: 100%;
     margin-bottom: 8px;
   }
-  
+
   .contributor-input-address {
     width: calc(100% - 120px);
   }
-  
+
   .contributor-input-container {
     width: 110px;
   }
-  
+
   .remove-contributor {
     right: -5px;
     top: 0;
@@ -373,56 +373,56 @@
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
   }
-  
+
   .file-upload {
     padding: 15px;
   }
-  
+
   .upload-text strong {
     font-size: 0.9rem;
   }
-  
+
   .upload-text p {
     font-size: 11px;
   }
-  
+
   .upload-actions {
     flex-direction: column;
     gap: 0.8rem;
   }
-  
+
   .upload-actions button {
     width: 100%;
   }
-  
+
   .file-name {
     font-size: 0.85rem;
   }
-  
+
   .contributor {
     position: relative;
     padding-bottom: 10px;
   }
-  
+
   .contributor-input-address {
     width: 100%;
     margin-bottom: 8px;
   }
-  
+
   .contributor-input-container {
     width: 80px;
   }
-  
+
   .add-contributor {
     font-size: 0.9rem;
   }
-  
+
   .add-icon {
     width: 20px;
     height: 20px;
     font-size: 16px;
   }
-  
+
   .remaining {
     font-size: 12px;
   }
@@ -434,12 +434,12 @@
     flex-direction: column;
     text-align: center;
   }
-  
+
   .upload-icon {
     margin-right: 0;
     margin-bottom: 10px;
   }
-  
+
   .preview-thumbnail {
     max-width: 80px;
     max-height: 80px;
