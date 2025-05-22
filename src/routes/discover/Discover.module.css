@@ -241,10 +241,14 @@
 .genreFiltersContainer {
   width: 100%;
   position: relative;
+  background-color: var(--color-bg-card);
+  padding: 1rem;
+  border-radius: 10px;
   margin-bottom: 2rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #4338ca;
   -ms-overflow-style: none; /* IE and Edge */
 }
 
