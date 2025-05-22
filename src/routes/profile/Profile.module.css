@@ -37,6 +37,16 @@
   font-weight: 700;
 }
 
+.address-copy {
+  display: flex;
+  flex: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+.address-copy .copy:hover {
+  color: var(--color-primary);
+}
+
 .artist-info p {
   color: var(--color-text-muted);
   margin-bottom: 1rem;
