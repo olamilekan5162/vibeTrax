@@ -14,6 +14,7 @@ import MusicCard from "../../components/cards/music-card/MusicCard";
 import styles from "./Profile.module.css";
 import { useMusicNfts } from "../../hooks/useMusicNfts";
 import { LoadingState } from "../../components/state/LoadingState";
+import { UnconnectedState } from "../../components/state/UnconnectedState";
 import { ErrorState } from "../../components/state/ErrorState";
 import { EmptyState } from "../../components/state/EmptyState";
 import Jazzicon from "react-jazzicon";
@@ -52,13 +53,14 @@ const Profile = () => {
     (music) => music.current_owner === address
   );
 
-  useEffect(() => {
-    if (!isPending && !currentAccount?.address) {
-      navigate("/");
-    }
-  }, [isPending, currentAccount, navigate]);
+  // useEffect(() => {
+  //   if (!isPending && !currentAccount?.address) {
+  //     navigate("/");
+  //   }
+  // }, [isPending, currentAccount, navigate]);
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState />;
+  if (!isPending && !currentAccount?.address) return <UnconnectedState />
 
   return (
     <main className={styles["main-content"]}>
