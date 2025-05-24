@@ -3,7 +3,13 @@ import Jazzicon from "react-jazzicon";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import { Link } from "react-router-dom";
 
-const Contributors = ({ contributors, splits, roles }) => {
+const Contributors = ({
+  contributors,
+  splits,
+  roles,
+  price,
+  royalty_percentage,
+}) => {
   const currentAccount = useCurrentAccount();
   return (
     <section className={styles.contributors}>
@@ -21,7 +27,10 @@ const Contributors = ({ contributors, splits, roles }) => {
               {/* <p className={styles.contributorRole}>{contributor.role}</p> */}
               {contributors.includes(currentAccount?.address) ? (
                 <p className={styles.contributorShare}>
-                  {splits[index] / 100}% Share
+                  {splits[index] / 100}% Shares of Royalty <br /> (
+                  {((price * (royalty_percentage / 100)) / 100) *
+                    (splits[index] / 100 / 100)}{" "}
+                  SUI)
                 </p>
               ) : (
                 " "
