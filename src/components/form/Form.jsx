@@ -29,6 +29,7 @@ const Form = ({
   const currentAccount = useCurrentAccount();
   const { uploadMusic, updateMusic } = useMusicUpload();
   const { id } = useParams();
+  // uploading to tusky
   // const tusky = new Tusky({ apiKey: import.meta.env.VITE_TUSKY_API_KEY });
 
   // const upToTusky = async() =>{
