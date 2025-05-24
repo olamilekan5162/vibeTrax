@@ -27,7 +27,7 @@ const UploadMusic = () => {
       <div className={styles["hint"]}>
         You need at least 0.1 sui for transaction fees
         <a
-          href={`https://faucet.sui.io/?network=testnet&address=${currentAccount.address}`}
+          href={`https://faucet.sui.io/?network=testnet&address=${currentAccount?.address}`}
           target="blank"
         >
           Get Gas Fee
