@@ -117,8 +117,6 @@ export const useMusicUpload = () => {
         target: `${tunflowPackageId}::music_nft::update_music_details`,
       });
 
-      // const toastId = toast.loading("Updating music...");
-
       signAndExecute(
         { transaction: tx },
         {
