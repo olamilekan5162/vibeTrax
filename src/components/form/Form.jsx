@@ -20,6 +20,7 @@ const Form = ({
   const [description, setDescription] = useState("");
   const [genre, setGenre] = useState("");
   const [price, setPrice] = useState(0);
+  const [royaltyPercentage, setRoyaltyPercentage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [highQualityFile, setHighQualityFile] = useState(null);
   const [lowQualityFile, setLowQualityFile] = useState(null);
@@ -28,6 +29,7 @@ const Form = ({
   const currentAccount = useCurrentAccount();
   const { uploadMusic, updateMusic } = useMusicUpload();
   const { id } = useParams();
+  // uploading to tusky
   // const tusky = new Tusky({ apiKey: import.meta.env.VITE_TUSKY_API_KEY });
 
   // const upToTusky = async() =>{
@@ -112,7 +114,7 @@ const Form = ({
           {
             role: "Artist",
             address: currentAccount?.address,
-            percentage: 100,
+            percentage: 50,
           },
         ]);
       }
@@ -303,6 +305,7 @@ const Form = ({
       `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${highQualityBlobId}`,
       `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${lowQualityBlobId}`,
       price,
+      royaltyPercentage,
       contributors,
       roles,
       percentages
@@ -595,6 +598,22 @@ const Form = ({
             )}
           </div>
         </div>
+        <div className={styles["form-group"]}>
+          <label className={styles["form-label"]} htmlFor="royalty">
+            Royalty Percentage
+          </label>
+          <input
+            type="number"
+            id="royalty"
+            className={styles["form-input"]}
+            placeholder="Enter the royalty splitting percentage (maximum of 50%)"
+            value={royaltyPercentage}
+            onChange={(e) => setRoyaltyPercentage(e.target.value)}
+            step="1"
+            min="0"
+            max="50"
+          />
+        </div>
 
         {/* Revenue Distribution - Updated Section */}
         <h3 className={styles["section-title"]}>Revenue Distribution</h3>
@@ -637,7 +656,7 @@ const Form = ({
                   updateContributor(index, "percentage", e.target.value)
                 }
                 min="0"
-                max="100"
+                max="50"
                 placeholder="%"
               />
               <span>%</span>

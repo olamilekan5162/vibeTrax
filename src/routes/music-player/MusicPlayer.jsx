@@ -113,6 +113,8 @@ const MusicPlayer = () => {
         contributors={songData?.fields.collaborators}
         splits={songData?.fields.collaborator_splits}
         roles={songData?.fields.collaborator_roles}
+        price={songData?.fields.price}
+        royalty_percentage={songData?.fields.royalty_percentage}
       />
 
       <div>

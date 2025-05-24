@@ -22,6 +22,7 @@ export const useMusicUpload = () => {
     highQualityUrl,
     lowQualityUrl,
     price,
+    royaltyPercentage,
     collaborators,
     collaboratorRoles,
     collaboratorSplits
@@ -39,7 +40,7 @@ export const useMusicUpload = () => {
           tx.pure.string(highQualityUrl),
           tx.pure.string(lowQualityUrl),
           tx.pure.u64(Number(price)),
-          tx.pure.u64(Number(collaborators[0].percentage * 100)),
+          tx.pure.u64(Number(royaltyPercentage * 100)),
           tx.pure.vector(
             "address",
             collaborators.map((c) => c.address)
@@ -115,8 +116,6 @@ export const useMusicUpload = () => {
         ],
         target: `${tunflowPackageId}::music_nft::update_music_details`,
       });
-
-      // const toastId = toast.loading("Updating music...");
 
       signAndExecute(
         { transaction: tx },
