@@ -24,7 +24,6 @@ const Contributors = ({
                 to={`/profile/${contributor}`}
                 className={styles.contributorName}
               >{`${contributor.slice(0, 5)}...${contributor.slice(-5)}`}</Link>
-              {/* <p className={styles.contributorRole}>{contributor.role}</p> */}
               {contributors.includes(currentAccount?.address) ? (
                 <p className={styles.contributorShare}>
                   {splits[index] / 100}% Shares of Royalty <br /> (
