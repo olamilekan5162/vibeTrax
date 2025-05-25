@@ -6,7 +6,6 @@
 
 VibeTrax is a decentralized music platform built on the **Sui blockchain**, enabling upcoming artists to release music **without upfront capital**, collaborate transparently, and earn fair, on-chain revenue. Fans can stream, own, and even resell music—creating an ecosystem where everyone is rewarded based on the value they contribute.
 
----
 
 ## Core Features
 
@@ -115,8 +114,9 @@ We’re building the future of music with community at the core. If you're a:
 
 Feel free to contribute or join the discussion.
 
-[GitHub Link](https://github.com/olamilekan5162/vibeTrax)
+**GitHub Repository:**  [GitHub](https://github.com/olamilekan5162/vibeTrax)
 
+**Live Url** [vibeTrax Live](https://vibe-trax.vercel.app/)
 
 ## License
 
