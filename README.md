@@ -1,4 +1,4 @@
-# VibeTrax || Music Reimagined
+# VibeTrax
 
 **Empowering emerging artists through blockchain-backed, transparent music collaboration.**
 
@@ -13,7 +13,7 @@ VibeTrax is a decentralized music platform built on the **Sui blockchain**, enab
 - **On-Chain Revenue Splitting** – Instant, automatic payments to artists and collaborators on song sales or resales.
 - **Subscription Access** – Fans subscribe on-chain to unlock premium content and early access.
 - **Optional Ownership** – Buy music NFTs to support artists, collect, resell, and own own the music value.
-- **Dynamic Musix Value**Upvoting a music increases the music's value dynamically overtime.
+- **Dynamic Musix Value** - Upvoting a music increases the music's value dynamically overtime.
 - **Collaborator Dashboards** – Real-time dashboards for all contributors to track revenue and engagement.
 - **Top-Rated Artists** – Voted by the community, not by industry gatekeepers.
 
@@ -87,7 +87,6 @@ Each user has a dashboard accessible after connecting a wallet or logging in via
     ```
     VITE_ENOKI_API_KEY=<YOUR ENOKI API KEY>
     VITE_GOOGLE_CLIENT_ID=<YOUR GOOGLE CLIENT ID>
-
     ```
 
 
