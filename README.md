@@ -1,4 +1,4 @@
-# VibeTrax
+# VibeTrax || Music Reimagined
 
 **Empowering emerging artists through blockchain-backed, transparent music collaboration.**
 
@@ -12,7 +12,8 @@ VibeTrax is a decentralized music platform built on the **Sui blockchain**, enab
 - **No Upfront Capital Needed** – Artists launch music and pay collaborators based on revenue shares.
 - **On-Chain Revenue Splitting** – Instant, automatic payments to artists and collaborators on song sales or resales.
 - **Subscription Access** – Fans subscribe on-chain to unlock premium content and early access.
-- **Optional Ownership** – Buy music NFTs to support artists, collect, resell, and earn Fan Power Tokens.
+- **Optional Ownership** – Buy music NFTs to support artists, collect, resell, and own own the music value.
+- **Dynamic Musix Value**Upvoting a music increases the music's value dynamically overtime.
 - **Collaborator Dashboards** – Real-time dashboards for all contributors to track revenue and engagement.
 - **Top-Rated Artists** – Voted by the community, not by industry gatekeepers.
 
@@ -40,7 +41,6 @@ Mr. A and his collaborators receive **instant, transparent payouts** on every pu
 4. **Royalties & Resale Earnings**:
    - Automatically distributed to artists and collaborators
    - All tracked on-chain
-5. **Owners receive Fan Power Tokens**, unlocking new music, perks, and rewards.
 
 ## User Types
 
@@ -80,14 +80,24 @@ Each user has a dashboard accessible after connecting a wallet or logging in via
     git clone https://github.com/olamilekan5162/vibetrax.git
     cd vibetrax
     ```
+2. **3. Set Up Environment Variables**
 
-2.  **Install dependencies:**
+    Create a .env.local file in the root directory and add your EnokiApi key and Google client id:
+
+    ```
+    VITE_ENOKI_API_KEY=<YOUR ENOKI API KEY>
+    VITE_GOOGLE_CLIENT_ID=<YOUR GOOGLE CLIENT ID>
+
+    ```
+
+
+3.  **Install dependencies:**
 
     ```bash
     npm install
     ```
 
-3.  **Run the development server:**
+4.  **Run the development server:**
 
     ```bash
     npm run dev
@@ -116,7 +126,7 @@ Feel free to contribute or join the discussion.
 
 **GitHub Repository:**  [GitHub](https://github.com/olamilekan5162/vibeTrax)
 
-**Live Url** [vibeTrax Live](https://vibe-trax.vercel.app/)
+**Live Url:** [vibeTrax Live](https://vibe-trax.vercel.app/)
 
 ## License
 
